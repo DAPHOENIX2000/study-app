@@ -3,156 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One Week to Know It All — Beginner Mode</title>
+<title>One Week to Know It All — Full Study Site</title>
 <style>
   :root{
     --ink:#14110d; --paper:#f3ede1; --paper2:#e9e0cd;
-    --line:#3a3127; --accent:#c0392b; --accent2:#2c5f4f;
-    --gold:#b8860b; --muted:#6b5f4e;
+    --line:#3a3127; --accent:#c0392b; --accent2:#2c5f4f; --gold:#b8860b; --muted:#6b5f4e;
     --c-chi:#9c4221; --c-eth:#2c5f4f; --c-ml:#5b3a8c; --c-sys:#1f5673;
     --shadow:6px 6px 0 rgba(20,17,13,.9);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
-    background:var(--paper);color:var(--ink);min-height:100vh;
-    background-image:radial-gradient(rgba(20,17,13,.035) 1px,transparent 1px);
-    background-size:18px 18px;
-  }
+  body{font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;background:var(--paper);color:var(--ink);min-height:100vh;
+    background-image:radial-gradient(rgba(20,17,13,.035) 1px,transparent 1px);background-size:18px 18px}
   .wrap{max-width:880px;margin:0 auto;padding:24px 18px 80px}
-  header.top{border-bottom:3px solid var(--line);padding-bottom:14px;margin-bottom:18px}
+  header.top{border-bottom:3px solid var(--line);padding-bottom:14px;margin-bottom:16px}
   .kicker{font-family:'Courier New',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
-  h1{font-size:clamp(28px,6vw,46px);line-height:.95;font-weight:800;letter-spacing:-1px;margin:4px 0 8px}
+  h1{font-size:clamp(26px,6vw,44px);line-height:.95;font-weight:800;letter-spacing:-1px;margin:4px 0 8px}
   h1 em{font-style:italic;color:var(--accent)}
   .sub{font-size:14px;color:var(--muted);max-width:600px}
-  .tabs{display:flex;gap:0;flex-wrap:wrap;margin:18px 0 22px;border:2.5px solid var(--line);background:var(--paper2)}
-  .tab{flex:1;min-width:96px;border:none;background:transparent;font-family:inherit;font-size:13px;
-    padding:11px 6px;cursor:pointer;border-right:2px solid var(--line);font-weight:700;color:var(--muted);transition:.12s}
+  .tabs{display:flex;flex-wrap:wrap;margin:16px 0 22px;border:2.5px solid var(--line);background:var(--paper2)}
+  .tab{flex:1 1 auto;min-width:84px;border:none;background:transparent;font-family:inherit;font-size:13px;padding:11px 6px;cursor:pointer;
+    border-right:2px solid var(--line);font-weight:700;color:var(--muted);transition:.12s}
   .tab:last-child{border-right:none}
   .tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
   .tab:hover:not([aria-selected="true"]){background:rgba(20,17,13,.07);color:var(--ink)}
-
-  .decks{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:8px}
-  .deck{border:2.5px solid var(--line);background:var(--paper2);padding:16px;cursor:pointer;text-align:left;
-    font-family:inherit;box-shadow:var(--shadow);transition:transform .1s,box-shadow .1s;position:relative;overflow:hidden}
+  .decks{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:8px}
+  .deck{border:2.5px solid var(--line);background:var(--paper2);padding:16px;cursor:pointer;text-align:left;font-family:inherit;
+    box-shadow:var(--shadow);transition:transform .1s,box-shadow .1s;position:relative;overflow:hidden}
   .deck:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 rgba(20,17,13,.9)}
   .deck:active{transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(20,17,13,.9)}
   .deck .bar{height:8px;margin:-16px -16px 12px;border-bottom:2.5px solid var(--line)}
-  .deck h3{font-size:19px;line-height:1.05;margin-bottom:4px}
+  .deck h3{font-size:18px;line-height:1.05;margin-bottom:4px}
   .deck .meta{font-family:'Courier New',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
   .deck .prog{margin-top:10px;height:6px;background:rgba(20,17,13,.12);border:1px solid var(--line)}
   .deck .prog i{display:block;height:100%;background:var(--accent2)}
-  .deck.all{background:var(--ink);color:var(--paper)}
-  .deck.all .meta{color:#bbada0}
+  .deck.all{background:var(--ink);color:var(--paper)}.deck.all .meta{color:#bbada0}
   .deck.all .bar{background:repeating-linear-gradient(45deg,var(--c-chi),var(--c-chi) 10px,var(--c-eth) 10px,var(--c-eth) 20px,var(--c-ml) 20px,var(--c-ml) 30px,var(--c-sys) 30px,var(--c-sys) 40px)}
-
-  /* Front and back are stacked normally (no 3D flip) so the card always
-     grows to fit its content and nothing is ever clipped. A quick fade +
-     lift gives feedback on reveal. */
   .scene{margin:6px 0 16px}
   .card{position:relative;width:100%;cursor:pointer}
-  .face{border:3px solid var(--line);box-shadow:var(--shadow);padding:26px 24px;
-    display:flex;flex-direction:column;background:var(--paper2)}
+  .face{border:3px solid var(--line);box-shadow:var(--shadow);padding:26px 24px;display:flex;flex-direction:column;background:var(--paper2)}
   .face.front{min-height:300px}
   .face.back{background:#fbf7ee;animation:reveal .35s ease}
   @keyframes reveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
   .card:not(.flipped) .face.back{display:none}
   .card.flipped .face.front{display:none}
-  .face .corner{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;
-    display:flex;justify-content:space-between;color:var(--muted);border-bottom:1.5px solid var(--line);padding-bottom:8px;flex-shrink:0}
+  .face .corner{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;display:flex;
+    justify-content:space-between;color:var(--muted);border-bottom:1.5px solid var(--line);padding-bottom:8px;flex-shrink:0}
   .face .corner .pill{padding:2px 9px;color:#fff;font-weight:700;border-radius:1px}
-  .qtext{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;
-    font-size:clamp(19px,3.4vw,25px);line-height:1.3;font-weight:600;padding:14px 4px}
+  .qtext{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(19px,3.4vw,25px);
+    line-height:1.3;font-weight:600;padding:14px 4px}
   .atext{font-size:clamp(14px,2.5vw,16.5px);line-height:1.55;padding:12px 2px 2px}
-  .atext .lead{font-size:1.05em}
-  .seg{margin-bottom:13px}
-  .seg:last-child{margin-bottom:2px}
-  .label{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;
-    text-transform:uppercase;font-weight:700;padding:2px 8px;margin-bottom:5px;border-radius:1px}
-  .label.plain{background:#2c5f4f;color:#fff}
-  .label.why{background:#b8860b;color:#fff}
-  .label.facts{background:#14110d;color:#f3ede1}
-  .label.analogy{background:#9c4221;color:#fff}
-  .label.exam{background:#c0392b;color:#fff}
-  .atext ul{margin:4px 0 4px 20px}.atext li{margin-bottom:4px}
+  .seg{margin-bottom:13px}.seg:last-child{margin-bottom:2px}
+  .label{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    font-weight:700;padding:2px 8px;margin-bottom:5px;border-radius:1px}
+  .label.plain{background:#2c5f4f;color:#fff}.label.why{background:#b8860b;color:#fff}
+  .label.facts{background:#14110d;color:#f3ede1}.label.analogy{background:#9c4221;color:#fff}.label.exam{background:#c0392b;color:#fff}
+  .atext ul,.atext ol{margin:4px 0 4px 20px}.atext li{margin-bottom:4px}
   .atext b{color:var(--accent)}
   .atext .term{background:#fff3d6;border:1px solid #e0c060;padding:0 4px;font-weight:700;color:#7a5a00}
-  .hintline{text-align:center;font-family:'Courier New',monospace;font-size:11px;color:var(--muted);
-    text-transform:uppercase;letter-spacing:2px;margin-top:6px;flex-shrink:0}
+  .hintline{text-align:center;font-family:'Courier New',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;
+    letter-spacing:2px;margin-top:6px;flex-shrink:0}
   .nav{display:flex;align-items:center;gap:10px;margin-top:6px}
-  .btn{font-family:inherit;font-weight:700;font-size:14px;border:2.5px solid var(--line);background:var(--paper2);
-    padding:12px 16px;cursor:pointer;box-shadow:3px 3px 0 rgba(20,17,13,.9);transition:.08s}
+  .btn{font-family:inherit;font-weight:700;font-size:14px;border:2.5px solid var(--line);background:var(--paper2);padding:12px 16px;
+    cursor:pointer;box-shadow:3px 3px 0 rgba(20,17,13,.9);transition:.08s}
   .btn:hover{background:var(--ink);color:var(--paper)}
   .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(20,17,13,.9)}
   .btn:disabled{opacity:.35;cursor:not-allowed}
-  .btn.know{background:var(--accent2);color:#fff;flex:1}
-  .btn.dunno{background:var(--accent);color:#fff;flex:1}
+  .btn.know{background:var(--accent2);color:#fff;flex:1}.btn.dunno{background:var(--accent);color:#fff;flex:1}
   .counter{font-family:'Courier New',monospace;font-size:13px;color:var(--muted);min-width:64px;text-align:center}
   .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap}
-  .backlink{background:none;border:none;font-family:'Courier New',monospace;font-size:12px;cursor:pointer;
-    text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);padding:4px 0}
+  .backlink{background:none;border:none;font-family:'Courier New',monospace;font-size:12px;cursor:pointer;text-transform:uppercase;
+    letter-spacing:1.5px;color:var(--muted);padding:4px 0}
   .backlink:hover{color:var(--accent)}
   .deckname{font-weight:800;font-size:18px}
-  .smallbtn{font-family:'Courier New',monospace;font-size:11px;border:2px solid var(--line);background:var(--paper2);
-    padding:6px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:1px}
-  .smallbtn:hover{background:var(--ink);color:var(--paper)}
   .modetoggle{display:flex;border:2px solid var(--line);overflow:hidden}
-  .modebtn{font-family:'Courier New',monospace;font-size:11px;border:none;background:var(--paper2);
-    padding:6px 11px;cursor:pointer;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700}
+  .modebtn{font-family:'Courier New',monospace;font-size:11px;border:none;background:var(--paper2);padding:6px 11px;cursor:pointer;
+    text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700}
   .modebtn+.modebtn{border-left:2px solid var(--line)}
   .modebtn.on{background:var(--ink);color:var(--paper)}
   .modebtn:not(.on):hover{background:rgba(20,17,13,.08);color:var(--ink)}
   .done{text-align:center;padding:40px 16px;border:3px solid var(--line);background:var(--paper2);box-shadow:var(--shadow)}
   .done h2{font-size:30px;margin-bottom:8px}.done .score{font-size:54px;font-weight:800;color:var(--accent2);margin:10px 0}
-
-  .day{border:2.5px solid var(--line);background:var(--paper2);box-shadow:var(--shadow);margin-bottom:16px}
-  .day h3{background:var(--ink);color:var(--paper);padding:10px 16px;font-size:16px;display:flex;justify-content:space-between;align-items:baseline}
-  .day h3 span{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;color:#bbada0}
-  .day .body{padding:14px 18px}
-  .day ul{margin-left:18px}.day li{margin-bottom:7px;font-size:15px;line-height:1.4}
-  .tag{display:inline-block;font-family:'Courier New',monospace;font-size:10px;color:#fff;padding:1px 7px;
-    border-radius:1px;margin-right:6px;letter-spacing:1px;vertical-align:middle}
-  .note{font-size:13px;color:var(--muted);font-style:italic;margin-top:8px}
-  footer{margin-top:30px;border-top:2px solid var(--line);padding-top:14px;font-family:'Courier New',monospace;
-    font-size:11px;color:var(--muted);text-align:center;letter-spacing:1px}
+  /* practice reveal */
+  .reveal-btn{display:block;width:100%;margin-top:8px}
+  .solution{border:2px solid var(--line);background:#fbf7ee;padding:14px 16px;margin-top:12px;animation:reveal .3s ease}
+  .solution .label{margin-bottom:6px}
+  .ansline{margin-top:10px;padding-top:10px;border-top:1.5px dashed var(--line);font-weight:700}
+  /* quiz */
+  .opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:15px;border:2.5px solid var(--line);background:var(--paper2);
+    padding:13px 15px;margin-bottom:10px;cursor:pointer;box-shadow:3px 3px 0 rgba(20,17,13,.9);transition:.08s}
+  .opt:hover:not(.locked){background:var(--ink);color:var(--paper)}
+  .opt.correct{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+  .opt.wrong{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .opt.locked{cursor:default}
+  /* pairs */
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:0;border:3px solid var(--line);box-shadow:var(--shadow);margin-bottom:6px}
+  .pair .side{padding:18px 16px;background:var(--paper2)}
+  .pair .side+.side{border-left:3px solid var(--line);background:#fbf7ee}
+  .pair .side h4{font-size:17px;margin-bottom:8px}
+  .pair .side p{font-size:14.5px;line-height:1.5}
+  .pairtip{border:2px dashed var(--line);background:rgba(184,134,11,.12);padding:12px 15px;margin:12px 0 0;font-size:14.5px;line-height:1.5}
+  .pairtip b{color:var(--gold)}
+  /* map */
+  .mapblock{border:2.5px solid var(--line);background:var(--paper2);box-shadow:var(--shadow);margin-bottom:18px;padding:16px}
+  .mapblock h3{font-size:18px;margin-bottom:4px}
+  .mapblock .lead{font-size:13.5px;color:var(--muted);margin-bottom:12px}
+  .step{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-top:1.5px solid rgba(58,49,39,.18)}
+  .step:first-of-type{border-top:none}
+  .stepnum{flex-shrink:0;width:26px;height:26px;border-radius:50%;color:#fff;font-family:'Courier New',monospace;font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-size:13px}
+  .step .body{font-size:14.5px;line-height:1.45}
+  .step .body b{font-size:15px}
+  .arrowdown{text-align:center;color:var(--muted);font-size:14px;line-height:1;margin:-2px 0 -2px 12px}
+  footer{margin-top:30px;border-top:2px solid var(--line);padding-top:14px;font-family:'Courier New',monospace;font-size:11px;
+    color:var(--muted);text-align:center;letter-spacing:1px}
   .kbd{font-family:'Courier New',monospace;font-size:11px;background:var(--ink);color:var(--paper);padding:1px 6px;border-radius:2px}
-  @media(max-width:560px){.face{padding:18px 15px}}
+  .intro{font-size:14px;color:var(--muted);margin-bottom:16px;max-width:640px}
+  @media(max-width:560px){.face{padding:18px 15px}.pair{grid-template-columns:1fr}.pair .side+.side{border-left:none;border-top:3px solid var(--line)}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="kicker">Beginner mode · explained from zero · 4 subjects</div>
+    <div class="kicker">Beginner mode · all 4 courses · explained from zero</div>
     <h1>One Week to <em>Know It All</em></h1>
-    <p class="sub">Every card teaches the idea first in plain words — often with an everyday analogy — before giving you the facts. Cards now play <b>in learning order</b> (each builds on the one before); flip to Shuffle once it's all familiar. No prior knowledge needed.</p>
+    <p class="sub">Five ways to study the same material: learn it, work problems, quiz yourself, untangle confusable pairs, and see how topics connect. Now includes the previously-missing ML lectures 4–7 and Ethics Chapter 6.</p>
   </header>
 
   <div class="tabs" role="tablist">
-    <button class="tab" role="tab" aria-selected="true" data-view="study">Flashcards</button>
-    <button class="tab" role="tab" aria-selected="false" data-view="plan">7-Day Plan</button>
+    <button class="tab" role="tab" aria-selected="true" data-view="learn">Learn</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="practice">Practice</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="quiz">Quiz</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="pairs">Pairs</button>
+    <button class="tab" role="tab" aria-selected="false" data-view="map">Map</button>
   </div>
 
-  <div id="study-view">
+  <div id="learn-view">
     <div id="picker"></div>
     <div id="player" style="display:none"></div>
   </div>
-
-  <div id="plan-view" style="display:none"></div>
+  <div id="practice-view" style="display:none"></div>
+  <div id="quiz-view" style="display:none"></div>
+  <div id="pairs-view" style="display:none"></div>
+  <div id="map-view" style="display:none"></div>
 
   <footer>
-    On each answer: <span class="kbd">PLAIN ENGLISH</span> = what it means · <span class="kbd">WHY</span> = why it matters · <span class="kbd">REMEMBER</span> = exam facts. Take your time. Progress saves on this device.
+    <span class="kbd">Learn</span> flip & self-grade · <span class="kbd">Practice</span> work it out · <span class="kbd">Quiz</span> scored · <span class="kbd">Pairs</span> confusables · <span class="kbd">Map</span> learning order. Progress saves on this device.
   </footer>
 </div>
 
 <script>
-const COURSES = {
-  chi:{name:"Chinese Culture",color:"var(--c-chi)",hex:"#9c4221"},
-  eth:{name:"Engineering Ethics",color:"var(--c-eth)",hex:"#2c5f4f"},
-  ml:{name:"Machine Learning",color:"var(--c-ml)",hex:"#5b3a8c"},
-  sys:{name:"Distributed Systems",color:"var(--c-sys)",hex:"#1f5673"},
-};
-
-// helper builders for the answer HTML
 const P =(t)=>`<div class="seg"><span class="label plain">Plain English</span><div>${t}</div></div>`;
 const A =(t)=>`<div class="seg"><span class="label analogy">Think of it like</span><div>${t}</div></div>`;
 const W =(t)=>`<div class="seg"><span class="label why">Why it matters</span><div>${t}</div></div>`;
@@ -446,36 +445,297 @@ const CARDS = [
  F("Files are stored on disk as <b>blocks</b> (~1KB). Each file has an <b>inode</b> storing attributes + pointers to data blocks (10 direct + indirect pointers). Directories map names → inode numbers. Resolution chain: <b>pathname → inode number → inode address → inode → data block number → disk address → data.</b>")},
 ];
 
-// ---------- state ----------
-const STORE='studyapp_beginner_v1';
+/* New beginner flashcards: ML L4-L7 + Ethics Ch6.
+   Uses same P/A/W/F/EX helpers as the main app. Appended to CARDS. */
+const NEW_CARDS = [
+/* ---- ML Lecture 4: SVM ---- */
+{c:"ml",q:"What is a Support Vector Machine (SVM)?",a:
+ P("SVM is a <b>supervised classifier</b>: you give it labelled examples (say, black dots vs white dots) and it finds the best dividing line — or in higher dimensions, a flat 'wall' called a <b>hyperplane</b> — that separates the two groups so it can label new points.")+
+ A("drawing a line on the floor to separate two teams. SVM doesn't just draw any line — it draws the line that leaves the widest possible gap between the teams.")+
+ F("SVM is a <b>discriminative classifier</b> that takes training data and outputs an <b>optimal hyperplane</b> categorising new examples. In 2D it's a line; in higher dimensions it's a hyperplane.")},
+{c:"ml",q:"In SVM, what are the 'margin' and the 'support vectors'?",a:
+ P("Of all the lines that could separate the two groups, SVM picks the one with the <b>biggest gap</b> on either side. That gap is the margin. The few data points sitting right on the edge of the gap — the ones that 'hold the line in place' — are the support vectors.")+
+ A("a road between two neighbourhoods. The margin is the width of the road; SVM wants the widest road possible. The support vectors are the houses right at the road's edge that determine how wide it can be.")+
+ W("Bigger margin = more robust = better at classifying new, unseen points. That's the whole goal of SVM: maximise the margin.")+
+ F("<b>Margin</b> = the perpendicular distance between the hyperplane and the closest data points on each side. <b>Support vectors</b> = those closest points; they alone define the margin. SVM's job: find the hyperplane with the <b>largest margin</b>.")},
+/* ---- ML Lecture 5: Decision Trees ---- */
+{c:"ml",q:"What is a decision tree?",a:
+ P("A decision tree is a flowchart of yes/no (or multi-way) questions that leads to a decision. Each box (node) asks about one feature; each branch is an answer; you follow the branches until you reach a final label.")+
+ A("the game '20 Questions', or a loan officer asking: 'Is the applicant a student? What's their income? Credit record?' — each answer narrows it down until you decide yes/no on the loan.")+
+ F("A tree-like model: <b>each node tests an attribute</b>, <b>each branch is an outcome</b> of that test, and leaves give the final label. Trained on labelled data; the goal is a tree that predicts well on unseen data while <b>asking as few questions as possible</b>.")},
+{c:"ml",q:"In decision trees, what are entropy and information gain?",a:
+ P("To build a good tree you must pick which question to ask first. <b>Entropy</b> measures how 'mixed up' a group of labels is (all-same = low entropy = pure; half-and-half = high entropy = messy). <b>Information gain</b> measures how much a question <i>reduces</i> that mess. You pick the question with the highest information gain.")+
+ A("sorting a mixed bag of red and blue marbles. Entropy = how jumbled the bag is. A good question is one that splits the bag into a mostly-red pile and a mostly-blue pile — that split has high information gain.")+
+ F("<b>Entropy</b> = level of impurity/disorder in a set of labels (lower = purer). <b>Information gain</b> = the drop in entropy after splitting on an attribute. Rule: <b>best attribute = highest information gain</b>. The <b>ID3 algorithm</b> builds the tree by repeatedly choosing the highest-information-gain attribute.")},
+/* ---- ML Lecture 6: Linear Regression ---- */
+{c:"ml",q:"What is linear regression?",a:
+ P("Linear regression <b>fits a straight line through your data</b> so you can predict a number. Give it house sizes and prices, it learns the line, and then for a new size it predicts the price. The output is a continuous number, not a category.")+
+ A("eyeballing a trend: you scatter house size vs price on a graph, draw the best straight line through the cloud of dots, and read predictions off the line.")+
+ F("Predicts a <b>continuous value</b> (e.g. house price from size). It fits a line by minimising error between the line and the actual points. This is <b>regression</b>, contrast with classification which predicts categories.")},
+{c:"ml",q:"In linear regression, what is the cost function (squared error)?",a:
+ P("To find the <i>best</i> line, the computer needs a score for how wrong a line is. For each point it measures the vertical gap between the real value and the line's prediction, <b>squares</b> it (so negatives don't cancel and big misses hurt more), and adds them all up. The best line is the one with the smallest total.")+
+ A("a darts game where your score is the distance you missed by, squared. You want the line that 'misses' all the data points by as little as possible overall.")+
+ F("The <b>cost function</b> measures total prediction error. <b>Squared error</b> = sum of (actual − predicted)², squared so errors don't cancel and large errors are penalised more. Training = finding the line parameters that <b>minimise the cost function</b>.")},
+/* ---- ML Lecture 7: Logistic Regression ---- */
+{c:"ml",q:"What is logistic regression, and how does it differ from linear regression?",a:
+ P("Logistic regression predicts a <b>yes/no</b> answer (True/False, 0 or 1), not a number. Instead of a straight line it fits an <b>S-shaped curve</b> that outputs a probability between 0 and 1 — e.g. 'this mouse is 90% likely to be obese'.")+
+ A("a dimmer switch vs an on/off light. Linear regression is the dimmer (any value). Logistic regression bends the output into an S so it always lands between fully-off (0) and fully-on (1) — a probability.")+
+ F("<b>Linear regression</b> → predicts a continuous number (a line). <b>Logistic regression</b> → predicts a <b>category / probability</b> (True or False) using an <b>S-shaped logistic (sigmoid) function</b> that maps any input to a value between 0 and 1. Above ~0.5 → predict True; below → False.")},
+{c:"ml",q:"What is the sigmoid (logistic) function and why is it used?",a:
+ P("The sigmoid is the S-shaped curve at the heart of logistic regression. It takes <i>any</i> number (from minus infinity to plus infinity) and squashes it into the range 0 to 1, so the output can be read as a probability.")+
+ A("a funnel that no matter how much you pour in, only ever lets out between 0 and 1. Very negative inputs → near 0; very positive → near 1; zero input → exactly 0.5.")+
+ F("The <b>sigmoid function</b> maps any real number to (0, 1), producing an S-curve. It converts the linear part into a <b>probability</b>. At input 0 it gives 0.5 (the 50/50 point); large positive → near 1; large negative → near 0.")},
+/* ---- Ethics Chapter 6 ---- */
+{c:"eth",q:"Ch6: What is 'moral intuition' in ethical decision-making?",a:
+ P("Moral intuition is your trained ability to <b>instantly 'see'</b> that a situation has an ethical problem — and to sense whether a proposed solution is good enough — without consciously reasoning it all out. It works like recognising a friend's face: instant, but hard to put into words.")+
+ A("the same way you spot a familiar face in a crowd instantly but can't describe it in words. With ethics, a trained person 'sees' the problem immediately.")+
+ F("Moral intuition = perceiving ethical situations and judging solutions, similar to <b>image-recognition ability</b>. <b>Aristotle</b> (Nicomachean Ethics): humans are creatures of habit; good upbringing trains us to recognise behaviour society permits. But bias/prejudice can creep in, so we must improve our moral judgment.")},
+{c:"eth",q:"Ch6: The heuristic method for ethics decision-making — the overall steps",a:
+ P("When intuition isn't enough (an unusual case, or a 'policy vacuum' where no rule fits), you work through a structured checklist: describe the case carefully, spot the ethical issue, bring in analogies and your sense of who'd object, role-play the people affected, get advice, apply formal methods, then draw conclusions and lessons.")+
+ F("Rough sequence: (1) keep an <b>ethical analysis record</b> with equality, fairness, respect; (2) describe the case in detail; (3) 'see' the issue & check if existing policy applies; (4) mobilise knowledge — precedents, analogies, who would object; (5) role-play & sympathy ('what if it were your child?'); (6) seek advice from others; (7) use systematic methods; then draw conclusions and lessons for the future. Key trigger: a <b>'policy vacuum'</b> where no existing rule covers the case.")},
+{c:"eth",q:"Ch6: The 4 systematic methods of analysis",a:
+ P("Step 6 of the heuristic offers four formal lenses to analyse a case. Each asks a different core question about the situation.")+
+ F("<ul><li><b>Professional Standards Analysis</b> — check against codes (IEEE, ACM, BCS): did anyone violate a principle? Is there a policy vacuum?</li><li><b>Role-and-Responsibility Analysis</b> — what role does each person play, and what duties/powers come with it?</li><li><b>Stakeholder Analysis</b> — are benefits and harms distributed fairly? Are rights respected?</li><li><b>Systematic Policy Analysis</b> — which laws, codes, and practices apply, from international treaties down to personal values?</li></ul>")},
+{c:"eth",q:"Ch6: The 3 ethical theories for analysing a case",a:
+ P("To judge a case formally you can apply three classic ethical theories. Each has a one-line core you should be able to state.")+
+ A("three different 'lenses': one counts results, one looks at character, one looks at how people are treated.")+
+ F("<ul><li><b>Utilitarianism</b> — judge by consequences: bring the <b>greatest benefit and least harm to the greatest number</b> (with an equality principle: don't favour rich over poor, etc.).</li><li><b>Aristotle's virtue ethics</b> — focus on <b>virtue vs vice</b>; a virtue is the rational middle ('the mean') between two extremes (courage sits between cowardice and recklessness).</li><li><b>Kant's ethics</b> — the <b>categorical imperative</b>: always treat people as ends in themselves, <b>never merely as a means</b>; lying/deception is wrong because it uses people.</li></ul>")},
+{c:"eth",q:"Ch6: Who commits research fraud, and the 3 common motives?",a:
+ P("Academic fraud isn't only about 'bad people'. The chapter notes three recurring reasons honest-seeming researchers cross the line — mostly about pressure and shortcuts.")+
+ F("Three common motives: <b>(a) career pressure</b>; <b>(b) the belief they already 'know' the answer</b> and just want a shortcut; <b>(c) the belief that some data are too hard to reproduce precisely</b>. Deviance rises as academics get tied to money/status/fame and people rush for quick success under biased evaluation systems.")},
+{c:"eth",q:"Ch6: The 7 citation behaviours to avoid",a:
+ P("Good citing gives credit and lets readers check your work. The chapter lists seven bad citation habits — useful for spotting misconduct in an exam scenario.")+
+ F("<ol><li><b>Writing without citation</b> — reword someone's work, present as your own.</li><li><b>Citing without real authorship</b> — others' quotes/paraphrases form your core content.</li><li><b>Deliberately omitting citations</b> — hide inconvenient literature to look more original.</li><li><b>Excessive citation</b> — pad with irrelevant/unread refs to look thorough.</li><li><b>Improper self-citation</b> — cite yourself needlessly to boost counts.</li><li><b>Mutual citation</b> — a group cites each other to inflate rates.</li><li><b>Vague citation</b> — use a source directly but only list it vaguely.</li></ol>Citation can take the form of footnotes, references, and acknowledgments.")},
+];
+
+/* ============================================================
+   EXTRA CONTENT: practice problems, quiz questions, pairs
+   Reused by the combined study site. Plain-language, beginner.
+   ============================================================ */
+
+/* ---------- PRACTICE PROBLEMS (work it out, then reveal) ----------
+   Each: {c, q, steps (worked solution html), answer (short)} */
+const PRACTICE = [
+/* ML */
+{c:"ml",q:"A fruit has sweetness=8, crunchiness=2. A known apple is sweetness=7, crunchiness=7. Using straight-line (Euclidean) distance, how far apart are they?",
+ steps:"Euclidean distance = √[(difference in feature 1)² + (difference in feature 2)²].<br>Feature 1 (sweetness): 8 − 7 = 1. Feature 2 (crunchiness): 2 − 7 = −5.<br>= √[(1)² + (−5)²] = √[1 + 25] = √26.",
+ answer:"√26 ≈ 5.1"},
+{c:"ml",q:"Same two points as before — fruit (8,2) and apple (7,7) — but now use Manhattan distance (city-block). What is it?",
+ steps:"Manhattan distance = sum of the absolute differences (no squaring).<br>|8 − 7| + |2 − 7| = |1| + |−5| = 1 + 5.",
+ answer:"6"},
+{c:"ml",q:"A model is tested on 100 emails. It flags 30 as spam. Of those 30, 24 really are spam. There were 40 real spam emails in total. Find precision and recall.",
+ steps:"TP = correctly flagged spam = 24. FP = flagged but not spam = 30 − 24 = 6. FN = real spam it missed = 40 − 24 = 16.<br><b>Precision</b> = TP/(TP+FP) = 24/(24+6) = 24/30 = 0.8.<br><b>Recall</b> = TP/(TP+FN) = 24/(24+16) = 24/40 = 0.6.",
+ answer:"Precision = 0.8 (80%), Recall = 0.6 (60%)"},
+{c:"ml",q:"From the spam numbers above (Precision 0.8, Recall 0.6), compute the F1 score.",
+ steps:"F1 = 2 × (P × R) / (P + R).<br>= 2 × (0.8 × 0.6) / (0.8 + 0.6) = 2 × 0.48 / 1.4 = 0.96 / 1.4.",
+ answer:"≈ 0.686 (about 0.69)"},
+{c:"ml",q:"You run K-Means with K=2 on points at 1, 2, 3, 10, 11, 12 (one number line). Start with centres at 2 and 11. After one assignment step, which points go to which centre?",
+ steps:"Assign each point to the nearer centre (2 or 11).<br>1→2, 2→2, 3→2 (all closer to 2). 10→11, 11→11, 12→11 (all closer to 11).<br>Then you'd update: new centre A = mean(1,2,3)=2, new centre B = mean(10,11,12)=11 — unchanged, so it has already converged.",
+ answer:"Cluster A = {1,2,3}, Cluster B = {10,11,12}; centres stay 2 and 11 (converged)"},
+{c:"ml",q:"You have 49 training examples and want to use KNN. What's a sensible starting value of K, using the common heuristic?",
+ steps:"Heuristic: K ≈ √(number of training examples).<br>√49 = 7. (Odd K is also nice for 2-class voting so there's no tie.)",
+ answer:"K = 7"},
+/* SYS */
+{c:"sys",q:"Cristian's algorithm: you send a time request at T0 = 100 ms, the server's reply says Ts = 500 ms, and you receive it at T1 = 140 ms. What should you set your clock to?",
+ steps:"Formula: Tc = Ts + (T1 − T0)/2. The (T1−T0)/2 estimates how long the reply took to travel back.<br>Round trip = T1 − T0 = 140 − 100 = 40 ms. Half of that = 20 ms.<br>Tc = 500 + 20.",
+ answer:"520 ms"},
+{c:"sys",q:"In that same exchange (T0=100, T1=140), what is the accuracy (± error bound) of the estimate, ignoring minimum travel time?",
+ steps:"Accuracy = ±(T1 − T0)/2 = ±(40)/2.",
+ answer:"± 20 ms"},
+{c:"sys",q:"Two events: A is 'process P sends a message', B is 'process Q receives that message'. Is A → B, B → A, or are they concurrent?",
+ steps:"Happened-before rule #2: a send always happens-before its matching receive. The message can't be received before it's sent.",
+ answer:"A → B (A happened-before B)"},
+{c:"sys",q:"Process P's vector clock is [3,1,0]. It receives a message carrying vector [2,4,1]. P is process #1 (the first slot). What is P's new vector clock?",
+ steps:"On receive: take the element-wise MAX of your vector and the incoming one, THEN add 1 to your own slot.<br>Max([3,1,0],[2,4,1]) = [3,4,1]. Then increment slot 1 (P's own): 3→4.",
+ answer:"[4,4,1]"},
+{c:"sys",q:"A quorum system has N=5 replicas. You choose a read quorum NR=2. What's the smallest write quorum NW that still guarantees consistency?",
+ steps:"Rule: NR + NW > N. So NW > N − NR = 5 − 2 = 3. The smallest whole number greater than 3 is 4.",
+ answer:"NW = 4"},
+/* ETH */
+{c:"eth",q:"A bridge design has a 1-in-10,000 chance per year of a failure that would cause $50,000,000 in losses. Using the course's formula, what is the risk magnitude (expected loss per year)?",
+ steps:"Formula: Risk = probability × loss.<br>= (1/10,000) × 50,000,000 = 50,000,000 / 10,000.",
+ answer:"$5,000 per year"},
+{c:"eth",q:"Scenario: engineers on a project privately believe a part is unsafe, but say nothing because the manager is senior and everyone else is staying quiet. Name the two obstacles to responsible behaviour most clearly at play.",
+ steps:"'Everyone else is staying quiet, so I will too' = <b>Groupthink</b> (agreeing to keep harmony). 'The manager is senior so I won't challenge it' = <b>Uncritical acceptance of authority</b>. (Fear of losing the job could also count.)",
+ answer:"Groupthink + Uncritical acceptance of authority"},
+{c:"eth",q:"A company builds a waste-processing plant that benefits a whole city, but the families living next to it bear the smell and health risk. What concept does this illustrate, and what makes it an ethical problem?",
+ steps:"This is <b>NIMBY</b> ('Not In My Back Yard'). The ethical problem is the <b>unjust distribution</b>: the benefit is shared by everyone, but the harm is concentrated on a few nearby residents who didn't choose it.",
+ answer:"NIMBY — unfair split of benefit (everyone) vs harm (the neighbours)"},
+{c:"eth",q:"A firm moves a hazardous chemical process to a country with weaker safety laws and runs it at the lower local standard. Which view of technology transfer is it following, and which view does the course say to adopt instead?",
+ steps:"Running at the weaker local standard = <b>relativism</b> ('when in Rome, do as the Romans'). The course says to adopt <b>associationism/situationism</b> — judge by the actual context, choosing what's suitable and sustainable, not simply the cheapest local minimum.",
+ answer:"It's relativism; you should adopt associationism (situationism)"},
+];
+
+/* ---------- QUIZ (multiple choice; correct index marked) ---------- */
+const QUIZ = [
+/* ML */
+{c:"ml",q:"Which learning type uses labelled data (examples with correct answers)?",opts:["Unsupervised","Supervised","Reinforcement","Hierarchical"],correct:1},
+{c:"ml",q:"Recall answers which question?",opts:["Of the items I flagged, how many were right?","Of all the real positives, how many did I catch?","How often am I right overall?","How spread out is my data?"],correct:1},
+{c:"ml",q:"PCA is built directly on top of which concept?",opts:["Recall","Variance & covariance","Manhattan distance","Reward"],correct:1},
+{c:"ml",q:"A big disadvantage of K-Means is that you must…",opts:["Label all the data first","Choose K (the number of clusters) in advance","Compute eigenvectors","Have a reward signal"],correct:1},
+{c:"ml",q:"In KNN, a very LARGE value of K tends to cause…",opts:["Sensitivity to noise","Too much memorising","Blurring of real patterns (high bias)","Faster training"],correct:2},
+{c:"ml",q:"Which clustering method does NOT require you to pick the number of clusters up front?",opts:["K-Means","Hierarchical (agglomerative)","KNN","PCA"],correct:1},
+/* SYS */
+{c:"sys",q:"In a distributed system, how do components coordinate?",opts:["Shared memory","Only by passing messages","A global clock","One CPU"],correct:1},
+{c:"sys",q:"Which should you study FIRST?",opts:["Logical time (Lamport)","Physical time (Cristian's, NTP)","Vector clocks","Consistency models"],correct:1},
+{c:"sys",q:"The key advantage of vector clocks over Lamport clocks is that they can…",opts:["Run faster","Detect concurrency (tell if two events are causally unrelated)","Work without messages","Store more data"],correct:1},
+{c:"sys",q:"'Skew' between two clocks means…",opts:["They tick at different rates","The difference between them at one moment","They are perfectly synced","One has crashed"],correct:1},
+{c:"sys",q:"In GFS (Google File System), files are split into chunks of what size?",opts:["1 KB","64 MB","1 GB","512 bytes"],correct:1},
+{c:"sys",q:"Mutual exclusion's 'safety' property means…",opts:["No deadlock","At most one process in the critical section at a time","Everyone gets a fair turn","Data is backed up"],correct:1},
+/* ETH */
+{c:"eth",q:"The risk formula in this course is…",opts:["Risk = probability + loss","Risk = probability × loss","Risk = loss ÷ probability","Risk = probability − loss"],correct:1},
+{c:"eth",q:"The Boeing 737 MAX case is an example of which risk source?",opts:["External environment","Technical factors","Human factors","Social cost"],correct:1},
+{c:"eth",q:"'Research Misconduct (FFP)' stands for…",opts:["Fast, Fair, Public","Fabrication, Falsification, Plagiarism","Funding, Fraud, Politics","Facts, Figures, Proof"],correct:1},
+{c:"eth",q:"Compared to legal responsibility, ethical responsibility is mainly…",opts:["Pursued after the event","Acting beforehand out of good will","Only about money","Decided by a judge"],correct:1},
+{c:"eth",q:"The '4 Vs' of big data are Volume, Variety, Velocity, and…",opts:["Validity","Value","Volatility","Vision"],correct:1},
+/* CHI */
+{c:"chi",q:"Linguistic relativity claims that…",opts:["All languages are the same","Language shapes how we think","Only Chinese affects thought","Grammar doesn't matter"],correct:1},
+{c:"chi",q:"Weak-FTR languages (like German) are associated with…",opts:["Less saving","More saving and healthier behaviour","More smoking","No effect"],correct:1},
+{c:"chi",q:"You can lose 面子 (prestige) and still keep 脸, but if you lose 脸 you…",opts:["Keep 面子","Also lose 面子","Gain prestige","Nothing changes"],correct:1},
+{c:"chi",q:"The number 8 (八 bā) is considered lucky because it sounds like…",opts:["死 (die)","发 (get rich)","病 (illness)","四 (four)"],correct:1},
+];
+
+/* ---------- CONFUSABLE PAIRS ---------- */
+const PAIRS = [
+{c:"ml",title:"Precision vs Recall",
+ a:{name:"Precision",txt:"Of the items I FLAGGED, how many were actually right? = TP/(TP+FP). Punishes false alarms."},
+ b:{name:"Recall",txt:"Of ALL the real positives out there, how many did I catch? = TP/(TP+FN). Punishes misses."},
+ tip:"Precision = quality of what you flagged. Recall = how much you caught. Net of fish: precision = fewer boots in the net; recall = fewer fish left in the lake."},
+{c:"ml",title:"K-Means vs KNN",
+ a:{name:"K-Means",txt:"UNSUPERVISED clustering. Groups unlabelled points; K = number of groups. No correct answers given."},
+ b:{name:"KNN (K-Nearest Neighbours)",txt:"SUPERVISED classification. Labels a new point by the majority vote of its K closest labelled neighbours."},
+ tip:"Same letter K, opposite jobs. K-Means makes groups from scratch; KNN sorts a new item using known answers."},
+{c:"ml",title:"Single-link vs Complete-link",
+ a:{name:"Single-link",txt:"Distance between clusters = the CLOSEST pair. Produces long, stringy chains."},
+ b:{name:"Complete-link",txt:"Distance between clusters = the FARTHEST pair. Produces compact, even clusters."},
+ tip:"Single = nearest friends touch; Complete = even the farthest members must be close."},
+{c:"sys",title:"Drift vs Skew",
+ a:{name:"Skew",txt:"The difference between two clocks AT ONE MOMENT (a snapshot gap)."},
+ b:{name:"Drift",txt:"The fact they tick at different RATES, so the gap grows OVER TIME."},
+ tip:"Skew = the gap now. Drift = the gap widening. Skew is a photo; drift is the movie."},
+{c:"sys",title:"Lamport vs Vector clocks",
+ a:{name:"Lamport clock",txt:"One number per event. If A→B then L(A)<L(B), but a smaller number does NOT prove causation. Cannot detect concurrency."},
+ b:{name:"Vector clock",txt:"A list of N numbers. CAN tell whether two events are causally related or truly concurrent."},
+ tip:"Lamport gives rough order only. Vector clocks can spot 'these happened independently'."},
+{c:"sys",title:"Push vs Pull",
+ a:{name:"Push (server-initiated)",txt:"Server sends updates to clients the moment data changes. High consistency; server must track clients."},
+ b:{name:"Pull (client-initiated)",txt:"Client asks for fresh data only when it needs it (like a web cache). Less server load, possibly staler."},
+ tip:"Push = notification pings you. Pull = you open the app to check."},
+{c:"eth",title:"Legal vs Ethical responsibility",
+ a:{name:"Legal",txt:"Kicks in AFTER something goes wrong; enforced by law (the referee's whistle after a foul)."},
+ b:{name:"Ethical",txt:"Acts BEFORE, out of good will; broader than the law (choosing not to foul at all). Ethical > professional."},
+ tip:"Legal = post-event punishment. Ethical = pre-event good will."},
+{c:"eth",title:"面子 (miànzi) vs 脸 (liǎn)",
+ a:{name:"面子 miànzi",txt:"Public PRESTIGE / reputation / status — like a follower count."},
+ b:{name:"脸 liǎn",txt:"Moral character / basic community respect for being decent."},
+ tip:"Lose 面子 (prestige) and you can still keep 脸 (decency). But lose 脸 and 面子 collapses too."},
+{c:"chi",title:"Strong FTR vs Weak FTR",
+ a:{name:"Strong FTR (English, Italian)",txt:"Grammar marks the future as clearly separate → future feels distant → less saving, more smoking/obesity."},
+ b:{name:"Weak FTR (German)",txt:"Future spoken almost like the present → feels close → more saving, healthier behaviour."},
+ tip:"Strong = future feels far = act less on it. Weak = future feels near = plan for it."},
+];
+
+/* Additional practice/quiz/pairs for L4-L7 ML + Ethics Ch6.
+   Merged into PRACTICE, QUIZ, PAIRS at build time. */
+const PRACTICE_NEW = [
+{c:"ml",q:"A decision-tree split sends a group of 8 samples into two branches: Branch A = 4 'yes' and 0 'no'; Branch B = 0 'yes' and 4 'no'. Without computing the exact number, is the information gain high or low, and why?",
+ steps:"Each branch is completely pure (one branch all 'yes', the other all 'no'). Entropy of a pure group = 0. The original mixed group had high entropy. Going from high entropy to zero entropy in both branches = the biggest possible drop.",
+ answer:"Very HIGH information gain — both branches are perfectly pure (entropy 0)"},
+{c:"ml",q:"A logistic-regression model outputs 0.82 for an email being spam. Using the usual 0.5 threshold, what does it predict, and what does 0.82 mean?",
+ steps:"The sigmoid output is a probability between 0 and 1. 0.82 > 0.5, so the prediction is the positive class. 0.82 means an estimated 82% probability the email is spam.",
+ answer:"Predicts SPAM; the model estimates 82% probability"},
+{c:"ml",q:"You must choose between linear regression and logistic regression. Task: predict whether a tumour is malignant (yes/no). Which one, and why?",
+ steps:"The output is a category (yes/no), not a continuous number. Linear regression predicts numbers; logistic regression predicts True/False via the sigmoid. So this is a classification task.",
+ answer:"Logistic regression — the answer is a category (yes/no), not a number"},
+{c:"eth",q:"Scenario (Ch6): An engineer treats a junior colleague purely as a tool to get a project done, taking credit for their work. Using Kant's theory, why is this wrong?",
+ steps:"Kant's categorical imperative says always treat people as ends in themselves, never merely as a means. Using the colleague only as a tool to advance oneself treats them merely as a means, violating their dignity.",
+ answer:"It treats the colleague merely as a means, violating Kant's categorical imperative"},
+{c:"eth",q:"Scenario (Ch6): A factory's emissions would slightly inconvenience thousands but a costly filter would protect one nearby village's health. A utilitarian and a Kantian might disagree. State each view's focus.",
+ steps:"Utilitarianism weighs total benefit vs harm across the greatest number — it might compare the many's convenience against the village's harm. Kant focuses on never using the villagers merely as a means and respecting their dignity/rights regardless of the numbers.",
+ answer:"Utilitarian = greatest good for greatest number (weigh totals); Kant = respect each person, don't use the village as a means"},
+];
+
+const QUIZ_NEW = [
+{c:"ml",q:"In SVM, the best separating hyperplane is the one with the…",opts:["Smallest margin","Largest margin","Most support vectors","Fewest features"],correct:1},
+{c:"ml",q:"The points that sit on the edge of the margin and define it are called…",opts:["Centroids","Support vectors","Eigenvectors","Neighbours"],correct:1},
+{c:"ml",q:"In a decision tree, you choose the attribute with the…",opts:["Lowest information gain","Highest information gain","Most branches","Longest name"],correct:1},
+{c:"ml",q:"Entropy of a group whose labels are all identical is…",opts:["Maximum","Zero","Negative","Exactly 0.5"],correct:1},
+{c:"ml",q:"Linear regression is used to predict…",opts:["A category (yes/no)","A continuous number","A cluster","A probability only"],correct:1},
+{c:"ml",q:"Logistic regression fits what shape to predict probability?",opts:["A straight line","An S-shaped (sigmoid) curve","A circle","A bar chart"],correct:1},
+{c:"ml",q:"A sigmoid function always outputs a value…",opts:["Between 0 and 1","Above 1","Any real number","Negative"],correct:0},
+{c:"eth",q:"Ch6: Moral intuition is compared to which human ability?",opts:["Maths calculation","Image recognition (recognising a face)","Memorising lists","Running fast"],correct:1},
+{c:"eth",q:"Ch6: Kant's categorical imperative says always treat people as…",opts:["A means to an end","Ends in themselves, never merely a means","Stakeholders only","Customers"],correct:1},
+{c:"eth",q:"Ch6: Utilitarianism judges an action by…",opts:["The actor's virtue","The greatest benefit & least harm to the greatest number","Following authority","Religious law"],correct:1},
+{c:"eth",q:"Ch6: A situation where no existing rule or policy applies is called a…",opts:["Policy vacuum","Stakeholder gap","Margin","Cost function"],correct:0},
+];
+
+const PAIRS_NEW = [
+{c:"ml",title:"Linear vs Logistic Regression",
+ a:{name:"Linear regression",txt:"Predicts a CONTINUOUS NUMBER by fitting a straight line (e.g. house price). Output can be any value."},
+ b:{name:"Logistic regression",txt:"Predicts a CATEGORY / probability (True or False) by fitting an S-shaped sigmoid. Output is between 0 and 1."},
+ tip:"Number → linear. Yes/No → logistic. The sigmoid bends the line so it stays between 0 and 1."},
+{c:"ml",title:"Classification vs Regression",
+ a:{name:"Classification",txt:"Predicts a category/label (spam or not, malignant or not). KNN, SVM, decision trees, logistic regression."},
+ b:{name:"Regression",txt:"Predicts a continuous number (price, temperature). Linear regression."},
+ tip:"Bucket vs number. 'Which class?' = classification. 'How much?' = regression."},
+{c:"ml",title:"SVM margin vs support vectors",
+ a:{name:"Margin",txt:"The width of the gap between the dividing hyperplane and the nearest points. SVM maximises this."},
+ b:{name:"Support vectors",txt:"The specific closest data points sitting on the edge of the margin — they define where the hyperplane goes."},
+ tip:"Margin = the road's width. Support vectors = the houses at the road's edge that set the width."},
+{c:"eth",title:"Utilitarianism vs Kant (Ch6)",
+ a:{name:"Utilitarianism",txt:"Judge by CONSEQUENCES: greatest benefit & least harm for the greatest number. Numbers matter."},
+ b:{name:"Kant",txt:"Judge by RESPECT: treat each person as an end, never merely a means. Rights matter regardless of numbers."},
+ tip:"Utilitarian counts outcomes for the many; Kant protects each individual's dignity even if outnumbered."},
+];
+
+
+const COURSES = {
+  chi:{name:"Chinese Culture",color:"var(--c-chi)",hex:"#9c4221"},
+  eth:{name:"Engineering Ethics",color:"var(--c-eth)",hex:"#2c5f4f"},
+  ml:{name:"Machine Learning",color:"var(--c-ml)",hex:"#5b3a8c"},
+  sys:{name:"Distributed Systems",color:"var(--c-sys)",hex:"#1f5673"},
+};
+const ALLCARDS = CARDS.concat(NEW_CARDS);
+const ALLPRACTICE = PRACTICE.concat(PRACTICE_NEW);
+const ALLQUIZ = QUIZ.concat(QUIZ_NEW);
+const ALLPAIRS = PAIRS.concat(PAIRS_NEW);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+/* ---------- tabs ---------- */
+const VIEWS=['learn','practice','quiz','pairs','map'];
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+  t.setAttribute('aria-selected','true');
+  const v=t.dataset.view;
+  VIEWS.forEach(name=>{document.getElementById(name+'-view').style.display = name===v?'block':'none';});
+  if(v==='practice'&&!practiceInit){renderPractice();practiceInit=true;}
+  if(v==='quiz'&&!quizInit){renderQuizPicker();quizInit=true;}
+  if(v==='pairs'&&!pairsInit){renderPairs();pairsInit=true;}
+  if(v==='map'&&!mapInit){renderMap();mapInit=true;}
+});
+let practiceInit=false,quizInit=false,pairsInit=false,mapInit=false;
+
+/* ===================== LEARN (flashcards) ===================== */
+const STORE='studyapp_full_v1';
 function loadState(){try{return JSON.parse(localStorage.getItem(STORE))||{}}catch(e){return{}}}
 function saveState(s){try{localStorage.setItem(STORE,JSON.stringify(s))}catch(e){}}
 let state=loadState();
 function ck(card){return card.c+'|'+card.q}
 let session=null;
 
-document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
-  t.setAttribute('aria-selected','true');
-  const v=t.dataset.view;
-  document.getElementById('study-view').style.display = v==='study'?'block':'none';
-  document.getElementById('plan-view').style.display = v==='plan'?'block':'none';
-});
-
 function renderPicker(){
   document.getElementById('player').style.display='none';
   const p=document.getElementById('picker');p.style.display='block';
-  const counts={};Object.keys(COURSES).forEach(k=>counts[k]=CARDS.filter(c=>c.c===k));
-  let html='<div class="decks">';
-  const allKnown=CARDS.filter(c=>state[ck(c)]==='known').length;
-  html+=`<button class="deck all" data-deck="all"><div class="bar"></div>
-    <h3>Everything</h3><div class="meta">${CARDS.length} cards · all 4 courses</div>
-    <div class="prog"><i style="width:${Math.round(allKnown/CARDS.length*100)}%"></i></div></button>`;
-  const missed=CARDS.filter(c=>state[ck(c)]==='missed');
+  const counts={};Object.keys(COURSES).forEach(k=>counts[k]=ALLCARDS.filter(c=>c.c===k));
+  let html='<p class="intro">Each card explains the idea in plain words and an analogy before the facts. Cards play in learning order; switch to Shuffle once it\u2019s familiar.</p><div class="decks">';
+  const allKnown=ALLCARDS.filter(c=>state[ck(c)]==='known').length;
+  html+=`<button class="deck all" data-deck="all"><div class="bar"></div><h3>Everything</h3>
+    <div class="meta">${ALLCARDS.length} cards · all 4</div>
+    <div class="prog"><i style="width:${Math.round(allKnown/ALLCARDS.length*100)}%"></i></div></button>`;
+  const missed=ALLCARDS.filter(c=>state[ck(c)]==='missed');
   html+=`<button class="deck" data-deck="missed" ${missed.length?'':'disabled style="opacity:.4;cursor:not-allowed"'}>
-    <div class="bar" style="background:var(--accent)"></div>
-    <h3>Cards I Missed</h3><div class="meta">${missed.length} to review</div>
-    <div class="prog"><i style="width:0%;background:var(--accent)"></i></div></button>`;
+    <div class="bar" style="background:var(--accent)"></div><h3>Cards I Missed</h3>
+    <div class="meta">${missed.length} to review</div><div class="prog"><i style="width:0%;background:var(--accent)"></i></div></button>`;
   Object.keys(COURSES).forEach(k=>{
     const list=counts[k];const known=list.filter(c=>state[ck(c)]==='known').length;
     html+=`<button class="deck" data-deck="${k}"><div class="bar" style="background:${COURSES[k].color}"></div>
@@ -483,21 +743,18 @@ function renderPicker(){
       <div class="prog"><i style="width:${Math.round(known/list.length*100)}%"></i></div></button>`;
   });
   html+='</div>';
-  const totalKnown=CARDS.filter(c=>state[ck(c)]==='known').length;
+  const totalKnown=ALLCARDS.filter(c=>state[ck(c)]==='known').length;
   html+=`<div style="text-align:center;margin-top:14px;font-family:'Courier New',monospace;font-size:12px;color:var(--muted);letter-spacing:1px">
-    OVERALL MASTERY: ${totalKnown}/${CARDS.length} · <button class="smallbtn" id="reset">RESET PROGRESS</button></div>`;
+    OVERALL: ${totalKnown}/${ALLCARDS.length} · <button class="modebtn" style="border:2px solid var(--line)" id="reset">RESET</button></div>`;
   p.innerHTML=html;
-  p.querySelectorAll('.deck[data-deck]').forEach(d=>{if(!d.disabled)d.onclick=()=>startDeck(d.dataset.deck)});
-  const r=document.getElementById('reset');if(r)r.onclick=()=>{if(confirm('Clear all progress on this device?')){state={};saveState(state);renderPicker()}};
+  p.querySelectorAll('.deck[data-deck]').forEach(d=>{if(!d.disabled)d.onclick=()=>startDeck(d.dataset.deck,false)});
+  const r=document.getElementById('reset');if(r)r.onclick=()=>{if(confirm('Clear all flashcard progress on this device?')){state={};saveState(state);renderPicker()}};
 }
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function startDeck(deck,shuffled){
   let list;
-  if(deck==='all')list=CARDS;
-  else if(deck==='missed')list=CARDS.filter(c=>state[ck(c)]==='missed');
-  else list=CARDS.filter(c=>c.c===deck);
-  // In-order by default (follows the prerequisite sequence). Cards within each
-  // course are already authored in learning order.
+  if(deck==='all')list=ALLCARDS;
+  else if(deck==='missed')list=ALLCARDS.filter(c=>state[ck(c)]==='missed');
+  else list=ALLCARDS.filter(c=>c.c===deck);
   session={deck,list:shuffled?shuffle(list):list.slice(),idx:0,flipped:false,right:0,shuffled:!!shuffled};
   renderPlayer();
 }
@@ -505,137 +762,216 @@ function renderPlayer(){
   document.getElementById('picker').style.display='none';
   const pl=document.getElementById('player');pl.style.display='block';
   const s=session;
-  if(s.idx>=s.list.length){return renderDone()}
+  if(s.idx>=s.list.length)return renderDone();
   const card=s.list[s.idx];const co=COURSES[card.c];
-  const deckName = s.deck==='all'?'Everything':s.deck==='missed'?'Cards I Missed':co.name;
-  // Position of this card within its own course's learning sequence
-  const courseList=CARDS.filter(c=>c.c===card.c);
+  const deckName=s.deck==='all'?'Everything':s.deck==='missed'?'Cards I Missed':co.name;
+  const courseList=ALLCARDS.filter(c=>c.c===card.c);
   const stepNo=courseList.findIndex(c=>ck(c)===ck(card))+1;
-  const orderHint = s.shuffled
-    ? `shuffled`
-    : (s.deck==='all'||s.deck==='missed')
-      ? `${COURSES[card.c].name} · step ${stepNo} of ${courseList.length}`
-      : `step ${s.idx+1} of ${s.list.length} · in order`;
+  const hint=s.shuffled?'shuffled':(s.deck==='all'||s.deck==='missed')?`${co.name} · ${stepNo}/${courseList.length}`:`step ${s.idx+1} of ${s.list.length} · in order`;
   pl.innerHTML=`
     <div class="toolbar">
       <button class="backlink" id="back">← all decks</button>
       <div class="deckname">${deckName}</div>
-      <div class="modetoggle" role="group" aria-label="card order">
-        <button class="modebtn ${s.shuffled?'':'on'}" id="mode-order">In order</button>
-        <button class="modebtn ${s.shuffled?'on':''}" id="mode-shuffle">Shuffle</button>
-      </div>
+      <div class="modetoggle"><button class="modebtn ${s.shuffled?'':'on'}" id="mo">In order</button><button class="modebtn ${s.shuffled?'on':''}" id="ms">Shuffle</button></div>
     </div>
     <div class="scene"><div class="card ${s.flipped?'flipped':''}" id="card">
-      <div class="face front">
-        <div class="corner"><span class="pill" style="background:${co.hex}">${co.name}</span><span>${orderHint}</span></div>
-        <div class="qtext">${card.q}</div>
-        <div class="hintline">tap / space to reveal the explanation</div>
-      </div>
-      <div class="face back">
-        <div class="corner"><span class="pill" style="background:${co.hex}">${co.name}</span><span>Explanation</span></div>
-        <div class="atext">${card.a}</div>
-      </div>
+      <div class="face front"><div class="corner"><span class="pill" style="background:${co.hex}">${co.name}</span><span>${hint}</span></div>
+        <div class="qtext">${card.q}</div><div class="hintline">tap / space to reveal</div></div>
+      <div class="face back"><div class="corner"><span class="pill" style="background:${co.hex}">${co.name}</span><span>Explanation</span></div>
+        <div class="atext">${card.a}</div></div>
     </div></div>
-    <div class="nav">
-      <button class="btn" id="prev" ${s.idx===0?'disabled':''}>← Prev</button>
-      <div class="counter">${s.idx+1} / ${s.list.length}</div>
-      <button class="btn" id="next">Next →</button>
-    </div>
-    <div class="nav" style="margin-top:10px">
-      <button class="btn dunno" id="missed">Still fuzzy — review again</button>
-      <button class="btn know" id="known">Got it ✓</button>
-    </div>`;
+    <div class="nav"><button class="btn" id="prev" ${s.idx===0?'disabled':''}>← Prev</button>
+      <div class="counter">${s.idx+1} / ${s.list.length}</div><button class="btn" id="next">Next →</button></div>
+    <div class="nav" style="margin-top:10px"><button class="btn dunno" id="missed">Still fuzzy</button><button class="btn know" id="known">Got it ✓</button></div>`;
   const cardEl=document.getElementById('card');
-  cardEl.onclick=(e)=>{ if(e.target.closest('a'))return; s.flipped=!s.flipped;cardEl.classList.toggle('flipped')};
+  cardEl.onclick=(e)=>{if(e.target.closest('a'))return;s.flipped=!s.flipped;cardEl.classList.toggle('flipped')};
   document.getElementById('back').onclick=renderPicker;
-  document.getElementById('mode-order').onclick=()=>{ if(s.shuffled) startDeck(s.deck,false); };
-  document.getElementById('mode-shuffle').onclick=()=>{ if(!s.shuffled) startDeck(s.deck,true); };
-  document.getElementById('prev').onclick=()=>move(-1);
-  document.getElementById('next').onclick=()=>move(1);
+  document.getElementById('mo').onclick=()=>{if(s.shuffled)startDeck(s.deck,false)};
+  document.getElementById('ms').onclick=()=>{if(!s.shuffled)startDeck(s.deck,true)};
+  document.getElementById('prev').onclick=()=>mv(-1);
+  document.getElementById('next').onclick=()=>mv(1);
   document.getElementById('known').onclick=()=>grade('known');
   document.getElementById('missed').onclick=()=>grade('missed');
   window.scrollTo({top:0,behavior:'smooth'});
 }
-function move(d){const s=session;s.idx=Math.min(s.list.length,Math.max(0,s.idx+d));s.flipped=false;renderPlayer()}
-function grade(g){const s=session;const card=s.list[s.idx];state[ck(card)]=g;saveState(state);if(g==='known')s.right++;s.idx++;s.flipped=false;renderPlayer()}
+function mv(d){const s=session;s.idx=Math.min(s.list.length,Math.max(0,s.idx+d));s.flipped=false;renderPlayer()}
+function grade(g){const s=session;const c=s.list[s.idx];state[ck(c)]=g;saveState(state);if(g==='known')s.right++;s.idx++;s.flipped=false;renderPlayer()}
 function renderDone(){
   const s=session;const pl=document.getElementById('player');
   const pct=s.list.length?Math.round(s.right/s.list.length*100):0;
-  let msg= pct>=90?"You understand it. Rest your brain.":pct>=70?"Solid. Re-run the fuzzy ones and you're set.":pct>=40?"Real progress — go through the fuzzy pile again slowly.":"That's fine. Understanding is slow on the first pass; the second pass is faster.";
-  pl.innerHTML=`<div class="done">
-    <div class="kicker" style="margin-bottom:6px">Deck complete</div>
-    <h2>Round done</h2>
-    <div class="score">${s.right}/${s.list.length}</div>
-    <p style="color:var(--muted);max-width:400px;margin:0 auto 18px">${msg}</p>
-    <div class="nav" style="justify-content:center">
-      <button class="btn" id="again">Run again</button>
-      <button class="btn know" id="missedrun" ${CARDS.filter(c=>state[ck(c)]==='missed').length?'':'disabled'}>Review fuzzy cards</button>
-      <button class="btn" id="home">All decks</button>
-    </div></div>`;
+  let msg=pct>=90?"You understand it. Rest your brain.":pct>=70?"Solid. Re-run the fuzzy ones.":pct>=40?"Real progress — go through the fuzzy pile again.":"First pass is always slow. The next is faster.";
+  pl.innerHTML=`<div class="done"><div class="kicker" style="margin-bottom:6px">Deck complete</div><h2>Round done</h2>
+    <div class="score">${s.right}/${s.list.length}</div><p style="color:var(--muted);max-width:400px;margin:0 auto 18px">${msg}</p>
+    <div class="nav" style="justify-content:center"><button class="btn" id="again">Run again</button>
+    <button class="btn know" id="mr" ${ALLCARDS.filter(c=>state[ck(c)]==='missed').length?'':'disabled'}>Review fuzzy</button>
+    <button class="btn" id="home">All decks</button></div></div>`;
   document.getElementById('again').onclick=()=>startDeck(s.deck,s.shuffled);
   document.getElementById('home').onclick=renderPicker;
-  document.getElementById('missedrun').onclick=()=>startDeck('missed');
+  document.getElementById('mr').onclick=()=>startDeck('missed',false);
 }
 document.addEventListener('keydown',e=>{
+  if(document.getElementById('learn-view').style.display==='none')return;
   if(document.getElementById('player').style.display==='none')return;
   if(!session||session.idx>=session.list.length)return;
   if(e.code==='Space'){e.preventDefault();session.flipped=!session.flipped;const c=document.getElementById('card');if(c)c.classList.toggle('flipped')}
-  else if(e.code==='ArrowRight')move(1);
-  else if(e.code==='ArrowLeft')move(-1);
-  else if(e.key==='k'||e.key==='K')grade('known');
-  else if(e.key==='j'||e.key==='J')grade('missed');
+  else if(e.code==='ArrowRight')mv(1);else if(e.code==='ArrowLeft')mv(-1);
+  else if(e.key==='k'||e.key==='K')grade('known');else if(e.key==='j'||e.key==='J')grade('missed');
 });
 
-const PLAN=[
-  {d:"Day 1",t:"Meet the material — Distributed Systems basics",items:[
-    {tag:'sys',txt:"Read the <b>Distributed Systems</b> deck slowly. Don't grade hard — just read every Plain English + analogy. The goal today is only to <i>understand</i>, not memorise."},
-    {tag:'sys',txt:"Start the two pure-memory lists: <b>8 challenges</b> and <b>8 transparencies</b>. Read them a few times; don't stress."}],
-    note:"Going slowly on day 1 is correct. Understanding first, memorising later."},
-  {d:"Day 2",t:"Distributed Systems — the trickier half",items:[
-    {tag:'sys',txt:"Clocks: drift vs skew, Cristian's formula, Berkeley, NTP. Read the analogies twice."},
-    {tag:'sys',txt:"Logical clocks: happened-before, Lamport vs Vector. These are abstract — reread the chat-app analogy."},
-    {tag:'sys',txt:"Consistency models, push vs pull, DFS/NFS/GFS. Then run the deck again and grade honestly."}]},
-  {d:"Day 3",t:"Machine Learning",items:[
-    {tag:'ml',txt:"3 paradigms + vocabulary (samples n, features p) + the confusion matrix (smoke-alarm analogy)."},
-    {tag:'ml',txt:"The 4 metrics — focus on the <i>question</i> each asks, not just the formula."},
-    {tag:'ml',txt:"PCA, K-Means, hierarchical, KNN. <b>Do the tomato/green-bean example by hand</b> until 4.2 comes out without looking."}],
-    note:"ML has formulas — write them on paper, don't just read. Writing slows you down in a good way."},
-  {d:"Day 4",t:"Engineering Ethics (first half)",items:[
-    {tag:'eth',txt:"伦理 (Lun/Li), the two norm types, risk = probability × loss."},
-    {tag:'eth',txt:"3 risk sources + their famous cases (737 MAX, Fukushima, Hyatt) — the cases are easy marks."},
-    {tag:'eth',txt:"5 values, the double-edged sword (knife analogy), NIMBY, stakeholders."}]},
-  {d:"Day 5",t:"Engineering Ethics (second half) + start Chinese Culture",items:[
-    {tag:'eth',txt:"4 roles + engine analogy, 8 obstacles, informed consent, 4 Vs of big data."},
-    {tag:'eth',txt:"Academic integrity: RCR / QRP / FFP and the 4 RCR principles."},
-    {tag:'chi',txt:"Begin <b>Chinese Culture</b>: linguistic relativity, the FTR saving idea, counting systems."}]},
-  {d:"Day 6",t:"Finish Chinese Culture + first full review",items:[
-    {tag:'chi',txt:"Metaphors, the two 'face' ideas, 面子 vs 脸, 谐音 (8 vs 4), regional cultures."},
-    {tag:'all',txt:"Run the <b>Everything</b> deck once. See where your overall number sits — no judgement, it's just a map."}],
-    note:"This is your first real check. Whatever feels fuzzy becomes tomorrow's focus."},
-  {d:"Day 7",t:"Drill the fuzzy cards + test yourself on paper",items:[
-    {tag:'all',txt:"Run <b>Cards I Missed</b> over and over until it's empty."},
-    {tag:'all',txt:"Close the app. On blank paper, write the lists from memory: 8 challenges, 8 transparencies, 8 obstacles, 4 Vs, the metric formulas."},
-    {tag:'all',txt:"Run <b>Everything</b> one last time. Anything still fuzzy → reread just that card's Plain English."}],
-    note:"Sleep beats one more hour of cramming. Stop when the fuzzy pile is empty."},
-];
-function renderPlan(){
-  const v=document.getElementById('plan-view');
-  let html=`<p class="sub" style="margin-bottom:18px">Built for slow, steady understanding: the hardest, most formula-heavy material comes early in the week when your focus is freshest, and the last two days are pure review. Read the explanations slowly — that's the whole point. Tell me your real exam dates and I'll reshuffle this.</p>`;
-  PLAN.forEach((day,i)=>{
-    html+=`<div class="day"><h3>${day.d} <span>${i<5?'LEARN':'REVIEW'}</span></h3><div class="body">
-      <div style="font-weight:700;margin-bottom:8px;font-size:15px">${day.t}</div><ul>`;
-    day.items.forEach(it=>{
-      const co=it.tag==='all'?{name:'ALL',hex:'#14110d'}:COURSES[it.tag];
-      const short={chi:'CHINESE',eth:'ETHICS',ml:'ML',sys:'SYSTEMS',all:'ALL'}[it.tag];
-      html+=`<li><span class="tag" style="background:${co.hex}">${short}</span>${it.txt}</li>`;
+/* ===================== PRACTICE ===================== */
+function renderPractice(){
+  const v=document.getElementById('practice-view');
+  let html='<p class="intro">Work each one out on paper <b>before</b> you reveal the solution. This is the part that actually moves your grade \u2014 exams test whether you can <i>do</i> it, not just recognise it.</p>';
+  const order=['ml','sys','eth','chi'];
+  order.forEach(c=>{
+    const items=ALLPRACTICE.filter(p=>p.c===c);
+    if(!items.length)return;
+    html+=`<h3 style="margin:18px 0 10px;color:${COURSES[c].hex}">${COURSES[c].name}</h3>`;
+    items.forEach((p,i)=>{
+      const id=`pr-${c}-${i}`;
+      html+=`<div class="mapblock" style="box-shadow:var(--shadow)">
+        <div style="font-weight:700;font-size:15.5px;margin-bottom:4px">${p.q}</div>
+        <button class="btn reveal-btn" data-target="${id}">Show worked solution</button>
+        <div class="solution" id="${id}" style="display:none">
+          <span class="label facts">Step by step</span><div>${p.steps}</div>
+          <div class="ansline">Answer: ${p.answer}</div>
+        </div></div>`;
     });
-    html+='</ul>';
-    if(day.note)html+=`<div class="note">↳ ${day.note}</div>`;
-    html+='</div></div>';
+  });
+  v.innerHTML=html;
+  v.querySelectorAll('.reveal-btn').forEach(b=>b.onclick=()=>{
+    const el=document.getElementById(b.dataset.target);
+    const open=el.style.display!=='none';
+    el.style.display=open?'none':'block';
+    b.textContent=open?'Show worked solution':'Hide solution';
+  });
+}
+
+/* ===================== QUIZ ===================== */
+let quiz=null;
+function renderQuizPicker(){
+  const v=document.getElementById('quiz-view');
+  let html='<p class="intro">Pick a set. You\u2019ll get one question at a time, answer, and see right/wrong instantly with your running score. Producing the answer from memory is harder \u2014 and closer to the real exam \u2014 than recognising a flashcard.</p><div class="decks">';
+  html+=`<button class="deck all" data-q="all"><div class="bar"></div><h3>Mixed Quiz</h3><div class="meta">${ALLQUIZ.length} questions · all 4</div></button>`;
+  Object.keys(COURSES).forEach(k=>{
+    const n=ALLQUIZ.filter(q=>q.c===k).length;
+    html+=`<button class="deck" data-q="${k}"><div class="bar" style="background:${COURSES[k].color}"></div><h3>${COURSES[k].name}</h3><div class="meta">${n} questions</div></button>`;
+  });
+  html+='</div>';
+  v.innerHTML=html;
+  v.querySelectorAll('.deck[data-q]').forEach(d=>d.onclick=()=>startQuiz(d.dataset.q));
+}
+function startQuiz(c){
+  const list=c==='all'?ALLQUIZ:ALLQUIZ.filter(q=>q.c===c);
+  quiz={c,list:shuffle(list),idx:0,score:0,answered:false};
+  renderQuiz();
+}
+function renderQuiz(){
+  const v=document.getElementById('quiz-view');const q=quiz;
+  if(q.idx>=q.list.length){
+    const pct=Math.round(q.score/q.list.length*100);
+    let msg=pct>=90?"Excellent \u2014 you can produce this from memory.":pct>=70?"Good. Re-quiz the ones you missed.":pct>=40?"Keep going \u2014 revisit those topics in Learn.":"Low score is useful information: those are your weak topics. Hit them in Learn.";
+    v.innerHTML=`<div class="done"><div class="kicker" style="margin-bottom:6px">Quiz complete</div><h2>Your score</h2>
+      <div class="score">${q.score}/${q.list.length}</div><p style="color:var(--muted);max-width:400px;margin:0 auto 18px">${msg}</p>
+      <div class="nav" style="justify-content:center"><button class="btn" id="qagain">Try again</button><button class="btn" id="qhome">Pick set</button></div></div>`;
+    document.getElementById('qagain').onclick=()=>startQuiz(q.c);
+    document.getElementById('qhome').onclick=renderQuizPicker;
+    return;
+  }
+  const item=q.list[q.idx];const co=COURSES[item.c];
+  let opts=item.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('');
+  v.innerHTML=`<div class="toolbar"><button class="backlink" id="qback">← pick set</button>
+    <div class="deckname">Quiz</div><div class="counter">Score ${q.score}</div></div>
+    <div class="mapblock"><div class="corner" style="display:flex;justify-content:space-between;font-family:'Courier New',monospace;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px">
+      <span class="pill" style="background:${co.hex};color:#fff;padding:2px 9px;border-radius:1px">${co.name}</span><span>${q.idx+1} / ${q.list.length}</span></div>
+      <div style="font-weight:700;font-size:17px;margin-bottom:14px">${item.q}</div><div id="opts">${opts}</div>
+      <div id="qfeed"></div></div>`;
+  document.getElementById('qback').onclick=renderQuizPicker;
+  v.querySelectorAll('.opt').forEach(b=>b.onclick=()=>answerQuiz(parseInt(b.dataset.i)));
+}
+function answerQuiz(i){
+  const q=quiz;if(q.answered)return;q.answered=true;
+  const item=q.list[q.idx];
+  const opts=document.querySelectorAll('.opt');
+  opts.forEach((b,j)=>{b.classList.add('locked');if(j===item.correct)b.classList.add('correct');if(j===i&&i!==item.correct)b.classList.add('wrong');});
+  if(i===item.correct)q.score++;
+  const feed=document.getElementById('qfeed');
+  feed.innerHTML=`<div style="margin-top:6px;font-weight:700;color:${i===item.correct?'var(--accent2)':'var(--accent)'}">
+    ${i===item.correct?'Correct ✓':'Not quite — the highlighted one is right.'}</div>
+    <button class="btn" id="qnext" style="margin-top:12px">Next →</button>`;
+  document.getElementById('qnext').onclick=()=>{q.idx++;q.answered=false;renderQuiz();};
+}
+
+/* ===================== PAIRS ===================== */
+function renderPairs(){
+  const v=document.getElementById('pairs-view');
+  let html='<p class="intro">These are the look-alikes that cause most exam mistakes. Read them side by side and lock in the difference.</p>';
+  const order=['ml','sys','eth','chi'];
+  order.forEach(c=>{
+    const items=ALLPAIRS.filter(p=>p.c===c);
+    if(!items.length)return;
+    html+=`<h3 style="margin:18px 0 10px;color:${COURSES[c].hex}">${COURSES[c].name}</h3>`;
+    items.forEach(p=>{
+      html+=`<div style="margin-bottom:18px"><div style="font-weight:800;font-size:16px;margin-bottom:8px">${p.title}</div>
+        <div class="pair"><div class="side"><h4 style="color:${COURSES[c].hex}">${p.a.name}</h4><p>${p.a.txt}</p></div>
+        <div class="side"><h4 style="color:${COURSES[c].hex}">${p.b.name}</h4><p>${p.b.txt}</p></div></div>
+        <div class="pairtip"><b>Tell them apart:</b> ${p.tip}</div></div>`;
+    });
   });
   v.innerHTML=html;
 }
-renderPicker();renderPlan();
+
+/* ===================== MAP ===================== */
+const MAPS={
+ ml:{name:"Machine Learning",hex:"#5b3a8c",lead:"Each step needs the one before it. Variance before PCA; foundations before the supervised methods.",
+   steps:["<b>Foundations</b> — what ML is, 3 paradigms, sample/feature/label, confusion matrix, the 4 metrics",
+   "<b>Variance & covariance</b> — the maths PCA is built on",
+   "<b>PCA</b> — dimensionality reduction, eigenfaces",
+   "<b>Clustering</b> — K-Means, hierarchical, distance",
+   "<b>KNN</b> — supervised classification; reuses distance (tomato/green-bean)",
+   "<b>SVM</b> — hyperplane, margin, support vectors",
+   "<b>Decision trees</b> — entropy, information gain, ID3",
+   "<b>Linear regression</b> — fit a line, squared-error cost function",
+   "<b>Logistic regression</b> — sigmoid S-curve, predicts True/False"]},
+ sys:{name:"Distributed Systems",hex:"#1f5673",lead:"Note the correction: study physical time BEFORE logical time \u2014 logical time exists because physical clocks can't sync perfectly.",
+   steps:["<b>Fundamentals & models</b> — definition, 8 challenges, 8 transparencies, architecture, 3 models",
+   "<b>Communication</b> — sockets, RPC / RMI",
+   "<b>Physical time FIRST</b> — drift/skew, Cristian's, Berkeley, NTP",
+   "<b>Logical time</b> — happened-before, Lamport, vector clocks",
+   "<b>Mutual exclusion & elections</b> — needs event ordering",
+   "<b>Replication, consistency & file systems</b> — consistency models, quorum, NFS, GFS"]},
+ eth:{name:"Engineering Ethics",hex:"#2c5f4f",lead:"Follow the chapter numbers \u2014 they already build in order. Academic integrity is standalone.",
+   steps:["<b>Ch 1</b> — Engineering & Ethics: 伦理 (Lun/Li), norms, 7 dimensions",
+   "<b>Ch 2</b> — Risk, Safety & Responsibility: risk = probability × loss, 3 sources + cases",
+   "<b>Ch 3</b> — Value, Benefit & Justice: 5 values, double-edged sword, NIMBY, stakeholders",
+   "<b>Ch 4</b> — Professional Ethics: 4 roles, 8 obstacles, informed consent",
+   "<b>Ch 5</b> — Information & Big Data Ethics: PRISM, 4 Vs",
+   "<b>Ch 6</b> — Decision-Making & Integrity: moral intuition, 8-step heuristic, 3 ethical theories, citation rules",
+   "<b>Part B</b> — Academic Integrity: RCR / QRP / FFP (can learn anytime)"]},
+ chi:{name:"Chinese Culture",hex:"#9c4221",lead:"Topics are fairly independent. Start with 'language shapes thought' \u2014 everything else illustrates it. (Order inferred from your notes.)",
+   steps:["<b>The big idea</b> — linguistic relativity (Sapir)",
+   "<b>Language effects</b> — FTR & saving, counting, metaphor",
+   "<b>Language & values</b> — face wants, 面子/脸, Confucian",
+   "<b>Regional cultures</b> — environment + history; Bashu etc.",
+   "<b>Varieties of Chinese</b> — language vs dialect, word differences",
+   "<b>Homophones & taboos</b> — 8 vs 4 (lightest, save for last)"]},
+};
+function renderMap(){
+  const v=document.getElementById('map-view');
+  let html='<p class="intro">What to study first, second, third in each course \u2014 and which part of the course each topic belongs to. Two orderings matter most: <b>variance before PCA</b> (ML) and <b>physical time before logical time</b> (Systems).</p>';
+  ['ml','sys','eth','chi'].forEach(c=>{
+    const m=MAPS[c];
+    html+=`<div class="mapblock"><h3 style="color:${m.hex}">${m.name}</h3><div class="lead">${m.lead}</div>`;
+    m.steps.forEach((s,i)=>{
+      html+=`<div class="step"><div class="stepnum" style="background:${m.hex}">${i+1}</div><div class="body">${s}</div></div>`;
+      if(i<m.steps.length-1)html+=`<div class="arrowdown">↓</div>`;
+    });
+    html+='</div>';
+  });
+  v.innerHTML=html;
+}
+
+renderPicker();
 </script>
 </body>
 </html>
