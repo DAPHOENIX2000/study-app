@@ -3,155 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One Week to Know It All — Full Study Site</title>
+<title>Exam Prep — One Week to Know It All</title>
 <style>
   :root{
-    --ink:#14110d; --paper:#f3ede1; --paper2:#e9e0cd;
-    --line:#3a3127; --accent:#c0392b; --accent2:#2c5f4f; --gold:#b8860b; --muted:#6b5f4e;
+    --ink:#14110d; --paper:#f3ede1; --paper2:#e9e0cd; --paper3:#fbf7ee;
+    --line:#3a3127; --muted:#6b5f4e; --accent:#c0392b; --good:#2c5f4f; --gold:#b8860b;
     --c-chi:#9c4221; --c-eth:#2c5f4f; --c-ml:#5b3a8c; --c-sys:#1f5673;
+    --c:#5b3a8c; --c-soft:#ece4f2;
     --shadow:6px 6px 0 rgba(20,17,13,.9);
+    --shadow-sm:3px 3px 0 rgba(20,17,13,.9);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;background:var(--paper);color:var(--ink);min-height:100vh;
-    background-image:radial-gradient(rgba(20,17,13,.035) 1px,transparent 1px);background-size:18px 18px}
-  .wrap{max-width:880px;margin:0 auto;padding:24px 18px 80px}
-  header.top{border-bottom:3px solid var(--line);padding-bottom:14px;margin-bottom:16px}
+  html{scroll-behavior:smooth}
+  body{font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;background:var(--paper);color:var(--ink);
+    min-height:100vh;background-image:radial-gradient(rgba(20,17,13,.035) 1px,transparent 1px);background-size:18px 18px;line-height:1.5}
+  .wrap{max-width:940px;margin:0 auto;padding:22px 18px 90px}
+  .mono{font-family:'Courier New',monospace}
+  /* ---------- top ---------- */
+  header.top{border-bottom:3px solid var(--line);padding-bottom:14px;margin-bottom:20px}
   .kicker{font-family:'Courier New',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
-  h1{font-size:clamp(26px,6vw,44px);line-height:.95;font-weight:800;letter-spacing:-1px;margin:4px 0 8px}
+  h1{font-size:clamp(28px,6vw,46px);line-height:.95;font-weight:800;letter-spacing:-1px;margin:5px 0 8px}
   h1 em{font-style:italic;color:var(--accent)}
-  .sub{font-size:14px;color:var(--muted);max-width:600px}
-  .tabs{display:flex;flex-wrap:wrap;margin:16px 0 22px;border:2.5px solid var(--line);background:var(--paper2)}
-  .tab{flex:1 1 auto;min-width:84px;border:none;background:transparent;font-family:inherit;font-size:13px;padding:11px 6px;cursor:pointer;
-    border-right:2px solid var(--line);font-weight:700;color:var(--muted);transition:.12s}
-  .tab:last-child{border-right:none}
-  .tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
-  .tab:hover:not([aria-selected="true"]){background:rgba(20,17,13,.07);color:var(--ink)}
-  .decks{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:8px}
-  .deck{border:2.5px solid var(--line);background:var(--paper2);padding:16px;cursor:pointer;text-align:left;font-family:inherit;
-    box-shadow:var(--shadow);transition:transform .1s,box-shadow .1s;position:relative;overflow:hidden}
-  .deck:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 rgba(20,17,13,.9)}
-  .deck:active{transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(20,17,13,.9)}
-  .deck .bar{height:8px;margin:-16px -16px 12px;border-bottom:2.5px solid var(--line)}
-  .deck h3{font-size:18px;line-height:1.05;margin-bottom:4px}
-  .deck .meta{font-family:'Courier New',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-  .deck .prog{margin-top:10px;height:6px;background:rgba(20,17,13,.12);border:1px solid var(--line)}
-  .deck .prog i{display:block;height:100%;background:var(--accent2)}
-  .deck.all{background:var(--ink);color:var(--paper)}.deck.all .meta{color:#bbada0}
-  .deck.all .bar{background:repeating-linear-gradient(45deg,var(--c-chi),var(--c-chi) 10px,var(--c-eth) 10px,var(--c-eth) 20px,var(--c-ml) 20px,var(--c-ml) 30px,var(--c-sys) 30px,var(--c-sys) 40px)}
-  .scene{margin:6px 0 16px}
-  .card{position:relative;width:100%;cursor:pointer}
-  .face{border:3px solid var(--line);box-shadow:var(--shadow);padding:26px 24px;display:flex;flex-direction:column;background:var(--paper2)}
-  .face.front{min-height:300px}
-  .face.back{background:#fbf7ee;animation:reveal .35s ease}
-  @keyframes reveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  .card:not(.flipped) .face.back{display:none}
-  .card.flipped .face.front{display:none}
-  .face .corner{font-family:'Courier New',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;display:flex;
-    justify-content:space-between;color:var(--muted);border-bottom:1.5px solid var(--line);padding-bottom:8px;flex-shrink:0}
-  .face .corner .pill{padding:2px 9px;color:#fff;font-weight:700;border-radius:1px}
-  .qtext{flex:1;display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(19px,3.4vw,25px);
-    line-height:1.3;font-weight:600;padding:14px 4px}
-  .atext{font-size:clamp(14px,2.5vw,16.5px);line-height:1.55;padding:12px 2px 2px}
+  .sub{font-size:14.5px;color:var(--muted);max-width:680px}
+  /* ---------- home: course cards ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:6px}
+  .ccard{border:3px solid var(--line);background:var(--paper2);box-shadow:var(--shadow);cursor:pointer;text-align:left;
+    font-family:inherit;color:var(--ink);overflow:hidden;transition:transform .1s,box-shadow .1s;display:flex;flex-direction:column}
+  .ccard:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 rgba(20,17,13,.9)}
+  .ccard:active{transform:translate(2px,2px);box-shadow:2px 2px 0 rgba(20,17,13,.9)}
+  .ccard .band{height:54px;display:flex;align-items:center;padding:0 16px;border-bottom:3px solid var(--line);color:#fff;font-weight:800;font-size:20px;letter-spacing:.3px}
+  .ccard .body{padding:14px 16px 16px}
+  .ccard .fmt{font-family:'Courier New',monospace;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;line-height:1.7}
+  .ccard .go{margin-top:12px;font-family:'Courier New',monospace;font-size:12px;font-weight:700;color:var(--ink)}
+  .hint{font-size:13px;color:var(--muted);margin:14px 0 18px;border-left:3px solid var(--gold);padding:6px 0 6px 12px;background:rgba(184,134,11,.07)}
+  /* ---------- course view ---------- */
+  .backlink{background:none;border:none;font-family:'Courier New',monospace;font-size:12px;cursor:pointer;text-transform:uppercase;
+    letter-spacing:1.5px;color:var(--muted);padding:4px 0;margin-bottom:10px}
+  .backlink:hover{color:var(--c)}
+  .chead{border:3px solid var(--line);background:var(--c);color:#fff;box-shadow:var(--shadow);padding:18px 20px;margin-bottom:4px}
+  .chead h2{font-size:clamp(22px,5vw,34px);font-weight:800;letter-spacing:-.5px}
+  .chead .meta{font-family:'Courier New',monospace;font-size:12px;opacity:.92;margin-top:6px;letter-spacing:.5px}
+  .subtabs{display:flex;flex-wrap:wrap;border:2.5px solid var(--line);border-top:none;background:var(--paper2);margin-bottom:22px}
+  .subtab{flex:1 1 auto;min-width:120px;border:none;background:transparent;font-family:inherit;font-size:14px;padding:12px 8px;cursor:pointer;
+    border-right:2px solid var(--line);font-weight:700;color:var(--muted)}
+  .subtab:last-child{border-right:none}
+  .subtab[aria-selected="true"]{background:var(--c);color:#fff}
+  .subtab:not([aria-selected="true"]):hover{background:rgba(20,17,13,.07);color:var(--ink)}
+  /* ---------- exam format sheet ---------- */
+  .sheet{border:3px solid var(--line);background:var(--paper3);box-shadow:var(--shadow);padding:22px 22px 24px;margin-bottom:18px}
+  .sheet h3{font-size:13px;font-family:'Courier New',monospace;letter-spacing:2px;text-transform:uppercase;color:var(--c);
+    border-bottom:2px solid var(--line);padding-bottom:8px;margin-bottom:14px}
+  .secrow{display:flex;gap:14px;align-items:flex-start;padding:11px 0;border-top:1.5px solid rgba(58,49,39,.18)}
+  .secrow:first-of-type{border-top:none}
+  .secrow .n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font-family:'Courier New',monospace;
+    font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px}
+  .secrow .t b{font-size:16px}.secrow .t .d{font-size:14px;color:var(--muted);margin-top:2px}
+  .examline{font-family:'Courier New',monospace;font-size:12.5px;color:var(--ink);background:var(--c-soft);border:2px solid var(--c);
+    padding:10px 14px;margin-top:6px;font-weight:700;letter-spacing:.4px}
+  .important{margin-top:4px}
+  .important li{list-style:none;padding:8px 0 8px 30px;position:relative;border-top:1px dashed rgba(58,49,39,.2);font-size:14.5px}
+  .important li:first-child{border-top:none}
+  .important li:before{content:"\2713";position:absolute;left:2px;top:7px;color:var(--good);font-weight:800;font-size:15px;
+    font-family:'Courier New',monospace}
+  /* ---------- study guide ---------- */
+  .gintro{font-size:14px;color:var(--muted);margin-bottom:14px}
+  .note{border:2.5px solid var(--line);background:var(--paper2);box-shadow:var(--shadow-sm);margin-bottom:14px;overflow:hidden}
+  .note > h4{background:var(--ink);color:var(--paper);padding:11px 16px;font-size:16px;font-weight:700;cursor:pointer;display:flex;
+    justify-content:space-between;align-items:center;gap:10px}
+  .note > h4 .tw{font-family:'Courier New',monospace;font-size:14px;opacity:.7;flex-shrink:0}
+  .note .ab{padding:14px 16px;display:none}
+  .note.open .ab{display:block}
+  .note.open > h4 .tw{transform:rotate(45deg)}
   .seg{margin-bottom:13px}.seg:last-child{margin-bottom:2px}
   .label{display:inline-block;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
-    font-weight:700;padding:2px 8px;margin-bottom:5px;border-radius:1px}
-  .label.plain{background:#2c5f4f;color:#fff}.label.why{background:#b8860b;color:#fff}
-  .label.facts{background:#14110d;color:#f3ede1}.label.analogy{background:#9c4221;color:#fff}.label.exam{background:#c0392b;color:#fff}
-  .atext ul,.atext ol{margin:4px 0 4px 20px}.atext li{margin-bottom:4px}
-  .atext b{color:var(--accent)}
-  .atext .term{background:#fff3d6;border:1px solid #e0c060;padding:0 4px;font-weight:700;color:#7a5a00}
-  .hintline{text-align:center;font-family:'Courier New',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;
-    letter-spacing:2px;margin-top:6px;flex-shrink:0}
-  .nav{display:flex;align-items:center;gap:10px;margin-top:6px}
-  .btn{font-family:inherit;font-weight:700;font-size:14px;border:2.5px solid var(--line);background:var(--paper2);padding:12px 16px;
-    cursor:pointer;box-shadow:3px 3px 0 rgba(20,17,13,.9);transition:.08s}
-  .btn:hover{background:var(--ink);color:var(--paper)}
-  .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(20,17,13,.9)}
-  .btn:disabled{opacity:.35;cursor:not-allowed}
-  .btn.know{background:var(--accent2);color:#fff;flex:1}.btn.dunno{background:var(--accent);color:#fff;flex:1}
-  .counter{font-family:'Courier New',monospace;font-size:13px;color:var(--muted);min-width:64px;text-align:center}
-  .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;flex-wrap:wrap}
-  .backlink{background:none;border:none;font-family:'Courier New',monospace;font-size:12px;cursor:pointer;text-transform:uppercase;
-    letter-spacing:1.5px;color:var(--muted);padding:4px 0}
-  .backlink:hover{color:var(--accent)}
-  .deckname{font-weight:800;font-size:18px}
-  .modetoggle{display:flex;border:2px solid var(--line);overflow:hidden}
-  .modebtn{font-family:'Courier New',monospace;font-size:11px;border:none;background:var(--paper2);padding:6px 11px;cursor:pointer;
-    text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700}
-  .modebtn+.modebtn{border-left:2px solid var(--line)}
-  .modebtn.on{background:var(--ink);color:var(--paper)}
-  .modebtn:not(.on):hover{background:rgba(20,17,13,.08);color:var(--ink)}
-  .done{text-align:center;padding:40px 16px;border:3px solid var(--line);background:var(--paper2);box-shadow:var(--shadow)}
-  .done h2{font-size:30px;margin-bottom:8px}.done .score{font-size:54px;font-weight:800;color:var(--accent2);margin:10px 0}
-  /* practice reveal */
-  .reveal-btn{display:block;width:100%;margin-top:8px}
-  .solution{border:2px solid var(--line);background:#fbf7ee;padding:14px 16px;margin-top:12px;animation:reveal .3s ease}
-  .solution .label{margin-bottom:6px}
-  .ansline{margin-top:10px;padding-top:10px;border-top:1.5px dashed var(--line);font-weight:700}
-  /* quiz */
-  .opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:15px;border:2.5px solid var(--line);background:var(--paper2);
-    padding:13px 15px;margin-bottom:10px;cursor:pointer;box-shadow:3px 3px 0 rgba(20,17,13,.9);transition:.08s}
+    font-weight:700;padding:2px 8px;margin-bottom:5px;border-radius:1px;color:#fff}
+  .label.plain{background:#2c5f4f}.label.why{background:#b8860b}.label.facts{background:#14110d;color:#f3ede1}
+  .label.analogy{background:#9c4221}.label.exam{background:#c0392b}
+  .ab ul,.ab ol{margin:4px 0 4px 20px}.ab li{margin-bottom:4px}
+  .ab b{color:var(--accent)} .ab .term{background:#fff3d6;border:1px solid #e0c060;padding:0 4px;font-weight:700;color:#7a5a00}
+  .grpttl{font-family:'Courier New',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--c);
+    margin:22px 0 10px;font-weight:700;border-bottom:1.5px solid var(--line);padding-bottom:6px}
+  .toolrow{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .minibtn{font-family:'Courier New',monospace;font-size:11px;border:2px solid var(--line);background:var(--paper2);padding:6px 12px;
+    cursor:pointer;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:var(--muted)}
+  .minibtn:hover{background:var(--ink);color:var(--paper)}
+  /* pairs in guide */
+  .pair{display:grid;grid-template-columns:1fr 1fr;border:2.5px solid var(--line);box-shadow:var(--shadow-sm);margin-bottom:10px}
+  .pair .side{padding:14px 14px;background:var(--paper2)}.pair .side+.side{border-left:2.5px solid var(--line);background:var(--paper3)}
+  .pair .side h5{font-size:15px;margin-bottom:6px}.pair .side p{font-size:13.5px;line-height:1.45}
+  .pairtip{grid-column:1/3;border-top:2px dashed var(--line);background:rgba(184,134,11,.1);padding:10px 14px;font-size:13.5px}
+  .pairtip b{color:var(--gold)}
+  /* ---------- mock exam ---------- */
+  .scorebar{position:sticky;top:0;z-index:20;background:var(--ink);color:var(--paper);border:2.5px solid var(--line);
+    padding:10px 16px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+    font-family:'Courier New',monospace;font-size:13px;box-shadow:var(--shadow-sm)}
+  .scorebar b{color:#f0d98a}
+  .scorebar .resetx{font-family:'Courier New',monospace;font-size:11px;border:2px solid var(--paper);background:transparent;color:var(--paper);
+    padding:4px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:1px}
+  .scorebar .resetx:hover{background:var(--paper);color:var(--ink)}
+  .partttl{border:3px solid var(--line);background:var(--c);color:#fff;padding:12px 16px;margin:20px 0 14px;box-shadow:var(--shadow-sm)}
+  .partttl b{font-size:18px;letter-spacing:.3px}.partttl .pts{font-family:'Courier New',monospace;font-size:12px;opacity:.9;margin-left:6px}
+  .q{border:2.5px solid var(--line);background:var(--paper3);box-shadow:var(--shadow-sm);padding:15px 16px;margin-bottom:14px}
+  .q .qn{font-weight:700;font-size:15.5px;margin-bottom:10px}
+  .q .qn .num{font-family:'Courier New',monospace;color:var(--c);margin-right:8px}
+  .opt{display:block;width:100%;text-align:left;font-family:inherit;font-size:14.5px;border:2px solid var(--line);background:var(--paper2);
+    padding:11px 13px;margin-bottom:8px;cursor:pointer;transition:.08s}
   .opt:hover:not(.locked){background:var(--ink);color:var(--paper)}
-  .opt.correct{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+  .opt.correct{background:var(--good);color:#fff;border-color:var(--good)}
   .opt.wrong{background:var(--accent);color:#fff;border-color:var(--accent)}
   .opt.locked{cursor:default}
-  /* pairs */
-  .pair{display:grid;grid-template-columns:1fr 1fr;gap:0;border:3px solid var(--line);box-shadow:var(--shadow);margin-bottom:6px}
-  .pair .side{padding:18px 16px;background:var(--paper2)}
-  .pair .side+.side{border-left:3px solid var(--line);background:#fbf7ee}
-  .pair .side h4{font-size:17px;margin-bottom:8px}
-  .pair .side p{font-size:14.5px;line-height:1.5}
-  .pairtip{border:2px dashed var(--line);background:rgba(184,134,11,.12);padding:12px 15px;margin:12px 0 0;font-size:14.5px;line-height:1.5}
-  .pairtip b{color:var(--gold)}
-  /* map */
-  .mapblock{border:2.5px solid var(--line);background:var(--paper2);box-shadow:var(--shadow);margin-bottom:18px;padding:16px}
-  .mapblock h3{font-size:18px;margin-bottom:4px}
-  .mapblock .lead{font-size:13.5px;color:var(--muted);margin-bottom:12px}
-  .step{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-top:1.5px solid rgba(58,49,39,.18)}
-  .step:first-of-type{border-top:none}
-  .stepnum{flex-shrink:0;width:26px;height:26px;border-radius:50%;color:#fff;font-family:'Courier New',monospace;font-weight:700;
-    display:flex;align-items:center;justify-content:center;font-size:13px}
-  .step .body{font-size:14.5px;line-height:1.45}
-  .step .body b{font-size:15px}
-  .arrowdown{text-align:center;color:var(--muted);font-size:14px;line-height:1;margin:-2px 0 -2px 12px}
-  footer{margin-top:30px;border-top:2px solid var(--line);padding-top:14px;font-family:'Courier New',monospace;font-size:11px;
+  .opt .mk{font-family:'Courier New',monospace;font-weight:700;margin-right:8px}
+  .reveal-btn{font-family:inherit;font-weight:700;font-size:14px;border:2.5px solid var(--line);background:var(--paper2);padding:11px 15px;
+    cursor:pointer;box-shadow:var(--shadow-sm);width:100%;margin-top:4px}
+  .reveal-btn:hover{background:var(--ink);color:var(--paper)}
+  .solution{border:2px solid var(--line);background:var(--paper3);padding:14px 16px;margin-top:12px}
+  .ansline{margin-top:10px;padding-top:10px;border-top:1.5px dashed var(--line);font-weight:700}
+  .studyp{margin-top:10px;padding-top:10px;border-top:1.5px dashed var(--line);font-size:13.5px}
+  .examnote{font-size:13px;color:var(--muted);margin-bottom:8px}
+  footer{margin-top:34px;border-top:2px solid var(--line);padding-top:14px;font-family:'Courier New',monospace;font-size:11px;
     color:var(--muted);text-align:center;letter-spacing:1px}
-  .kbd{font-family:'Courier New',monospace;font-size:11px;background:var(--ink);color:var(--paper);padding:1px 6px;border-radius:2px}
-  .intro{font-size:14px;color:var(--muted);margin-bottom:16px;max-width:640px}
-  @media(max-width:560px){.face{padding:18px 15px}.pair{grid-template-columns:1fr}.pair .side+.side{border-left:none;border-top:3px solid var(--line)}}
+  @media(max-width:520px){.pair{grid-template-columns:1fr}.pair .side+.side{border-left:none;border-top:2.5px solid var(--line)}.pairtip{grid-column:1}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <div class="kicker">Beginner mode · all 4 courses · explained from zero</div>
+    <div class="kicker">Exam Prep · Built to the teachers' real formats</div>
     <h1>One Week to <em>Know It All</em></h1>
-    <p class="sub">Five ways to study the same material: learn it, work problems, quiz yourself, untangle confusable pairs, and see how topics connect. Built from all four course folders — now with the ML deep-learning lectures (neural nets, CNN), Chinese characters &amp; religion, election algorithms, labelled diagrams, and worked exercises (with solutions + what to revise).</p>
+    <p class="sub">Each course is laid out the way its exam actually works — so on exam day the format is already familiar. Pick a course: read the <b>exam format</b> &amp; what the teacher said matters, study the <b>structured guide</b>, then sit a <b>mock exam</b> in the real structure.</p>
   </header>
 
-  <div class="tabs" role="tablist">
-    <button class="tab" role="tab" aria-selected="true" data-view="learn">Learn</button>
-    <button class="tab" role="tab" aria-selected="false" data-view="practice">Practice</button>
-    <button class="tab" role="tab" aria-selected="false" data-view="quiz">Quiz</button>
-    <button class="tab" role="tab" aria-selected="false" data-view="pairs">Pairs</button>
-    <button class="tab" role="tab" aria-selected="false" data-view="map">Map</button>
+  <div id="home"></div>
+
+  <div id="course" style="display:none">
+    <button class="backlink" id="backHome">&larr; All courses</button>
+    <div class="chead" id="chead"></div>
+    <div class="subtabs" id="subtabs">
+      <button class="subtab" data-sec="format" aria-selected="true">Exam Format</button>
+      <button class="subtab" data-sec="guide" aria-selected="false">Study Guide</button>
+      <button class="subtab" data-sec="exam" aria-selected="false">Mock Exam</button>
+    </div>
+    <div id="sec-format"></div>
+    <div id="sec-guide" style="display:none"></div>
+    <div id="sec-exam" style="display:none"></div>
   </div>
 
-  <div id="learn-view">
-    <div id="picker"></div>
-    <div id="player" style="display:none"></div>
-  </div>
-  <div id="practice-view" style="display:none"></div>
-  <div id="quiz-view" style="display:none"></div>
-  <div id="pairs-view" style="display:none"></div>
-  <div id="map-view" style="display:none"></div>
-
-  <footer>
-    <span class="kbd">Learn</span> flip & self-grade · <span class="kbd">Practice</span> work it out · <span class="kbd">Quiz</span> scored · <span class="kbd">Pairs</span> confusables · <span class="kbd">Map</span> learning order. Progress saves on this device.
-  </footer>
+  <footer>One Week to Know It All · Exam-structured study site · progress &amp; design saved on this device</footer>
 </div>
-
 <script>
+
 const P =(t)=>`<div class="seg"><span class="label plain">Plain English</span><div>${t}</div></div>`;
 const A =(t)=>`<div class="seg"><span class="label analogy">Think of it like</span><div>${t}</div></div>`;
 const W =(t)=>`<div class="seg"><span class="label why">Why it matters</span><div>${t}</div></div>`;
@@ -1278,228 +1278,6 @@ const ALLQUIZ = QUIZ.concat(QUIZ_NEW, QUIZ_DRIVE, QUIZ_EXAM);
 const ALLPAIRS = PAIRS.concat(PAIRS_NEW, PAIRS_DRIVE, PAIRS_EXAM);
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 
-/* ---------- tabs ---------- */
-const VIEWS=['learn','practice','quiz','pairs','map'];
-document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
-  t.setAttribute('aria-selected','true');
-  const v=t.dataset.view;
-  VIEWS.forEach(name=>{document.getElementById(name+'-view').style.display = name===v?'block':'none';});
-  if(v==='practice'&&!practiceInit){renderPractice();practiceInit=true;}
-  if(v==='quiz'&&!quizInit){renderQuizPicker();quizInit=true;}
-  if(v==='pairs'&&!pairsInit){renderPairs();pairsInit=true;}
-  if(v==='map'&&!mapInit){renderMap();mapInit=true;}
-});
-let practiceInit=false,quizInit=false,pairsInit=false,mapInit=false;
-
-/* ===================== LEARN (flashcards) ===================== */
-const STORE='studyapp_full_v1';
-function loadState(){try{return JSON.parse(localStorage.getItem(STORE))||{}}catch(e){return{}}}
-function saveState(s){try{localStorage.setItem(STORE,JSON.stringify(s))}catch(e){}}
-let state=loadState();
-function ck(card){return card.c+'|'+card.q}
-let session=null;
-
-function renderPicker(){
-  document.getElementById('player').style.display='none';
-  const p=document.getElementById('picker');p.style.display='block';
-  const counts={};Object.keys(COURSES).forEach(k=>counts[k]=ALLCARDS.filter(c=>c.c===k));
-  let html='<p class="intro">Each card explains the idea in plain words and an analogy before the facts. Cards play in learning order; switch to Shuffle once it\u2019s familiar.</p><div class="decks">';
-  const allKnown=ALLCARDS.filter(c=>state[ck(c)]==='known').length;
-  html+=`<button class="deck all" data-deck="all"><div class="bar"></div><h3>Everything</h3>
-    <div class="meta">${ALLCARDS.length} cards · all 4</div>
-    <div class="prog"><i style="width:${Math.round(allKnown/ALLCARDS.length*100)}%"></i></div></button>`;
-  const missed=ALLCARDS.filter(c=>state[ck(c)]==='missed');
-  html+=`<button class="deck" data-deck="missed" ${missed.length?'':'disabled style="opacity:.4;cursor:not-allowed"'}>
-    <div class="bar" style="background:var(--accent)"></div><h3>Cards I Missed</h3>
-    <div class="meta">${missed.length} to review</div><div class="prog"><i style="width:0%;background:var(--accent)"></i></div></button>`;
-  Object.keys(COURSES).forEach(k=>{
-    const list=counts[k];const known=list.filter(c=>state[ck(c)]==='known').length;
-    html+=`<button class="deck" data-deck="${k}"><div class="bar" style="background:${COURSES[k].color}"></div>
-      <h3>${COURSES[k].name}</h3><div class="meta">${list.length} cards · ${known} known</div>
-      <div class="prog"><i style="width:${Math.round(known/list.length*100)}%"></i></div></button>`;
-  });
-  html+='</div>';
-  const totalKnown=ALLCARDS.filter(c=>state[ck(c)]==='known').length;
-  html+=`<div style="text-align:center;margin-top:14px;font-family:'Courier New',monospace;font-size:12px;color:var(--muted);letter-spacing:1px">
-    OVERALL: ${totalKnown}/${ALLCARDS.length} · <button class="modebtn" style="border:2px solid var(--line)" id="reset">RESET</button></div>`;
-  p.innerHTML=html;
-  p.querySelectorAll('.deck[data-deck]').forEach(d=>{if(!d.disabled)d.onclick=()=>startDeck(d.dataset.deck,false)});
-  const r=document.getElementById('reset');if(r)r.onclick=()=>{if(confirm('Clear all flashcard progress on this device?')){state={};saveState(state);renderPicker()}};
-}
-function startDeck(deck,shuffled){
-  let list;
-  if(deck==='all')list=ALLCARDS;
-  else if(deck==='missed')list=ALLCARDS.filter(c=>state[ck(c)]==='missed');
-  else list=ALLCARDS.filter(c=>c.c===deck);
-  session={deck,list:shuffled?shuffle(list):list.slice(),idx:0,flipped:false,right:0,shuffled:!!shuffled};
-  renderPlayer();
-}
-function renderPlayer(){
-  document.getElementById('picker').style.display='none';
-  const pl=document.getElementById('player');pl.style.display='block';
-  const s=session;
-  if(s.idx>=s.list.length)return renderDone();
-  const card=s.list[s.idx];const co=COURSES[card.c];
-  const deckName=s.deck==='all'?'Everything':s.deck==='missed'?'Cards I Missed':co.name;
-  const courseList=ALLCARDS.filter(c=>c.c===card.c);
-  const stepNo=courseList.findIndex(c=>ck(c)===ck(card))+1;
-  const hint=s.shuffled?'shuffled':(s.deck==='all'||s.deck==='missed')?`${co.name} · ${stepNo}/${courseList.length}`:`step ${s.idx+1} of ${s.list.length} · in order`;
-  pl.innerHTML=`
-    <div class="toolbar">
-      <button class="backlink" id="back">← all decks</button>
-      <div class="deckname">${deckName}</div>
-      <div class="modetoggle"><button class="modebtn ${s.shuffled?'':'on'}" id="mo">In order</button><button class="modebtn ${s.shuffled?'on':''}" id="ms">Shuffle</button></div>
-    </div>
-    <div class="scene"><div class="card ${s.flipped?'flipped':''}" id="card">
-      <div class="face front"><div class="corner"><span class="pill" style="background:${co.hex}">${co.name}</span><span>${hint}</span></div>
-        <div class="qtext">${card.q}</div><div class="hintline">tap / space to reveal</div></div>
-      <div class="face back"><div class="corner"><span class="pill" style="background:${co.hex}">${co.name}</span><span>Explanation</span></div>
-        <div class="atext">${card.a}</div></div>
-    </div></div>
-    <div class="nav"><button class="btn" id="prev" ${s.idx===0?'disabled':''}>← Prev</button>
-      <div class="counter">${s.idx+1} / ${s.list.length}</div><button class="btn" id="next">Next →</button></div>
-    <div class="nav" style="margin-top:10px"><button class="btn dunno" id="missed">Still fuzzy</button><button class="btn know" id="known">Got it ✓</button></div>`;
-  const cardEl=document.getElementById('card');
-  cardEl.onclick=(e)=>{if(e.target.closest('a'))return;s.flipped=!s.flipped;cardEl.classList.toggle('flipped')};
-  document.getElementById('back').onclick=renderPicker;
-  document.getElementById('mo').onclick=()=>{if(s.shuffled)startDeck(s.deck,false)};
-  document.getElementById('ms').onclick=()=>{if(!s.shuffled)startDeck(s.deck,true)};
-  document.getElementById('prev').onclick=()=>mv(-1);
-  document.getElementById('next').onclick=()=>mv(1);
-  document.getElementById('known').onclick=()=>grade('known');
-  document.getElementById('missed').onclick=()=>grade('missed');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function mv(d){const s=session;s.idx=Math.min(s.list.length,Math.max(0,s.idx+d));s.flipped=false;renderPlayer()}
-function grade(g){const s=session;const c=s.list[s.idx];state[ck(c)]=g;saveState(state);if(g==='known')s.right++;s.idx++;s.flipped=false;renderPlayer()}
-function renderDone(){
-  const s=session;const pl=document.getElementById('player');
-  const pct=s.list.length?Math.round(s.right/s.list.length*100):0;
-  let msg=pct>=90?"You understand it. Rest your brain.":pct>=70?"Solid. Re-run the fuzzy ones.":pct>=40?"Real progress — go through the fuzzy pile again.":"First pass is always slow. The next is faster.";
-  pl.innerHTML=`<div class="done"><div class="kicker" style="margin-bottom:6px">Deck complete</div><h2>Round done</h2>
-    <div class="score">${s.right}/${s.list.length}</div><p style="color:var(--muted);max-width:400px;margin:0 auto 18px">${msg}</p>
-    <div class="nav" style="justify-content:center"><button class="btn" id="again">Run again</button>
-    <button class="btn know" id="mr" ${ALLCARDS.filter(c=>state[ck(c)]==='missed').length?'':'disabled'}>Review fuzzy</button>
-    <button class="btn" id="home">All decks</button></div></div>`;
-  document.getElementById('again').onclick=()=>startDeck(s.deck,s.shuffled);
-  document.getElementById('home').onclick=renderPicker;
-  document.getElementById('mr').onclick=()=>startDeck('missed',false);
-}
-document.addEventListener('keydown',e=>{
-  if(document.getElementById('learn-view').style.display==='none')return;
-  if(document.getElementById('player').style.display==='none')return;
-  if(!session||session.idx>=session.list.length)return;
-  if(e.code==='Space'){e.preventDefault();session.flipped=!session.flipped;const c=document.getElementById('card');if(c)c.classList.toggle('flipped')}
-  else if(e.code==='ArrowRight')mv(1);else if(e.code==='ArrowLeft')mv(-1);
-  else if(e.key==='k'||e.key==='K')grade('known');else if(e.key==='j'||e.key==='J')grade('missed');
-});
-
-/* ===================== PRACTICE ===================== */
-function renderPractice(){
-  const v=document.getElementById('practice-view');
-  let html='<p class="intro">Work each one out on paper <b>before</b> you reveal the solution. This is the part that actually moves your grade \u2014 exams test whether you can <i>do</i> it, not just recognise it.</p>';
-  const order=['ml','sys','eth','chi'];
-  order.forEach(c=>{
-    const items=ALLPRACTICE.filter(p=>p.c===c);
-    if(!items.length)return;
-    html+=`<h3 style="margin:18px 0 10px;color:${COURSES[c].hex}">${COURSES[c].name}</h3>`;
-    items.forEach((p,i)=>{
-      const id=`pr-${c}-${i}`;
-      html+=`<div class="mapblock" style="box-shadow:var(--shadow)">
-        <div style="font-weight:700;font-size:15.5px;margin-bottom:4px">${p.q}</div>
-        <button class="btn reveal-btn" data-target="${id}">Show worked solution</button>
-        <div class="solution" id="${id}" style="display:none">
-          <span class="label facts">Step by step</span><div>${p.steps}</div>
-          <div class="ansline">Answer: ${p.answer}</div>
-          ${p.study?`<div style="margin-top:10px;padding-top:10px;border-top:1.5px dashed var(--line)"><span class="label why">Study this</span> <span style="font-size:14px">${p.study}</span></div>`:''}
-        </div></div>`;
-    });
-  });
-  v.innerHTML=html;
-  v.querySelectorAll('.reveal-btn').forEach(b=>b.onclick=()=>{
-    const el=document.getElementById(b.dataset.target);
-    const open=el.style.display!=='none';
-    el.style.display=open?'none':'block';
-    b.textContent=open?'Show worked solution':'Hide solution';
-  });
-}
-
-/* ===================== QUIZ ===================== */
-let quiz=null;
-function renderQuizPicker(){
-  const v=document.getElementById('quiz-view');
-  let html='<p class="intro">Pick a set. You\u2019ll get one question at a time, answer, and see right/wrong instantly with your running score. Producing the answer from memory is harder \u2014 and closer to the real exam \u2014 than recognising a flashcard.</p><div class="decks">';
-  html+=`<button class="deck all" data-q="all"><div class="bar"></div><h3>Mixed Quiz</h3><div class="meta">${ALLQUIZ.length} questions · all 4</div></button>`;
-  Object.keys(COURSES).forEach(k=>{
-    const n=ALLQUIZ.filter(q=>q.c===k).length;
-    html+=`<button class="deck" data-q="${k}"><div class="bar" style="background:${COURSES[k].color}"></div><h3>${COURSES[k].name}</h3><div class="meta">${n} questions</div></button>`;
-  });
-  html+='</div>';
-  v.innerHTML=html;
-  v.querySelectorAll('.deck[data-q]').forEach(d=>d.onclick=()=>startQuiz(d.dataset.q));
-}
-function startQuiz(c){
-  const list=c==='all'?ALLQUIZ:ALLQUIZ.filter(q=>q.c===c);
-  quiz={c,list:shuffle(list),idx:0,score:0,answered:false};
-  renderQuiz();
-}
-function renderQuiz(){
-  const v=document.getElementById('quiz-view');const q=quiz;
-  if(q.idx>=q.list.length){
-    const pct=Math.round(q.score/q.list.length*100);
-    let msg=pct>=90?"Excellent \u2014 you can produce this from memory.":pct>=70?"Good. Re-quiz the ones you missed.":pct>=40?"Keep going \u2014 revisit those topics in Learn.":"Low score is useful information: those are your weak topics. Hit them in Learn.";
-    v.innerHTML=`<div class="done"><div class="kicker" style="margin-bottom:6px">Quiz complete</div><h2>Your score</h2>
-      <div class="score">${q.score}/${q.list.length}</div><p style="color:var(--muted);max-width:400px;margin:0 auto 18px">${msg}</p>
-      <div class="nav" style="justify-content:center"><button class="btn" id="qagain">Try again</button><button class="btn" id="qhome">Pick set</button></div></div>`;
-    document.getElementById('qagain').onclick=()=>startQuiz(q.c);
-    document.getElementById('qhome').onclick=renderQuizPicker;
-    return;
-  }
-  const item=q.list[q.idx];const co=COURSES[item.c];
-  let opts=item.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('');
-  v.innerHTML=`<div class="toolbar"><button class="backlink" id="qback">← pick set</button>
-    <div class="deckname">Quiz</div><div class="counter">Score ${q.score}</div></div>
-    <div class="mapblock"><div class="corner" style="display:flex;justify-content:space-between;font-family:'Courier New',monospace;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px">
-      <span class="pill" style="background:${co.hex};color:#fff;padding:2px 9px;border-radius:1px">${co.name}</span><span>${q.idx+1} / ${q.list.length}</span></div>
-      <div style="font-weight:700;font-size:17px;margin-bottom:14px">${item.q}</div><div id="opts">${opts}</div>
-      <div id="qfeed"></div></div>`;
-  document.getElementById('qback').onclick=renderQuizPicker;
-  v.querySelectorAll('.opt').forEach(b=>b.onclick=()=>answerQuiz(parseInt(b.dataset.i)));
-}
-function answerQuiz(i){
-  const q=quiz;if(q.answered)return;q.answered=true;
-  const item=q.list[q.idx];
-  const opts=document.querySelectorAll('.opt');
-  opts.forEach((b,j)=>{b.classList.add('locked');if(j===item.correct)b.classList.add('correct');if(j===i&&i!==item.correct)b.classList.add('wrong');});
-  if(i===item.correct)q.score++;
-  const feed=document.getElementById('qfeed');
-  feed.innerHTML=`<div style="margin-top:6px;font-weight:700;color:${i===item.correct?'var(--accent2)':'var(--accent)'}">
-    ${i===item.correct?'Correct ✓':'Not quite — the highlighted one is right.'}</div>
-    <button class="btn" id="qnext" style="margin-top:12px">Next →</button>`;
-  document.getElementById('qnext').onclick=()=>{q.idx++;q.answered=false;renderQuiz();};
-}
-
-/* ===================== PAIRS ===================== */
-function renderPairs(){
-  const v=document.getElementById('pairs-view');
-  let html='<p class="intro">These are the look-alikes that cause most exam mistakes. Read them side by side and lock in the difference.</p>';
-  const order=['ml','sys','eth','chi'];
-  order.forEach(c=>{
-    const items=ALLPAIRS.filter(p=>p.c===c);
-    if(!items.length)return;
-    html+=`<h3 style="margin:18px 0 10px;color:${COURSES[c].hex}">${COURSES[c].name}</h3>`;
-    items.forEach(p=>{
-      html+=`<div style="margin-bottom:18px"><div style="font-weight:800;font-size:16px;margin-bottom:8px">${p.title}</div>
-        <div class="pair"><div class="side"><h4 style="color:${COURSES[c].hex}">${p.a.name}</h4><p>${p.a.txt}</p></div>
-        <div class="side"><h4 style="color:${COURSES[c].hex}">${p.b.name}</h4><p>${p.b.txt}</p></div></div>
-        <div class="pairtip"><b>Tell them apart:</b> ${p.tip}</div></div>`;
-    });
-  });
-  v.innerHTML=html;
-}
-
-/* ===================== MAP ===================== */
 const MAPS={
  ml:{name:"Machine Learning",hex:"#5b3a8c",lead:"EXAM: 35 multiple-choice + 15 true/false + 5 short-answer (incl. an information-gain calculation and a KNN k=3 classification). Study order: each step needs the one before it — variance before PCA; foundations before the supervised methods; deep learning last.",
    steps:["<b>Foundations</b> — what ML is, 3 paradigms, sample/feature/label, confusion matrix, the 4 metrics",
@@ -1545,22 +1323,283 @@ const MAPS={
    "<b>Religion & cultural interaction</b> — Tian worship, Confucianism/Taoism, 3 Buddhist schools, Islam",
    "<b>Homophones & taboos</b> — 8 vs 4 (lightest, save for last)"]},
 };
-function renderMap(){
-  const v=document.getElementById('map-view');
-  let html='<p class="intro">What to study first, second, third in each course \u2014 and which part of the course each topic belongs to. Two orderings matter most: <b>variance before PCA</b> (ML) and <b>physical time before logical time</b> (Systems).</p>';
-  ['ml','sys','eth','chi'].forEach(c=>{
-    const m=MAPS[c];
-    html+=`<div class="mapblock"><h3 style="color:${m.hex}">${m.name}</h3><div class="lead">${m.lead}</div>`;
-    m.steps.forEach((s,i)=>{
-      html+=`<div class="step"><div class="stepnum" style="background:${m.hex}">${i+1}</div><div class="body">${s}</div></div>`;
-      if(i<m.steps.length-1)html+=`<div class="arrowdown">↓</div>`;
-    });
-    html+='</div>';
+
+
+/* ============================================================
+   EXAM-STRUCTURED UI  (data arrays above: ALLCARDS, ALLQUIZ,
+   ALLPRACTICE, ALLPAIRS, COURSES, MAPS)
+   ============================================================ */
+const ORDER=['ml','sys','eth','chi'];
+
+/* Per-course exam format + "what the teacher said is important". */
+const EXAMS={
+ ml:{
+  fmtline:"35 MCQ + 15 True/False + 5 Short-Answer · closed-book",
+  parts:[
+   {sec:"Section I — Multiple Choice",detail:"~35 questions. Choose the single best answer."},
+   {sec:"Section II — True / False",detail:"~15 statements. Mark each True or False."},
+   {sec:"Section III — Short Answer",detail:"5 questions, incl. an information-gain calculation and a KNN (k=3) classification; descriptive answers ≥100 words."}],
+  important:[
+   "What ML is + the 3 paradigms (supervised / unsupervised / reinforcement); when to use ML",
+   "Metrics: Precision = TP/(TP+FP), Recall, F1, accuracy — from a confusion matrix",
+   "KNN: Euclidean vs Manhattan distance; classify a new point with k=3 (majority vote)",
+   "Naive Bayes — key assumption: features conditionally independent",
+   "SVM: margin = 2/‖ω‖, support vectors, kernel trick for non-linear data, common kernels",
+   "Decision trees: entropy & information-gain calculation; pruning; handles missing data",
+   "Bias vs variance / under- vs over-fitting; effect of the regularization parameter λ",
+   "Gradient descent: learning-rate behaviour (too small = slow; too large = diverge)",
+   "Logistic regression & the sigmoid (range 0–1; activation of logistic regression)",
+   "MLP: structure (input/hidden/output), non-linear activation, chain rule ∂z/∂x₂=ω₂, forward+backprop, XOR needs a hidden layer",
+   "CNN: channels out = number of filters; output side = ⌊(N+2P−F)/S⌋+1",
+   "RNN shapes (many-to-one = sentiment); LSTM/GRU gates solve vanishing gradient; ResNet skip connections",
+   "Transformers: self-attention, positional encoding (no inherent order), quadratic cost → sparse attention",
+   "GPT (autoregressive, generation) vs BERT (bidirectional, understanding); GPT-3 = unsupervised next-token prediction",
+   "Ensembles: Bagging (parallel, cuts variance) vs Boosting (sequential, cuts bias)"]},
+ sys:{
+  fmtline:"QCM + code/figure analysis + identification problems",
+  parts:[
+   {sec:"Part I — QCM / Multiple Choice",detail:"Concept questions (incl. mount/unmount — you can skip superblock detail)."},
+   {sec:"Part II — Code & Figure Analysis",detail:"Tell client vs server from socket code; read a delivery figure and name the multicast ordering."},
+   {sec:"Part III — Identification & Problems",detail:"Pick the data-centric consistency model from an example; vector-clock computation."}],
+  important:[
+   "Definition, features (concurrency, no global clock, independent failure) & motivation of a DS",
+   "Difference between the models — physical / architectural / fundamental",
+   "Vector clocks: how they update (max then +1) and detecting concurrency",
+   "IPC: tell client vs server from the socket code — bind/listen/accept = server; connect = client (read the PPT code!)",
+   "Group communication: how to achieve atomicity (atomic multicast, all-or-nothing)",
+   "Read a figure of message deliveries → conclude the ordering (FIFO / causal / total)",
+   "Data-centric consistency models: given an example, choose which one it is",
+   "Distributed file systems: mount / unmount (skip superblock detail)",
+   "Failure recovery (checkpoint / log / 2PC) & concurrency control (locking, timestamp ordering)",
+   "Web search: the spider / crawler architecture"]},
+ eth:{
+  fmtline:"10 MCQ + 10 True/False + 4 Case Analyses · 120 min · 100 pts",
+  parts:[
+   {sec:"Multiple Choice",detail:"10 questions × 2 pts = 20 pts."},
+   {sec:"True / False",detail:"10 questions × 2 pts = 20 pts."},
+   {sec:"Case Analysis",detail:"4 cases × 15 pts = 60 pts. Use the 3-question framework: facts/roles → values/impacts → action/reasons."}],
+  important:[
+   "Engineering is a social practice — technical feasibility ≠ ethical acceptability",
+   "3 features of engineering ethics: multiple values, multiple actors, uncertainty",
+   "Risk = probability × loss; 3 sources (technical / environmental / human) + a case each",
+   "Acceptable risk: the 6 requirements; risk governance is a cycle",
+   "Responsibility is distributed: professional / social / environmental / collective",
+   "Double-edged value; engineering's 6 value types; technology is often morally neutral",
+   "Justice: stakeholders, social cost, NIMBY, procedural justice & informed consent",
+   "Why responsible action fails: the 8 obstacles (groupthink, authority pressure…)",
+   "Data & big-data ethics: privacy, algorithmic fairness, the PRISM case",
+   "Academic integrity: RCR / QRP / Research misconduct (FFP)",
+   "Case-analysis framework: facts & roles → values & impacts → action & reasons; fill policy vacuums"]},
+ chi:{
+  fmtline:"MCQs + open-ended question(s) · closed-book (final = 50%)",
+  parts:[
+   {sec:"Multiple Choice (MCQs)",detail:"Concept questions across all lectures."},
+   {sec:"Open-ended question(s)",detail:"Short essay / explanation in your own words."}],
+  important:[
+   "Linguistic relativity (Sapir–Whorf): language shapes thought; vocabulary size reflects what matters",
+   "Future Time Reference & saving/health; East-Asian number regularity (97 = 9×10+7)",
+   "Metaphor as a way of thinking (TIME IS SPACE / TIME IS MONEY / LIFE IS A JOURNEY)",
+   "Face: negative vs positive face; 面子 (prestige) vs 脸 (moral character); Confucian relationships",
+   "Regional culture = natural environment + social/historical factors (Bashu, Yanzhao, Wuyue…)",
+   "Language vs dialect ('Sinitic languages'); homophones & taboos (love 8 发, avoid 4 死)",
+   "Chinese characters: writing systems, script evolution (Oracle→Seal→Clerical→Regular), 六书 formation",
+   "Religion & cultural interaction: Tian worship, Confucianism vs Taoism, 3 Buddhist schools, Islam"]}
+};
+
+/* ---- progress (mock-exam answers) saved per device ---- */
+const STORE='studyapp_exam_v2';
+function load(){try{return JSON.parse(localStorage.getItem(STORE))||{}}catch(e){return{}}}
+function save(s){try{localStorage.setItem(STORE,JSON.stringify(s))}catch(e){}}
+let answers=load();
+
+let current=null;
+
+/* ===================== HOME ===================== */
+function renderHome(){
+  document.getElementById('course').style.display='none';
+  document.getElementById('home').style.display='block';
+  let h='<div class="hint">Tip: study in three passes per course — read the <b>Exam Format</b> so you know what is coming, work through the <b>Study Guide</b>, then sit the <b>Mock Exam</b> in the same structure until it feels routine.</div><div class="grid">';
+  ORDER.forEach(c=>{
+    const co=COURSES[c],ex=EXAMS[c];
+    h+=`<button class="ccard" data-c="${c}">
+      <div class="band" style="background:${co.hex}">${co.name}</div>
+      <div class="body">
+        <div class="fmt">${ex.fmtline}</div>
+        <div class="go">Open course &rarr;</div>
+      </div></button>`;
   });
-  v.innerHTML=html;
+  h+='</div>';
+  document.getElementById('home').innerHTML=h;
+  document.querySelectorAll('.ccard').forEach(b=>b.onclick=()=>openCourse(b.dataset.c));
 }
 
-renderPicker();
+/* ===================== COURSE ===================== */
+function openCourse(c){
+  current=c;
+  const co=COURSES[c],ex=EXAMS[c];
+  document.documentElement.style.setProperty('--c',co.hex);
+  document.documentElement.style.setProperty('--c-soft',softTint(c));
+  document.getElementById('home').style.display='none';
+  document.getElementById('course').style.display='block';
+  document.getElementById('chead').style.background=co.hex;
+  document.getElementById('chead').innerHTML=
+    `<h2>${co.name}</h2><div class="meta">${ex.fmtline}</div>`;
+  document.querySelectorAll('.subtab').forEach((t,i)=>t.setAttribute('aria-selected', i===0?'true':'false'));
+  showSec('format');
+  renderFormat(c); renderGuide(c); renderExam(c);
+  window.scrollTo(0,0);
+}
+function softTint(c){return {ml:'#ece4f2',sys:'#dbe6ec',eth:'#dceae4',chi:'#f0e1d8'}[c];}
+
+function showSec(sec){
+  ['format','guide','exam'].forEach(s=>{
+    document.getElementById('sec-'+s).style.display = s===sec?'block':'none';
+  });
+}
+
+/* ---- Exam Format ---- */
+function renderFormat(c){
+  const ex=EXAMS[c];
+  let h='<div class="sheet"><h3>Exam Format — what to expect</h3>';
+  h+=`<div class="examline">${ex.fmtline}</div>`;
+  ex.parts.forEach((p,i)=>{
+    h+=`<div class="secrow"><div class="n">${i+1}</div><div class="t"><b>${p.sec}</b><div class="d">${p.detail}</div></div></div>`;
+  });
+  h+='</div>';
+  h+='<div class="sheet"><h3>What the teacher said is important</h3><ul class="important">';
+  ex.important.forEach(it=>h+=`<li>${it}</li>`);
+  h+='</ul></div>';
+  document.getElementById('sec-format').innerHTML=h;
+}
+
+/* ---- Study Guide (structured explanation) ---- */
+function renderGuide(c){
+  const cards=ALLCARDS.filter(x=>x.c===c);
+  const pairs=ALLPAIRS.filter(x=>x.c===c);
+  const map=MAPS[c];
+  let h='<p class="gintro">Every topic the course covers, explained from zero — plain words, an analogy, then the facts to remember. Click a topic to expand. This is your structured revision.</p>';
+  if(map){
+    h+='<div class="sheet"><h3>Study order</h3>';
+    map.steps.forEach((s,i)=>{h+=`<div class="secrow"><div class="n">${i+1}</div><div class="t"><div class="d" style="font-size:14.5px;color:var(--ink)">${s}</div></div></div>`;});
+    h+='</div>';
+  }
+  h+='<div class="toolrow"><button class="minibtn" id="expandAll">Expand all</button><button class="minibtn" id="collapseAll">Collapse all</button></div>';
+  h+=`<div class="grpttl">All topics (${cards.length})</div>`;
+  cards.forEach((card,i)=>{
+    h+=`<div class="note"><h4 data-i="${i}">${card.q}<span class="tw">+</span></h4><div class="ab">${card.a}</div></div>`;
+  });
+  if(pairs.length){
+    h+='<div class="grpttl">Easily confused — don’t mix these up</div>';
+    pairs.forEach(p=>{
+      h+=`<div class="pair"><div class="side"><h5>${p.a.name}</h5><p>${p.a.txt}</p></div>
+        <div class="side"><h5>${p.b.name}</h5><p>${p.b.txt}</p></div>
+        <div class="pairtip"><b>How to tell:</b> ${p.tip}</div></div>`;
+  });
+  }
+  const v=document.getElementById('sec-guide');
+  v.innerHTML=h;
+  v.querySelectorAll('.note > h4').forEach(hd=>hd.onclick=()=>hd.parentElement.classList.toggle('open'));
+  const ea=v.querySelector('#expandAll'), ca=v.querySelector('#collapseAll');
+  if(ea)ea.onclick=()=>v.querySelectorAll('.note').forEach(n=>n.classList.add('open'));
+  if(ca)ca.onclick=()=>v.querySelectorAll('.note').forEach(n=>n.classList.remove('open'));
+}
+
+/* ---- Mock Exam (sectioned like the real paper) ---- */
+function renderExam(c){
+  const mcq=ALLQUIZ.filter(q=>q.c===c && q.opts.length>2);
+  const tf=ALLQUIZ.filter(q=>q.c===c && q.opts.length===2);
+  const short=ALLPRACTICE.filter(p=>p.c===c);
+  const v=document.getElementById('sec-exam');
+  let h='<div class="scorebar"><div>Score: <b id="exScore">0</b> / <span id="exTotal">0</span> answered · <b id="exPct">0%</b> correct</div><button class="resetx" id="exReset">Reset exam</button></div>';
+  h+='<p class="examnote">Answer like the real thing — choose before you check. Click an option to lock it in; it turns green if right, red if wrong (the correct one is highlighted).</p>';
+  let qn=0; const LETT=['A','B','C','D','E'];
+
+  if(mcq.length){
+    h+=`<div class="partttl"><b>Section I · Multiple Choice</b><span class="pts">${mcq.length} questions</span></div>`;
+    mcq.forEach(q=>{qn++;h+=qBlock(c,q,qn,LETT);});
+  }
+  if(tf.length){
+    h+=`<div class="partttl"><b>Section II · True / False</b><span class="pts">${tf.length} statements</span></div>`;
+    tf.forEach(q=>{qn++;h+=qBlock(c,q,qn,LETT);});
+  }
+  if(short.length){
+    h+=`<div class="partttl"><b>Section III · Short Answer / Case Analysis</b><span class="pts">${short.length} questions</span></div>`;
+    short.forEach((p,i)=>{
+      const id=`sa-${c}-${i}`;
+      h+=`<div class="q"><div class="qn"><span class="num">${++qn}.</span>${p.q}</div>
+        <button class="reveal-btn" data-t="${id}">Show model answer &amp; steps</button>
+        <div class="solution" id="${id}" style="display:none">
+          <span class="label facts">Step by step</span><div>${p.steps}</div>
+          <div class="ansline">Answer: ${p.answer}</div>
+          ${p.study?`<div class="studyp"><span class="label why">Study this</span> ${p.study}</div>`:''}
+        </div></div>`;
+    });
+  }
+  v.innerHTML=h;
+  wireExam(c,v);
+}
+function qBlock(c,q,qn,LETT){
+  const key=c+'|'+q.q;
+  const saved=answers[key];
+  let h=`<div class="q" data-key="${encodeURIComponent(key)}" data-correct="${q.correct}"><div class="qn"><span class="num">${qn}.</span>${q.q}</div>`;
+  q.opts.forEach((o,i)=>{
+    let cls='opt';
+    if(saved!==undefined){cls+=' locked';if(i===q.correct)cls+=' correct';else if(i===saved)cls+=' wrong';}
+    h+=`<button class="${cls}" data-i="${i}"><span class="mk">${LETT[i]}</span>${o}</button>`;
+  });
+  h+='</div>';
+  return h;
+}
+function wireExam(c,v){
+  v.querySelectorAll('.q[data-key]').forEach(qel=>{
+    const key=decodeURIComponent(qel.dataset.key);
+    const correct=+qel.dataset.correct;
+    qel.querySelectorAll('.opt').forEach(btn=>{
+      btn.onclick=()=>{
+        if(answers[key]!==undefined)return;
+        const i=+btn.dataset.i;
+        answers[key]=i; save(answers);
+        qel.querySelectorAll('.opt').forEach((b,j)=>{
+          b.classList.add('locked');
+          if(j===correct)b.classList.add('correct');
+          else if(j===i)b.classList.add('wrong');
+        });
+        updateScore(c,v);
+      };
+    });
+  });
+  v.querySelectorAll('.reveal-btn').forEach(b=>b.onclick=()=>{
+    const el=document.getElementById(b.dataset.t);
+    const open=el.style.display!=='none';
+    el.style.display=open?'none':'block';
+    b.textContent=open?'Show model answer & steps':'Hide model answer';
+  });
+  const rs=v.querySelector('#exReset');
+  if(rs)rs.onclick=()=>{
+    ALLQUIZ.filter(q=>q.c===c).forEach(q=>{delete answers[c+'|'+q.q];});
+    save(answers); renderExam(c);
+  };
+  updateScore(c,v);
+}
+function updateScore(c,v){
+  const qs=ALLQUIZ.filter(q=>q.c===c);
+  let answered=0,correct=0;
+  qs.forEach(q=>{const a=answers[c+'|'+q.q];if(a!==undefined){answered++;if(a===q.correct)correct++;}});
+  const sc=v.querySelector('#exScore'),tot=v.querySelector('#exTotal'),pct=v.querySelector('#exPct');
+  if(sc){sc.textContent=correct;tot.textContent=qs.length;pct.textContent=answered?Math.round(correct/answered*100)+'%':'0%';}
+}
+
+/* ---- nav wiring ---- */
+document.getElementById('backHome').onclick=()=>{renderHome();window.scrollTo(0,0);};
+document.querySelectorAll('.subtab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.subtab').forEach(x=>x.setAttribute('aria-selected','false'));
+  t.setAttribute('aria-selected','true');
+  showSec(t.dataset.sec);
+  window.scrollTo(0,document.getElementById('chead').offsetTop-10);
+});
+
+renderHome();
+
 </script>
 </body>
 </html>
