@@ -126,7 +126,7 @@
   <header class="top">
     <div class="kicker">Beginner mode · all 4 courses · explained from zero</div>
     <h1>One Week to <em>Know It All</em></h1>
-    <p class="sub">Five ways to study the same material: learn it, work problems, quiz yourself, untangle confusable pairs, and see how topics connect. Now includes the previously-missing ML lectures 4–7 and Ethics Chapter 6.</p>
+    <p class="sub">Five ways to study the same material: learn it, work problems, quiz yourself, untangle confusable pairs, and see how topics connect. Built from all four course folders — now with the ML deep-learning lectures (neural nets, CNN), Chinese characters &amp; religion, election algorithms, labelled diagrams, and worked exercises (with solutions + what to revise).</p>
   </header>
 
   <div class="tabs" role="tablist">
@@ -157,6 +157,7 @@ const A =(t)=>`<div class="seg"><span class="label analogy">Think of it like</sp
 const W =(t)=>`<div class="seg"><span class="label why">Why it matters</span><div>${t}</div></div>`;
 const F =(t)=>`<div class="seg"><span class="label facts">Remember</span><div>${t}</div></div>`;
 const EX=(t)=>`<div class="seg"><span class="label exam">Exam example</span><div>${t}</div></div>`;
+const FIG=(svg,cap)=>`<div class="seg"><div style="border:2px solid var(--line);background:#fbf7ee;padding:10px 8px;overflow-x:auto;text-align:center">${svg}${cap?`<div style="font-family:'Courier New',monospace;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:6px">${cap}</div>`:''}</div></div>`;
 
 const CARDS = [
 /* ===================== CHINESE CULTURE ===================== */
@@ -689,16 +690,340 @@ const PAIRS_NEW = [
 ];
 
 
+/* ============================================================
+   DRIVE CONTENT — topics added from the course Drive folder,
+   inline SVG diagrams (the "images"), and extra exercises with
+   step-by-step solutions + "study this part" pointers.
+   ============================================================ */
+
+/* ---- inline SVG diagrams (themed to the site palette) ---- */
+const SVG_MLP="<svg viewBox='0 0 380 195' width='100%' style='max-width:360px' xmlns='http://www.w3.org/2000/svg'>"+
+ "<g stroke='#c2b08f' stroke-width='1'>"+
+ "<line x1='50' y1='55' x2='190' y2='40'/><line x1='50' y1='55' x2='190' y2='80'/><line x1='50' y1='55' x2='190' y2='120'/><line x1='50' y1='55' x2='190' y2='160'/>"+
+ "<line x1='50' y1='95' x2='190' y2='40'/><line x1='50' y1='95' x2='190' y2='80'/><line x1='50' y1='95' x2='190' y2='120'/><line x1='50' y1='95' x2='190' y2='160'/>"+
+ "<line x1='50' y1='135' x2='190' y2='40'/><line x1='50' y1='135' x2='190' y2='80'/><line x1='50' y1='135' x2='190' y2='120'/><line x1='50' y1='135' x2='190' y2='160'/>"+
+ "<line x1='190' y1='40' x2='330' y2='80'/><line x1='190' y1='40' x2='330' y2='120'/><line x1='190' y1='80' x2='330' y2='80'/><line x1='190' y1='80' x2='330' y2='120'/>"+
+ "<line x1='190' y1='120' x2='330' y2='80'/><line x1='190' y1='120' x2='330' y2='120'/><line x1='190' y1='160' x2='330' y2='80'/><line x1='190' y1='160' x2='330' y2='120'/></g>"+
+ "<g stroke='#14110d' stroke-width='2'>"+
+ "<circle cx='50' cy='55' r='12' fill='#e9e0cd'/><circle cx='50' cy='95' r='12' fill='#e9e0cd'/><circle cx='50' cy='135' r='12' fill='#e9e0cd'/>"+
+ "<circle cx='190' cy='40' r='12' fill='#d9c9e6'/><circle cx='190' cy='80' r='12' fill='#d9c9e6'/><circle cx='190' cy='120' r='12' fill='#d9c9e6'/><circle cx='190' cy='160' r='12' fill='#d9c9e6'/>"+
+ "<circle cx='330' cy='80' r='12' fill='#5b3a8c'/><circle cx='330' cy='120' r='12' fill='#5b3a8c'/></g>"+
+ "<g font-family='Courier New,monospace' font-size='11' fill='#6b5f4e' text-anchor='middle'>"+
+ "<text x='50' y='185'>Input</text><text x='190' y='185'>Hidden</text><text x='330' y='185'>Output</text></g></svg>";
+
+const SVG_CNN="<svg viewBox='0 0 560 96' width='100%' style='max-width:540px' xmlns='http://www.w3.org/2000/svg'>"+
+ "<g font-family='Iowan Old Style,Georgia,serif' font-size='11' text-anchor='middle'>"+
+ "<rect x='4' y='20' width='66' height='44' fill='#e9e0cd' stroke='#14110d' stroke-width='2'/><text x='37' y='46'>Input</text>"+
+ "<rect x='90' y='20' width='66' height='44' fill='#d9c9e6' stroke='#14110d' stroke-width='2'/><text x='123' y='40'>Conv-</text><text x='123' y='54'>olution</text>"+
+ "<rect x='176' y='20' width='66' height='44' fill='#cdbbe0' stroke='#14110d' stroke-width='2'/><text x='209' y='40'>Max</text><text x='209' y='54'>Pooling</text>"+
+ "<rect x='262' y='20' width='66' height='44' fill='#d9c9e6' stroke='#14110d' stroke-width='2'/><text x='295' y='40'>Conv +</text><text x='295' y='54'>Pool…</text>"+
+ "<rect x='348' y='20' width='66' height='44' fill='#e9e0cd' stroke='#14110d' stroke-width='2'/><text x='381' y='46'>Flatten</text>"+
+ "<rect x='434' y='20' width='66' height='44' fill='#5b3a8c' stroke='#14110d' stroke-width='2'/><text x='467' y='40' fill='#fff'>Fully</text><text x='467' y='54' fill='#fff'>Conn.</text>"+
+ "<text x='535' y='46' font-size='13' font-weight='700'>cat</text></g>"+
+ "<g stroke='#14110d' stroke-width='1.5' fill='none'>"+
+ "<path d='M72 42 h16' marker-end='url(#ac)'/><path d='M158 42 h16' marker-end='url(#ac)'/><path d='M244 42 h16' marker-end='url(#ac)'/><path d='M330 42 h16' marker-end='url(#ac)'/><path d='M416 42 h16' marker-end='url(#ac)'/><path d='M502 42 h14' marker-end='url(#ac)'/></g>"+
+ "<defs><marker id='ac' markerWidth='7' markerHeight='7' refX='5' refY='3' orient='auto'><path d='M0 0 L6 3 L0 6 z' fill='#14110d'/></marker></defs></svg>";
+
+const SVG_SCRIPT="<svg viewBox='0 0 560 120' width='100%' style='max-width:540px' xmlns='http://www.w3.org/2000/svg'>"+
+ "<g text-anchor='middle'>"+
+ "<rect x='4' y='8' width='96' height='58' fill='#f0e3c8' stroke='#14110d' stroke-width='2'/><text x='52' y='46' font-size='30' font-family='serif'>馬</text>"+
+ "<rect x='118' y='8' width='96' height='58' fill='#f0e3c8' stroke='#14110d' stroke-width='2'/><text x='166' y='46' font-size='30' font-family='serif'>馬</text>"+
+ "<rect x='232' y='8' width='96' height='58' fill='#f0e3c8' stroke='#14110d' stroke-width='2'/><text x='280' y='46' font-size='30' font-family='serif'>馬</text>"+
+ "<rect x='346' y='8' width='96' height='58' fill='#f0e3c8' stroke='#14110d' stroke-width='2'/><text x='394' y='46' font-size='30' font-family='serif'>馬</text>"+
+ "<rect x='460' y='8' width='96' height='58' fill='#e7d6ec' stroke='#14110d' stroke-width='2'/><text x='508' y='46' font-size='30' font-family='serif'>马</text>"+
+ "<g font-family='Courier New,monospace' font-size='9.5' fill='#6b5f4e'>"+
+ "<text x='52' y='84'>Oracle Bone</text><text x='52' y='97'>甲骨文</text><text x='52' y='110'>~1200 BC</text>"+
+ "<text x='166' y='84'>Bronze</text><text x='166' y='97'>金文</text><text x='166' y='110'>Zhou</text>"+
+ "<text x='280' y='84'>Seal</text><text x='280' y='97'>篆书</text><text x='280' y='110'>Qin</text>"+
+ "<text x='394' y='84'>Clerical</text><text x='394' y='97'>隶书</text><text x='394' y='110'>Han</text>"+
+ "<text x='508' y='84'>Regular</text><text x='508' y='97'>楷书</text><text x='508' y='110'>Tang+ / simpl.</text></g>"+
+ "<g stroke='#14110d' stroke-width='1.5'><path d='M100 37 h16'/><path d='M214 37 h16'/><path d='M328 37 h16'/><path d='M442 37 h16'/></g></g></svg>";
+
+const SVG_SVM="<svg viewBox='0 0 300 200' width='100%' style='max-width:300px' xmlns='http://www.w3.org/2000/svg'>"+
+ "<line x1='55' y1='190' x2='235' y2='25' stroke='#14110d' stroke-width='2.5'/>"+
+ "<line x1='20' y1='190' x2='200' y2='25' stroke='#6b5f4e' stroke-width='1.5' stroke-dasharray='5 4'/>"+
+ "<line x1='90' y1='190' x2='270' y2='25' stroke='#6b5f4e' stroke-width='1.5' stroke-dasharray='5 4'/>"+
+ "<g fill='#c0392b'><circle cx='55' cy='60' r='7'/><circle cx='95' cy='120' r='7'/><circle cx='40' cy='150' r='7'/></g>"+
+ "<g fill='#1f5673'><rect x='210' y='55' width='13' height='13'/><rect x='245' y='110' width='13' height='13'/><rect x='195' y='150' width='13' height='13'/></g>"+
+ "<circle cx='130' cy='95' r='10' fill='none' stroke='#b8860b' stroke-width='2.5'/><circle cx='130' cy='95' r='6' fill='#c0392b'/>"+
+ "<rect x='160' y='118' width='13' height='13' fill='#1f5673'/><circle cx='166' cy='124' r='11' fill='none' stroke='#b8860b' stroke-width='2.5'/>"+
+ "<g font-family='Courier New,monospace' font-size='10' fill='#6b5f4e'><text x='150' y='40'>margin</text><text x='150' y='185' fill='#b8860b'>○ = support vector</text></g></svg>";
+
+const SVG_SOCK="<svg viewBox='0 0 400 235' width='100%' style='max-width:400px' xmlns='http://www.w3.org/2000/svg'>"+
+ "<g text-anchor='middle' font-family='Courier New,monospace' font-size='11'>"+
+ "<text x='80' y='16' font-weight='700' fill='#1f5673'>CLIENT</text><text x='320' y='16' font-weight='700' fill='#c0392b'>SERVER</text>"+
+ "<g fill='#dce6ec' stroke='#14110d' stroke-width='2'><rect x='20' y='28' width='120' height='26'/><rect x='20' y='150' width='120' height='26'/><rect x='20' y='190' width='120' height='26'/></g>"+
+ "<g fill='#f0dcd9' stroke='#14110d' stroke-width='2'><rect x='260' y='28' width='120' height='26'/><rect x='260' y='66' width='120' height='26'/><rect x='260' y='104' width='120' height='26'/><rect x='260' y='150' width='120' height='26'/><rect x='260' y='190' width='120' height='26'/></g>"+
+ "<g fill='#14110d'><text x='80' y='45'>socket()</text><text x='80' y='167'>read / write</text><text x='80' y='207'>close()</text>"+
+ "<text x='320' y='45'>socket()</text><text x='320' y='83'>bind()</text><text x='320' y='121'>listen()</text><text x='320' y='167'>accept()</text><text x='320' y='207'>close()</text></g>"+
+ "<g stroke='#14110d' stroke-width='1.5' fill='none' marker-end='url(#as)'><path d='M140 41 C 200 41, 200 163, 258 163'/><path d='M260 163 C 200 200, 200 70, 142 70' transform='translate(0,4)'/></g>"+
+ "<text x='200' y='120' fill='#6b5f4e'>connect</text>"+
+ "<defs><marker id='as' markerWidth='7' markerHeight='7' refX='5' refY='3' orient='auto'><path d='M0 0 L6 3 L0 6 z' fill='#14110d'/></marker></defs></g></svg>";
+
+const CARDS_DRIVE=[
+/* ===================== MACHINE LEARNING (deep learning + extras) ===================== */
+{c:"ml",q:"Naive Bayes classifier — the idea and why it's 'naive'",a:
+ P("Naive Bayes predicts a class by asking: 'given these features, which class is most probable?' It uses Bayes' rule to flip that into something it can count from data, and it makes one big simplifying assumption to keep the maths easy.")+
+ A("a doctor guessing an illness from symptoms. They combine how common each symptom is for each illness. 'Naive' = pretending each symptom is independent of the others, even when they aren't — it works surprisingly well anyway.")+
+ F("Built on <b>Bayes' theorem</b>: P(class|features) &prop; P(class)·&Pi; P(featureᵢ|class). The <b>naive assumption</b> = all features are <b>conditionally independent</b> given the class, so you just multiply the per-feature probabilities. It's a <b>lazy / probabilistic</b> classifier; fast, great for text/spam. Watch for the <b>zero-probability</b> problem → fix with Laplace smoothing.")},
+
+{c:"ml",q:"Gradient descent — how a model 'learns' the best parameters",a:
+ P("Gradient descent is the method that actually finds the line/weights with the smallest error. It starts with a guess, checks which way is 'downhill' on the error surface, takes a small step that way, and repeats until it can't go lower.")+
+ A("walking down a foggy hill to the lowest point. You can't see the bottom, so you feel the slope under your feet and step downhill a little at a time until the ground is flat.")+
+ F("Repeat until convergence: <b>θ := θ − α·(∂Cost/∂θ)</b>. <b>α = learning rate</b> (step size): too small → slow; too large → overshoots / diverges. Two tips: <b>feature scaling</b> (put features on a similar scale → faster) and testing α over 0.001…1.")+
+ EX("<b>Batch GD</b> uses <i>all</i> examples per step → always reaches the global min for linear regression, but slow on big data. <b>Stochastic GD (SGD)</b> updates on <i>one</i> example at a time → starts improving immediately, faster, but may never settle exactly at the minimum.")},
+
+{c:"ml",q:"Overfitting vs underfitting, and what regularization does",a:
+ P("A model can fail two ways. <b>Underfitting</b> = too simple, misses the real pattern. <b>Overfitting</b> = too complex, it memorises the training data (including the noise) and then flops on new data. Regularization is a penalty that keeps the model from getting too complex.")+
+ A("a student who barely studied (underfit) vs one who memorised last year's exam word-for-word (overfit). You want the one who learned the general method. Regularization is the teacher saying 'keep your answer simple'.")+
+ F("<b>Underfit</b> = high bias (too simple). <b>Overfit</b> = high variance (fits noise; great on train, poor on test). <b>Regularization</b> adds a penalty on big weights to the cost: <b>L2 / Ridge</b> (sum of weights²) shrinks weights smoothly; <b>L1 / Lasso</b> (sum of |weights|) can zero some out (feature selection). Bigger penalty → simpler model. Also fight overfitting with more data and cross-validation.")},
+
+{c:"ml",q:"Neural networks & the Multi-Layer Perceptron (MLP)",a:
+ P("A neural network is layers of tiny units ('neurons'). Each neuron takes the previous layer's numbers, weights them, adds them up, and passes the result through an activation function. Stacking layers lets the network learn its own features instead of you hand-crafting them.")+
+ A("an assembly line: raw input enters, each station (layer) transforms it a bit, and the final station outputs the answer (e.g. 'cat'). The network tunes every station automatically.")+
+ FIG(SVG_MLP,"MLP: input → hidden layer(s) → output, fully connected")+
+ F("An <b>MLP</b> is a <b>feedforward</b> network (info flows one way, no loops) with an <b>input layer → hidden layer(s) → output layer</b>. A single perceptron is just a linear model (like logistic regression with a step function) — it <b>can't solve XOR</b>. Adding a hidden layer that learns a <b>feature transformation</b> solves XOR. That's the whole point of 'deep' learning: <b>learn the features automatically</b>.")},
+
+{c:"ml",q:"Why neural nets need a NON-linear activation function",a:
+ P("Each neuron passes its weighted sum through an 'activation function'. If that function were just a straight line, stacking many layers would collapse into one big straight line — no better than a single linear model. A non-linear activation is what lets deep networks learn complex, curvy patterns.")+
+ A("stacking flat sheets of glass only ever gives you flat glass. To build a curved shape you need pieces that bend. Non-linear activations are the bend.")+
+ F("Without non-linearity, output = linear(input) no matter how many layers → useless depth. Common activations: <b>Sigmoid</b> (0,1), <b>Tanh</b> (−1,1), <b>ReLU</b> = max(0,x) — fast, the default for hidden layers, but not differentiable at 0; <b>Leaky ReLU</b>, <b>GeLU</b>. Output layer often uses <b>sigmoid</b> (binary) or <b>softmax</b> (multi-class).")},
+
+{c:"ml",q:"Backpropagation — how a network actually trains",a:
+ P("Backpropagation is how the network figures out how to adjust every weight. It makes a prediction (forward pass), measures the error, then sends that error <i>backwards</i> through the layers using the chain rule, computing how much each weight contributed. Gradient descent then nudges each weight to reduce the error.")+
+ A("a relay team that lost a race analysing the replay backwards: each runner learns exactly how much their leg cost, and trains to fix their share.")+
+ F("Two passes: <b>forward</b> (compute output + loss) then <b>backward</b> (propagate the error gradient layer-by-layer via the <b>chain rule</b>). The gradients feed <b>gradient descent</b>, which updates the weights. Repeat over many <b>epochs</b>.")},
+
+{c:"ml",q:"Convolutional Neural Networks (CNN) — what & why",a:
+ P("A CNN is a neural network built for images. Instead of connecting every pixel to every neuron (huge and wasteful), it slides small filters across the image to detect local patterns (edges, then shapes, then objects), and shrinks the image as it goes.")+
+ A("looking for a face by sliding a small 'eye detector' window all over the photo, rather than memorising the whole picture at once.")+
+ FIG(SVG_CNN,"CNN pipeline: Convolution + Pooling repeated → Flatten → Fully Connected → label")+
+ F("Three image properties CNNs exploit: <b>(1)</b> patterns are smaller than the whole image (a neuron sees a small region → fewer parameters); <b>(2)</b> the same pattern appears in different places (filters <b>share parameters</b> across the image); <b>(3)</b> subsampling pixels doesn't change the object (so we can <b>pool</b> to shrink). Pipeline: <b>Convolution → Max Pooling</b> (repeat) <b>→ Flatten → Fully-Connected → output</b>.")+
+ EX("<b>Convolution</b>: slide a 3×3 filter over the image with a stride; at each spot take the element-wise product and sum it → one number in the feature map. <b>Output size</b> (no padding) = <b>(N − F)/stride + 1</b>. E.g. a 6×6 image with a 3×3 filter, stride 1 → (6−3)/1+1 = <b>4×4</b> feature map.")},
+
+{c:"ml",q:"SVM — the picture (margin, hyperplane, support vectors)",a:
+ P("SVM separates two classes with the widest possible 'street' between them. The middle of the street is the decision boundary (hyperplane); the edges are the margins; the few points touching the edges are the support vectors that hold it all in place.")+
+ FIG(SVG_SVM,"SVM: widest-margin hyperplane; circled points are support vectors")+
+ F("Maximise the <b>margin</b> = distance from the hyperplane to the nearest points. Only the <b>support vectors</b> matter — move any other point and the boundary is unchanged. For data that isn't linearly separable, the <b>kernel trick</b> maps it to a higher dimension where a flat separator exists.")},
+
+/* ===================== CHINESE CULTURE (Characters + Religion) ===================== */
+{c:"chi",q:"Writing systems: logographic vs phonographic (where does Chinese fit?)",a:
+ P("Writing systems differ in <b>what each symbol stands for</b>. Some symbols stand for <i>meaning</i> (a whole word/idea); others stand for <i>sound</i> (letters). Chinese characters mostly carry meaning + a sound hint; the Latin alphabet carries pure sound.")+
+ A("emoji 🍎 vs the letters a-p-p-l-e. The emoji shows the <i>thing</i> (logographic-ish); the letters spell the <i>sound</i> (phonographic).")+
+ F("<b>Logophonetic / logographic</b> (meaning + sound): Chinese characters. <b>Phonographic</b> (sound only): Latin/Roman alphabet. Key point: <b>writing systems are relatively independent of the spoken language</b> — the same characters are used across Mandarin, Japanese, Korean, Vietnamese (historically); the same Latin letters across English, French, German.")},
+
+{c:"chi",q:"The evolution of Chinese characters (5 stages)",a:
+ P("Chinese script changed shape over ~3000 years, getting steadily simpler and more 'square/straight' so it was faster to write. You should know the five main stages in order.")+
+ A("like a logo getting redesigned over centuries — same idea, cleaner lines each time.")+
+ FIG(SVG_SCRIPT,"Oracle Bone → Bronze → Seal → Clerical → Regular (the character 馬/马 'horse')")+
+ F("<ol><li><b>Oracle Bone Script 甲骨文</b> — late Shang (~1200 BC), carved on shells/bones for divination (Yinxu site).</li><li><b>Bronze Script 金文</b> — cast on bronze, Zhou dynasty.</li><li><b>Seal Script 篆书</b> — standardised by <b>Qin</b> ('书同文', unify the writing).</li><li><b>Clerical Script 隶书</b> — Han; the big turning point (<b>隶变</b>): curves straightened into strokes → looks modern.</li><li><b>Regular Script 楷书</b> — matured in the <b>Tang</b>; the form still used today.</li></ol>(Order: 隶→行 semi-cursive→草 cursive; 楷 regular came from neat semi-cursive.)")},
+
+{c:"chi",q:"The 6 principles of character formation (六书) — the main four",a:
+ P("Chinese characters are built in a few systematic ways. Knowing the categories lets you guess a character's logic. The four big ones go from simple pictures up to the most common type, which mixes a meaning hint with a sound hint.")+
+ F("<ul><li><b>Pictograms 象形</b> — stylised pictures of things (日 sun, 木 tree, 馬 horse). Few, but the basis of others.</li><li><b>Simple ideograms 指事</b> — abstract indicators (上 up, 下 down, 一二三).</li><li><b>Associative compounds 会意</b> — combine pictographs for a new meaning (e.g. 尖 'small over big' = point).</li><li><b>Semantic-phonetic compounds 形声</b> — a <b>meaning part (形旁)</b> + a <b>sound part (声旁)</b>. <b>Over 80%</b> of characters are this type (e.g. 鯨 = 魚 fish-meaning + 京 jīng-sound = 'whale').</li></ul>(The other two of the 六书 are 转注 mutual explanation and 假借 phonetic loan.)")},
+
+{c:"chi",q:"Traditional Chinese belief: Tian (天) worship and ancestor worship",a:
+ P("Before the organised religions, the core Chinese belief centred on <b>Tian (Heaven)</b> — the sky seen as the ultimate source and controller of nature and fate — plus deep respect for <b>ancestors</b>. These ideas are baked into the language itself.")+
+ A("treating 'the sky/Heaven' as the big boss of the universe (like saying 'Heaven knows', 'thank Heaven'), and treating dead family members as still watching over you.")+
+ F("<b>Tian 天</b> = sky / nature / heaven / deity all at once — the aloft source and controller of weather and fate (天帝, 皇天上帝). Seen in idioms: 天下 (under heaven), 天灾 (sky-disaster), 天知道 (Heaven knows). <b>Ancestor worship</b> deifies heroic ancestors (祭祖; the Qingming Festival 清明). Also the <b>dragon</b> linked to thunder/rain.")},
+
+{c:"chi",q:"Confucianism vs Taoism (the two homegrown traditions)",a:
+ P("China's two native traditions pull in different directions. <b>Confucianism</b> is about fitting into society — duties, relationships, being a good person. <b>Taoism</b> is about stepping back and flowing with nature instead of forcing things.")+
+ A("Confucianism = the rulebook for being a good member of the family/team. Taoism = the advice to 'go with the current, don't fight the river'.")+
+ F("<b>Confucianism</b> (孔子): 仁 ren (benevolence), 恕 empathy, 诚 honesty, 孝 filial piety; the <b>三纲五常</b> (3 bonds & 5 constant virtues). Debated as philosophy vs religion. <b>Taoism</b> (道教): texts <i>Daodejing 道德经</i> (Laozi), <i>Zhuangzi</i>; key ideas 道 Tao, 气 qi, 阴阳 yin-yang, <b>无为 wú wéi (non-action)</b>; plus alchemy (炼丹) and 风水 feng shui.")},
+
+{c:"chi",q:"Buddhism in China — the 3 schools/branches",a:
+ P("Buddhism came to China from India and split into three branches that entered by different routes and regions. Each is tied to a region and language, and Buddhism deeply shaped Chinese language, art and thought.")+
+ A("the same religion arriving through three different doors — a main front door (most of China), a side door from the south, and a mountain door from Tibet.")+
+ F("<ul><li><b>Mahayana 大乘 / 汉传佛教</b> — 'Chinese Buddhism', entered under the Han (White Horse Temple); the mainstream.</li><li><b>Theravada 上座部 / 南传佛教</b> — 'Southern Buddhism', ~7th c., border areas of Yunnan.</li><li><b>Vajrayana 密宗 / 藏传佛教</b> — Tibetan Buddhism, ~7th c.</li></ul>Impact on the language: 世界 (world), 执着 (obsession), 障碍 (obstacle), 烦恼 (annoyance), 轮回 (samsara/reincarnation) are all Buddhist-origin words.")},
+
+{c:"chi",q:"Cultural interaction: Islam in China & loanwords",a:
+ P("China's culture has always absorbed outside influences. Islam arrived very early via trade and diplomacy, and over the centuries Chinese borrowed huge numbers of foreign concepts — many through Japanese-coined translations during modernisation.")+
+ F("<b>Islam</b> reached China soon after its founding: in <b>651 (Tang)</b> an embassy from the caliphate (大食 dàshí) under Uthman was sent to China; it spread through trade. <b>Loanwords</b>: many modern abstract terms (思想 thought, 资本 capital, 选举 election, 哲学 philosophy, 经验 experience, 政党 political party) were re-imported via Japanese kanji translations of Western ideas. Lesson: Chinese culture continually interacts with and absorbs other cultures.")},
+
+/* ===================== DISTRIBUTED SYSTEMS (Elections + Sockets) ===================== */
+{c:"sys",q:"Election algorithms: the Bully algorithm",a:
+ P("Sometimes the group needs to pick a single 'coordinator' (e.g. after the old one crashes). An election algorithm chooses one — usually the live process with the highest ID. The Bully algorithm lets the biggest surviving process 'bully' its way to the top.")+
+ A("the most senior person in the room automatically takes charge; if anyone more senior is present they say 'I'll take it', otherwise the senior-most announces they're now the boss.")+
+ F("When a process notices the coordinator is dead, it sends an <b>ELECTION</b> message to all processes with <b>higher IDs</b>. If none answer → it wins and sends a <b>COORDINATOR</b> message to everyone. If a higher one answers (<b>OK</b>), it takes over and the first process drops out. <b>Result:</b> the highest-ID live process always wins. Costly in messages (O(N²) worst case).")},
+
+{c:"sys",q:"Election algorithms: the Ring algorithm",a:
+ P("Another way to elect a coordinator when processes are arranged in a logical ring. An election message travels around the ring collecting IDs; whoever is highest wins, and the news circulates back around.")+
+ A("passing a clipboard around a circle — everyone adds their name, and when it comes back you can all see who's the highest-ranked, who becomes leader.")+
+ F("Processes form a <b>logical ring</b>. A starter sends an <b>ELECTION</b> message around, each node appends its ID. When it returns to the starter, the <b>highest ID</b> in the list is the new coordinator; a <b>COORDINATOR</b> message then circulates to inform everyone. Compare with <b>Token Ring</b> mutual exclusion (a token circulates; holder may enter the critical section).")},
+
+{c:"sys",q:"Socket communication + RPC / RMI (how processes talk)",a:
+ P("The lowest level of network communication is the <b>socket</b> — an endpoint a process opens to send/receive bytes. On top of that, RPC/RMI hide the messaging so a remote call <i>looks</i> like a normal local function/method call.")+
+ A("a socket is the phone jack and raw call; RPC/RMI is a smart assistant who places the call for you so it feels like you just spoke to someone in the same room.")+
+ FIG(SVG_SOCK,"TCP sockets: server socket→bind→listen→accept; client socket→connect; then read/write")+
+ F("<b>Socket steps</b> — server: <b>socket → bind → listen → accept</b>; client: <b>socket → connect</b>; then both <b>read/write → close</b> (connect/listen/accept are skipped for connectionless UDP). Transport: <b>TCP</b> (connection-oriented, ordered, reliable — like a phone call) vs <b>UDP</b> (datagram, no setup, cheaper, less reliable — like posting letters). <b>RPC</b> = Remote Procedure Call; <b>RMI</b> = Remote Method Invocation (object-oriented RPC, e.g. Java) — both use <b>stubs/proxies + marshalling</b> to hide the network.")},
+];
+
+/* ---------- MORE EXERCISES (variations on each course's worked examples) ----------
+   Each: {c, q, steps, answer, study}  — study = which part to revise. */
+const PRACTICE_DRIVE=[
+/* ---- MACHINE LEARNING ---- */
+{c:"ml",q:"KNN distance: point A = (sweetness 2, crunchiness 9), point B = (sweetness 9, crunchiness 3). Find both the Euclidean and the Manhattan distance.",
+ steps:"<b>Euclidean</b> = √[(Δsweet)² + (Δcrunch)²]. Δsweet = 2−9 = −7; Δcrunch = 9−3 = 6.<br>= √[(−7)² + 6²] = √[49 + 36] = √85 ≈ 9.22.<br><b>Manhattan</b> = |Δsweet| + |Δcrunch| = |−7| + |6| = 7 + 6 = 13.",
+ answer:"Euclidean ≈ 9.22 (√85); Manhattan = 13",
+ study:"ML Lecture 3 — KNN, the 'Calculating Distance' slides (Euclidean vs Manhattan)."},
+{c:"ml",q:"You have 100 training examples and want a starting K for KNN that avoids voting ties in a 2-class problem. What K do you pick?",
+ steps:"Heuristic: K ≈ √(number of training examples) = √100 = 10. But for a 2-class vote you want an <b>odd</b> K to avoid 5–5 ties, so round to the nearest odd number.",
+ answer:"K = 9 (≈ √100 = 10, made odd to avoid ties)",
+ study:"ML Lecture 3 — KNN, 'Choosing Appropriate K' + Min-Max normalization slides."},
+{c:"ml",q:"Confusion matrix: a model gives TP = 40, FP = 10, FN = 20, TN = 30. Compute accuracy, precision, recall and F1.",
+ steps:"Total = 40+10+20+30 = 100.<br><b>Accuracy</b> = (TP+TN)/total = (40+30)/100 = 0.70.<br><b>Precision</b> = TP/(TP+FP) = 40/50 = 0.80.<br><b>Recall</b> = TP/(TP+FN) = 40/60 ≈ 0.667.<br><b>F1</b> = 2PR/(P+R) = 2(0.8·0.667)/(0.8+0.667) = 1.0672/1.467 ≈ 0.727.",
+ answer:"Accuracy 0.70, Precision 0.80, Recall ≈ 0.67, F1 ≈ 0.73",
+ study:"ML Lecture 1 / ML-NOTES — Evaluation Metrics (confusion matrix, the 4 formulas)."},
+{c:"ml",q:"Decision tree: a node has 8 samples — 4 'yes' and 4 'no'. What is its entropy (in bits)?",
+ steps:"Entropy H = −Σ pᵢ·log₂(pᵢ). Here p(yes)=4/8=0.5, p(no)=0.5.<br>H = −(0.5·log₂0.5 + 0.5·log₂0.5) = −(0.5·(−1) + 0.5·(−1)) = −(−1) = 1.",
+ answer:"1 bit (maximum impurity — a perfectly mixed node)",
+ study:"ML Lecture 5 — Decision Trees, the Entropy & Information Gain slides."},
+{c:"ml",q:"Decision tree: a split produces Branch A = 3 yes / 0 no and Branch B = 0 yes / 5 no. What is the entropy of each branch, and is the information gain high or low?",
+ steps:"A pure branch (all one class) has entropy 0: H = −(1·log₂1) = 0. Both branches are pure → both have entropy 0.<br>The parent was mixed (entropy > 0). Information gain = parent entropy − weighted child entropy = (positive) − 0 = the maximum possible.",
+ answer:"Each branch entropy = 0; information gain is the HIGHEST possible (perfect split)",
+ study:"ML Lecture 5 — Decision Trees, 'best attribute = highest information gain', ID3."},
+{c:"ml",q:"CNN: a 32×32 input image is convolved with a 5×5 filter, stride 1, no padding. What is the output feature-map size?",
+ steps:"Output size = (N − F)/stride + 1 per dimension. N=32, F=5, stride=1.<br>= (32 − 5)/1 + 1 = 27 + 1 = 28. Same for width and height.",
+ answer:"28 × 28",
+ study:"ML Lecture 9 — CNN, the Convolution slides (filter, stride, output size)."},
+{c:"ml",q:"Sigmoid: what is σ(0)? And if a logistic model outputs 0.3, what class does it predict at the 0.5 threshold?",
+ steps:"σ(z) = 1/(1+e^(−z)). At z=0: σ(0) = 1/(1+e⁰) = 1/(1+1) = 0.5.<br>Output 0.3 < 0.5 → predict the negative class (0 / False). 0.3 means an estimated 30% probability of the positive class.",
+ answer:"σ(0) = 0.5; output 0.3 → predict negative class (≈30% probability positive)",
+ study:"ML Lecture 7 — Logistic Regression, the Sigmoid Function slides."},
+{c:"ml",q:"Gradient descent: a weight is θ = 4, the cost's slope (gradient) there is +2, and the learning rate α = 0.1. What is θ after one update step?",
+ steps:"Update rule: θ := θ − α·gradient.<br>= 4 − 0.1·(+2) = 4 − 0.2 = 3.8. (Positive slope → step left/down, so θ decreases.)",
+ answer:"θ = 3.8",
+ study:"ML Lecture 6 — Linear Regression, the Gradient Descent slides (update rule, learning rate)."},
+{c:"ml",q:"PCA: you have 10-dimensional data and keep the top 3 principal components. What is the shape of the projection matrix W and of one projected point z?",
+ steps:"W is made of the top-K eigenvectors of the covariance matrix XᵀX. Each eigenvector has length = original dimension (10), and there are K=3 of them → W is 10×3.<br>Projection z = Wᵀ(x − m): Wᵀ is 3×10, (x−m) is 10×1 → z is 3×1.",
+ answer:"W is 10×3; each projected point z is 3-dimensional (3×1)",
+ study:"ML Lecture 2 — Unsupervised Learning, the PCA Algorithm slides (eigenvectors, z = Wᵀ(x−m))."},
+{c:"ml",q:"Naive Bayes idea check: why might P(class|features) become 0 for a test email, and how do you fix it?",
+ steps:"Naive Bayes multiplies P(featureᵢ|class). If a word never appeared with that class in training, its conditional probability is 0, and one 0 makes the whole product 0 (the zero-probability problem).<br>Fix: <b>Laplace (add-one) smoothing</b> — add a small count to every feature so nothing is exactly 0.",
+ answer:"A never-seen feature gives probability 0, zeroing the product → fix with Laplace smoothing",
+ study:"ML Lecture 3 — Naive Bayes (second half of the KNN & Naive Bayes lecture)."},
+/* ---- DISTRIBUTED SYSTEMS ---- */
+{c:"sys",q:"Cristian's algorithm: request sent at T0 = 200 ms, server time in reply Ts = 900 ms, reply received at T1 = 260 ms. What should the client set its clock to, and what is the error bound?",
+ steps:"Tc = Ts + (T1 − T0)/2. Round trip = 260 − 200 = 60 ms; half = 30 ms.<br>Tc = 900 + 30 = 930 ms. Accuracy = ±(T1 − T0)/2 = ±30 ms.",
+ answer:"Set clock to 930 ms, accuracy ± 30 ms",
+ study:"Dist Systems T3 — Physical Time, Cristian's algorithm slides."},
+{c:"sys",q:"Berkeley algorithm: the master polls and gets clock offsets of +10, −20, and +40 ms (its own = 0). By how much does the master tell each node to adjust?",
+ steps:"Berkeley <b>averages</b> the times (including the master's). Average offset = (0 + 10 − 20 + 40)/4 = 30/4 = +7.5 ms. Each node is told to move toward the average: adjustment = average − that node's offset.<br>Master (0): +7.5; node +10: −2.5; node −20: +27.5; node +40: −32.5.",
+ answer:"Average = +7.5 ms; adjust master +7.5, and nodes by −2.5, +27.5, −32.5 respectively",
+ study:"Dist Systems T3 — Physical Time, Berkeley algorithm (internal synchronization by averaging)."},
+{c:"sys",q:"Vector clocks: process P (slot 1 of 3) has clock [2,4,1] and receives a message stamped [5,1,3]. What is P's new clock?",
+ steps:"On receive: element-wise MAX of the two vectors, then +1 to your own slot.<br>max([2,4,1],[5,1,3]) = [5,4,3]. Increment slot 1 (P's own): 5→6.",
+ answer:"[6,4,3]",
+ study:"Dist Systems T4 — Logical Time, Vector clocks (VC1–VC3 update rules)."},
+{c:"sys",q:"Lamport clocks: P1's clock is 7 when it sends a message. P2's clock is 3 when the message arrives. What does P2 set its clock to for the receive event?",
+ steps:"Lamport receive rule: L := max(local, timestamp) then +1.<br>= max(3, 7) + 1 = 7 + 1 = 8.",
+ answer:"8",
+ study:"Dist Systems T4 — Logical Time, Lamport's algorithm (LC1–LC3)."},
+{c:"sys",q:"Quorum consensus: N = 7 replicas. You want a read quorum NR = 3. What is the smallest write quorum NW that keeps reads and writes consistent?",
+ steps:"Rules: NR + NW > N (read sees latest write) AND NW > N/2 (no two writes at once). From NR+NW>N: NW > 7−3 = 4 → NW ≥ 5. Check NW>N/2 = 3.5 → ≥4. Both satisfied by 5.",
+ answer:"NW = 5",
+ study:"Dist Systems — Replication & Consistency, quorum-based protocols (NR+NW>N, NW>N/2)."},
+{c:"sys",q:"Bully election: live processes have IDs 2, 4, 5, 7. Process 4 notices the coordinator (was 7) has crashed and starts an election. Who becomes the new coordinator?",
+ steps:"4 sends ELECTION to higher IDs (5 and 7). 7 is down; 5 replies OK and starts its own election to higher IDs (7). 7 is down, none reply, so 5 wins and broadcasts COORDINATOR.",
+ answer:"Process 5 (the highest-ID live process)",
+ study:"Dist Systems T5 — Mutual Exclusion & Election, the Bully algorithm."},
+/* ---- ENGINEERING ETHICS ---- */
+{c:"eth",q:"Risk magnitude: a dam has a 1-in-2,000 chance per year of a failure causing $80,000,000 in losses. What is the expected loss per year (risk magnitude)?",
+ steps:"Risk = probability × loss = (1/2000) × 80,000,000 = 80,000,000 / 2000 = 40,000.",
+ answer:"$40,000 per year",
+ study:"Ethics Ch2 — Risks, Safety & Responsibility (Risk = probability × loss)."},
+{c:"eth",q:"Identify the risk source: a bridge collapses because routine inspections were skipped and a corroded cable was never replaced. Which of the 3 sources is this, and name another source with a case.",
+ steps:"Skipped inspection + ignored corrosion = a <b>human factor</b> (negligence in operation/maintenance). The other two: <b>technical factors</b> (e.g. Boeing 737 MAX sensor) and <b>external environment</b> (e.g. Fukushima earthquake).",
+ answer:"Human factors; cf. technical (737 MAX) and external environment (Fukushima)",
+ study:"Ethics Ch2 — the 3 sources of engineering risk + their cases."},
+{c:"eth",q:"Scenario: an engineer stays silent about a flaw because the manager outranks them and the team has already agreed to ship. Name the two 'obstacles to responsible behaviour' at play, and one ethical theory to argue they should speak up.",
+ steps:"'Manager outranks me' = <b>uncritical acceptance of authority</b>; 'the team already agreed' = <b>groupthink</b>. To argue for speaking up: <b>Kant</b> (don't deceive users / treat the public merely as a means) or <b>utilitarianism</b> (greatest safety for the greatest number).",
+ answer:"Uncritical acceptance of authority + groupthink; argue via Kant or utilitarianism",
+ study:"Ethics Ch4 — the 8 obstacles (Challenger/Columbia); Ch6 — the 3 ethical theories."},
+{c:"eth",q:"Spot the citation problem: a researcher reads a key paper that disagrees with their conclusion and deliberately leaves it out of the references to look more original. Which of the 7 bad citation behaviours is this?",
+ steps:"Leaving out inconvenient literature on purpose to appear more novel = <b>deliberately omitting citations</b> (#3 on the list).",
+ answer:"Deliberately omitting citations (#3)",
+ study:"Ethics Ch6 — the 7 citation behaviours to avoid (academic integrity)."},
+/* ---- CHINESE CULTURE ---- */
+{c:"chi",q:"Number formation: write out the spoken structure of 86 in Chinese, then in French, and say which is more 'regular'.",
+ steps:"Chinese: 八十六 = literally 8×10 + 6 — directly matches the digits, fully regular. French: quatre-vingt-six = 4×20 + 6 (vigesimal), irregular. Regularity helps children learn arithmetic faster.",
+ answer:"Chinese 八十六 = 8×10+6 (regular); French = 4×20+6 (irregular) — Chinese is more regular",
+ study:"Chinese Culture Lecture 2 — Effect of Language on Numerical Abilities (the '97' example)."},
+{c:"chi",q:"Identify the formation principle (六书): for 日 (sun), 上 (up), and 鯨 (whale = 魚 + 京 jīng).",
+ steps:"日 is a stylised picture of the sun → <b>pictogram 象形</b>. 上 is an abstract indicator of position → <b>simple ideogram 指事</b>. 鯨 = meaning part 魚 'fish' + sound part 京 'jīng' → <b>semantic-phonetic compound 形声</b> (the &gt;80% type).",
+ answer:"日 = pictogram; 上 = simple ideogram; 鯨 = semantic-phonetic compound",
+ study:"Chinese Culture Lecture 4 — Principles of Formation (象形 / 指事 / 会意 / 形声)."},
+{c:"chi",q:"FTR classification: a language always uses a special future tense ('it WILL rain'). Is it strong or weak FTR, and what does the theory predict about its speakers' saving?",
+ steps:"Forcing a distinct future marker = <b>strong FTR</b> (like English, Italian). The theory: marking the future as separate makes it feel distant → speakers save LESS, smoke more, more obesity. (Weak-FTR like German/Mandarin → save more, healthier.)",
+ answer:"Strong FTR → predicted to save less and have worse health behaviours",
+ study:"Chinese Culture Lecture 2 — Effect of Language on Economic Behaviour (Chen, strong vs weak FTR)."},
+{c:"chi",q:"Homophone luck: explain why gifts of clocks (送钟) are avoided, using the homophone idea.",
+ steps:"谐音 = luck/taboo by similar sound. 送钟 (sòng zhōng, 'give a clock') sounds like 送终 (sòng zhōng, 'attend a funeral / see someone off in death') → unlucky, so clocks aren't given as gifts. Same logic as loving 8 (发, get rich) and avoiding 4 (死, die).",
+ answer:"送钟 'give a clock' sounds like 送终 'attend a death' → taboo (a homophone/谐音 avoidance)",
+ study:"Chinese Culture Lecture 3/overview — 谐音 homophones, luck and taboos (8 vs 4)."},
+];
+
+/* ---------- MORE QUIZ QUESTIONS (new topics) ---------- */
+const QUIZ_DRIVE=[
+{c:"ml",q:"What makes Naive Bayes 'naive'?",opts:["It is slow","It assumes features are independent given the class","It needs no data","It only works on images"],correct:1},
+{c:"ml",q:"The learning rate α in gradient descent controls…",opts:["The number of features","The size of each step downhill","The number of classes","The data scale"],correct:1},
+{c:"ml",q:"A model that scores great on training data but poorly on new data is…",opts:["Underfitting","Overfitting","Well-regularized","Unsupervised"],correct:1},
+{c:"ml",q:"Why must a neural network's activation function be non-linear?",opts:["To run faster","Otherwise stacked layers collapse into one linear model","To save memory","To avoid labels"],correct:1},
+{c:"ml",q:"A single perceptron famously CANNOT solve which problem?",opts:["AND","OR","XOR","NOT"],correct:2},
+{c:"ml",q:"In a CNN, max pooling is used mainly to…",opts:["Add colour","Downsample / shrink the feature map","Label the image","Increase parameters"],correct:1},
+{c:"ml",q:"Backpropagation computes gradients using the…",opts:["Pythagorean theorem","Chain rule","Bayes rule","Median"],correct:1},
+{c:"sys",q:"In the Bully algorithm, the new coordinator is the…",opts:["Lowest-ID live process","Highest-ID live process","First to start the election","Random process"],correct:1},
+{c:"sys",q:"For a TCP (connection-oriented) server, which call sequence is correct?",opts:["socket → connect → read","socket → bind → listen → accept","bind → socket → close","listen → connect → bind"],correct:1},
+{c:"sys",q:"RMI differs from RPC mainly in that RMI is…",opts:["Connectionless","Object-oriented (invokes methods on remote objects)","Only for files","Slower by design"],correct:1},
+{c:"chi",q:"Over 80% of Chinese characters are which formation type?",opts:["Pictograms 象形","Simple ideograms 指事","Semantic-phonetic compounds 形声","Loan characters 假借"],correct:2},
+{c:"chi",q:"Which is the correct order of script evolution?",opts:["Seal → Oracle Bone → Regular","Oracle Bone → Seal → Clerical → Regular","Regular → Clerical → Seal","Clerical → Oracle Bone → Seal"],correct:1},
+{c:"chi",q:"Which Buddhist branch is 'Tibetan Buddhism'?",opts:["Mahayana 汉传","Theravada 南传","Vajrayana 密宗 / 藏传","None"],correct:2},
+{c:"chi",q:"The Taoist idea of 'non-action / go with nature' is…",opts:["仁 ren","无为 wú wéi","孝 filial piety","三纲五常"],correct:1},
+];
+
+/* ---------- MORE CONFUSABLE PAIRS (new topics) ---------- */
+const PAIRS_DRIVE=[
+{c:"ml",title:"Overfitting vs Underfitting",
+ a:{name:"Overfitting",txt:"Too complex — memorises training noise. Great on train, poor on test (HIGH variance). Fix: regularization, more data."},
+ b:{name:"Underfitting",txt:"Too simple — misses the real pattern. Poor on both train and test (HIGH bias). Fix: a richer model / more features."},
+ tip:"Overfit = memorised the answer key. Underfit = didn't study. You want the general method in between."},
+{c:"ml",title:"Batch GD vs Stochastic GD",
+ a:{name:"Batch gradient descent",txt:"Uses ALL examples per step. Smooth, reaches the global min for linear regression, but slow on big data."},
+ b:{name:"Stochastic GD (SGD)",txt:"Updates on ONE example per step. Starts improving immediately and is fast, but jitters and may not settle exactly at the minimum."},
+ tip:"Batch = careful full survey each step. SGD = quick noisy steps that get close fast."},
+{c:"ml",title:"Convolution vs Pooling (CNN)",
+ a:{name:"Convolution",txt:"Slides learnable filters to DETECT patterns (edges, shapes). Produces feature maps; shares parameters across the image."},
+ b:{name:"Max pooling",txt:"Downsamples — keeps the strongest value in each region to SHRINK the map. No learnable weights."},
+ tip:"Conv finds features; pooling shrinks. Conv learns; pooling just summarises."},
+{c:"sys",title:"Bully vs Ring election",
+ a:{name:"Bully algorithm",txt:"Each process messages HIGHER IDs; the highest live one wins and announces itself. Can be O(N²) messages."},
+ b:{name:"Ring algorithm",txt:"An ELECTION message circulates a logical ring collecting IDs; highest ID wins, then a COORDINATOR message circulates."},
+ tip:"Both elect the highest ID. Bully = direct challenges; Ring = pass it around the circle."},
+{c:"sys",title:"TCP vs UDP",
+ a:{name:"TCP (connection-oriented)",txt:"Sets up a connection; ordered, reliable delivery (a phone call). Uses connect/listen/accept."},
+ b:{name:"UDP (connectionless)",txt:"No setup; fast, cheaper, may lose/reorder packets (posting letters). Skips connect/listen/accept."},
+ tip:"TCP = reliable call. UDP = fire-and-forget letters."},
+{c:"chi",title:"Confucianism vs Taoism",
+ a:{name:"Confucianism",txt:"Fit into society: 仁 benevolence, 孝 filial piety, relationships & duties (三纲五常). Order and harmony."},
+ b:{name:"Taoism",txt:"Step back, follow nature: 道 Tao, 阴阳 yin-yang, 无为 non-action; plus feng shui & alchemy."},
+ tip:"Confucianism = be a good member of society. Taoism = flow with nature, don't force."},
+{c:"chi",title:"Mahayana vs Theravada",
+ a:{name:"Mahayana 大乘 / 汉传",txt:"'Chinese Buddhism' — the mainstream branch, entered under the Han (White Horse Temple)."},
+ b:{name:"Theravada 上座部 / 南传",txt:"'Southern Buddhism' — entered ~7th c. into the border areas of Yunnan."},
+ tip:"Mahayana = the big mainstream of China; Theravada = southern, Yunnan border. (Vajrayana = Tibetan.)"},
+];
+
 const COURSES = {
   chi:{name:"Chinese Culture",color:"var(--c-chi)",hex:"#9c4221"},
   eth:{name:"Engineering Ethics",color:"var(--c-eth)",hex:"#2c5f4f"},
   ml:{name:"Machine Learning",color:"var(--c-ml)",hex:"#5b3a8c"},
   sys:{name:"Distributed Systems",color:"var(--c-sys)",hex:"#1f5673"},
 };
-const ALLCARDS = CARDS.concat(NEW_CARDS);
-const ALLPRACTICE = PRACTICE.concat(PRACTICE_NEW);
-const ALLQUIZ = QUIZ.concat(QUIZ_NEW);
-const ALLPAIRS = PAIRS.concat(PAIRS_NEW);
+const ALLCARDS = CARDS.concat(NEW_CARDS, CARDS_DRIVE);
+const ALLPRACTICE = PRACTICE.concat(PRACTICE_NEW, PRACTICE_DRIVE);
+const ALLQUIZ = QUIZ.concat(QUIZ_NEW, QUIZ_DRIVE);
+const ALLPAIRS = PAIRS.concat(PAIRS_NEW, PAIRS_DRIVE);
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 
 /* ---------- tabs ---------- */
@@ -835,6 +1160,7 @@ function renderPractice(){
         <div class="solution" id="${id}" style="display:none">
           <span class="label facts">Step by step</span><div>${p.steps}</div>
           <div class="ansline">Answer: ${p.answer}</div>
+          ${p.study?`<div style="margin-top:10px;padding-top:10px;border-top:1.5px dashed var(--line)"><span class="label why">Study this</span> <span style="font-size:14px">${p.study}</span></div>`:''}
         </div></div>`;
     });
   });
@@ -931,14 +1257,18 @@ const MAPS={
    "<b>KNN</b> — supervised classification; reuses distance (tomato/green-bean)",
    "<b>SVM</b> — hyperplane, margin, support vectors",
    "<b>Decision trees</b> — entropy, information gain, ID3",
-   "<b>Linear regression</b> — fit a line, squared-error cost function",
-   "<b>Logistic regression</b> — sigmoid S-curve, predicts True/False"]},
+   "<b>Naive Bayes</b> — Bayes rule, conditional independence",
+   "<b>Linear regression</b> — fit a line, squared-error cost, gradient descent",
+   "<b>Logistic regression</b> — sigmoid S-curve, predicts True/False",
+   "<b>Generalization & regularization</b> — overfitting/underfitting, L1/L2",
+   "<b>Neural networks (MLP)</b> — perceptron, XOR, activation, backprop",
+   "<b>Deep learning: CNN</b> — convolution, pooling, the 3 image properties"]},
  sys:{name:"Distributed Systems",hex:"#1f5673",lead:"Note the correction: study physical time BEFORE logical time \u2014 logical time exists because physical clocks can't sync perfectly.",
    steps:["<b>Fundamentals & models</b> — definition, 8 challenges, 8 transparencies, architecture, 3 models",
-   "<b>Communication</b> — sockets, RPC / RMI",
+   "<b>Communication</b> — sockets (socket/bind/listen/accept), TCP vs UDP, RPC / RMI",
    "<b>Physical time FIRST</b> — drift/skew, Cristian's, Berkeley, NTP",
    "<b>Logical time</b> — happened-before, Lamport, vector clocks",
-   "<b>Mutual exclusion & elections</b> — needs event ordering",
+   "<b>Mutual exclusion & elections</b> — Ricart-Agrawala, token ring; Bully & Ring elections",
    "<b>Replication, consistency & file systems</b> — consistency models, quorum, NFS, GFS"]},
  eth:{name:"Engineering Ethics",hex:"#2c5f4f",lead:"Follow the chapter numbers \u2014 they already build in order. Academic integrity is standalone.",
    steps:["<b>Ch 1</b> — Engineering & Ethics: 伦理 (Lun/Li), norms, 7 dimensions",
@@ -954,6 +1284,8 @@ const MAPS={
    "<b>Language & values</b> — face wants, 面子/脸, Confucian",
    "<b>Regional cultures</b> — environment + history; Bashu etc.",
    "<b>Varieties of Chinese</b> — language vs dialect, word differences",
+   "<b>Chinese characters</b> — writing systems, script evolution, 六书 formation",
+   "<b>Religion & cultural interaction</b> — Tian worship, Confucianism/Taoism, 3 Buddhist schools, Islam",
    "<b>Homophones & taboos</b> — 8 vs 4 (lightest, save for last)"]},
 };
 function renderMap(){
