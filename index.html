@@ -1014,16 +1014,268 @@ const PAIRS_DRIVE=[
  tip:"Mahayana = the big mainstream of China; Theravada = southern, Yunnan border. (Vajrayana = Tibetan.)"},
 ];
 
+/* ============================================================
+   EXAM PREP — structured to the teachers' actual exam formats.
+   ML exam: 35 MCQ + 15 True/False + 5 short-answer (incl. info-gain
+   calc & KNN k=3). Ethics exam: 10 MCQ + 10 T/F + 4 case analyses
+   (closed-book, 120 min). Distributed Systems: topic list the
+   teacher flagged. True/False are quiz items with opts True/False.
+   ============================================================ */
+
+const SVG_RNN="<svg viewBox='0 0 540 150' width='100%' style='max-width:540px' xmlns='http://www.w3.org/2000/svg'>"+
+ "<g font-family='Courier New,monospace' font-size='10' text-anchor='middle'>"+
+ "<g><rect x='30' y='55' width='18' height='18' fill='#c0392b'/><rect x='30' y='30' width='18' height='18' fill='#5b3a8c'/><rect x='30' y='5' width='18' height='18' fill='#1f5673'/><text x='39' y='95'>one-to-one</text><text x='39' y='110' fill='#6b5f4e'>(plain net)</text></g>"+
+ "<g><rect x='120' y='55' width='18' height='18' fill='#c0392b'/><rect x='110' y='30' width='18' height='18' fill='#5b3a8c'/><rect x='132' y='30' width='18' height='18' fill='#5b3a8c'/><rect x='110' y='5' width='18' height='18' fill='#1f5673'/><rect x='132' y='5' width='18' height='18' fill='#1f5673'/><text x='130' y='95'>one-to-many</text><text x='130' y='110' fill='#6b5f4e'>(captioning)</text></g>"+
+ "<g><rect x='210' y='55' width='18' height='18' fill='#c0392b'/><rect x='232' y='55' width='18' height='18' fill='#c0392b'/><rect x='221' y='30' width='18' height='18' fill='#5b3a8c'/><rect x='221' y='5' width='18' height='18' fill='#1f5673'/><text x='230' y='95'>many-to-one</text><text x='230' y='110' fill='#6b5f4e'>(sentiment)</text></g>"+
+ "<g><rect x='320' y='55' width='18' height='18' fill='#c0392b'/><rect x='342' y='55' width='18' height='18' fill='#c0392b'/><rect x='320' y='30' width='18' height='18' fill='#5b3a8c'/><rect x='342' y='30' width='18' height='18' fill='#5b3a8c'/><rect x='320' y='5' width='18' height='18' fill='#1f5673'/><rect x='342' y='5' width='18' height='18' fill='#1f5673'/><text x='340' y='95'>many-to-many</text><text x='340' y='110' fill='#6b5f4e'>(translation)</text></g>"+
+ "<g><rect x='430' y='55' width='18' height='18' fill='#c0392b'/><rect x='452' y='55' width='18' height='18' fill='#c0392b'/><rect x='474' y='55' width='18' height='18' fill='#c0392b'/><rect x='430' y='5' width='18' height='18' fill='#1f5673'/><rect x='452' y='5' width='18' height='18' fill='#1f5673'/><rect x='474' y='5' width='18' height='18' fill='#1f5673'/><text x='461' y='95'>many-to-many</text><text x='461' y='110' fill='#6b5f4e'>(per-frame)</text></g>"+
+ "<text x='270' y='138' fill='#6b5f4e'>red = input · purple = hidden state · blue = output</text></g></svg>";
+
+const SVG_SPIDER="<svg viewBox='0 0 540 150' width='100%' style='max-width:540px' xmlns='http://www.w3.org/2000/svg'>"+
+ "<g font-family='Iowan Old Style,Georgia,serif' font-size='11' text-anchor='middle'>"+
+ "<rect x='6' y='55' width='70' height='38' fill='#e9e0cd' stroke='#14110d' stroke-width='2'/><text x='41' y='78'>Seed URLs</text>"+
+ "<rect x='110' y='55' width='80' height='38' fill='#dce6ec' stroke='#14110d' stroke-width='2'/><text x='150' y='72'>URL</text><text x='150' y='86'>Frontier</text>"+
+ "<rect x='224' y='55' width='80' height='38' fill='#dce6ec' stroke='#14110d' stroke-width='2'/><text x='264' y='72'>Downloader</text><text x='264' y='86'>(fetch page)</text>"+
+ "<rect x='338' y='55' width='80' height='38' fill='#dce6ec' stroke='#14110d' stroke-width='2'/><text x='378' y='72'>Parser /</text><text x='378' y='86'>extract links</text>"+
+ "<rect x='452' y='12' width='82' height='38' fill='#d9c9e6' stroke='#14110d' stroke-width='2'/><text x='493' y='29'>Indexer →</text><text x='493' y='43'>Index/store</text>"+
+ "<g stroke='#14110d' stroke-width='1.5' fill='none' marker-end='url(#asp)'>"+
+ "<path d='M76 74 h32'/><path d='M190 74 h32'/><path d='M304 74 h32'/><path d='M418 70 C 440 64, 440 40, 450 34'/>"+
+ "<path d='M378 55 C 378 20, 200 20, 150 53'/></g>"+
+ "<text x='270' y='14' fill='#6b5f4e' font-family='Courier New,monospace' font-size='9.5'>new links loop back to the frontier</text>"+
+ "<defs><marker id='asp' markerWidth='7' markerHeight='7' refX='5' refY='3' orient='auto'><path d='M0 0 L6 3 L0 6 z' fill='#14110d'/></marker></defs></g></svg>";
+
+const CARDS_EXAM=[
+/* ===================== MACHINE LEARNING (advanced exam topics) ===================== */
+{c:"ml",q:"Bias vs variance (underfitting vs overfitting) — diagnosing from errors",a:
+ P("Two failure modes. <b>High bias</b> = the model is too simple, so it's wrong even on the training data (underfit). <b>High variance</b> = the model is too flexible, so it nails the training data but fails on new data (overfit).")+
+ A("high bias = a student who didn't learn the material (bad on practice AND exam). High variance = a student who memorised the practice answers (perfect on practice, lost on the real exam).")+
+ F("<b>Diagnose by comparing errors:</b> high <b>training</b> error → high bias (underfit). Low training error but high <b>test</b> error → high variance (overfit). <b>Regularization λ:</b> too large → underfit (high bias); too small → overfit (high variance). Fix overfit with more data, simpler model, or more regularization.")},
+
+{c:"ml",q:"SVM: the kernel trick and common kernels",a:
+ P("When data can't be split by a straight line, SVM secretly maps it into a higher-dimensional space where a flat separator <i>does</i> exist — without ever computing those new coordinates directly. That shortcut is the kernel trick.")+
+ A("crumpling a flat sheet of paper into 3D so two tangled ink colours can be sliced apart by a flat blade.")+
+ F("The <b>kernel trick</b> = implicitly map data to a higher-dimensional space using a kernel function, so non-linearly-separable data becomes linearly separable — without explicitly computing the mapping. Common kernels: <b>Gaussian (RBF)</b>, <b>Polynomial</b>, <b>Sigmoid</b> (and linear). For a hard-margin SVM the max margin = <b>2/‖ω‖</b>, so maximising the margin = minimising ‖ω‖.")},
+
+{c:"ml",q:"MLP details: chain rule, backprop, and the XOR fact",a:
+ P("An MLP trains with one forward pass (predict) and backward passes (assign blame to each weight via the chain rule). One key exam fact: a single linear model can't solve XOR — you need a hidden layer.")+
+ F("<ul><li>For a unit z = ω₁x₁ + ω₂x₂ + b, the partial derivative <b>∂z/∂x₂ = ω₂</b> (the chain rule building block).</li><li>Training: <b>one forward pass, then one backward pass</b> per step (not several backward passes).</li><li>A <b>linear</b> model <b>cannot</b> separate XOR; an MLP with a hidden layer can.</li><li>MLP layers = <b>input, hidden, output</b> (there is no 'projection layer'); MLP can have <b>multiple outputs</b>; it's a <b>universal function approximator</b>; being feedforward it has <b>no loops/cycles</b>.</li></ul>")},
+
+{c:"ml",q:"CNN math: channels and the output-size formula",a:
+ P("Two things the exam tests on convolutions: how many channels come out, and how big the output is. Channels out = number of filters. Output side comes from a formula with padding and stride.")+
+ F("<b>Channels:</b> each filter must match the input's channel depth; the number of <b>output channels = number of filters</b>. (A 6×6×3 image with two 3×3×3 filters → output has <b>2</b> channels.)<br><b>Output side = ⌊(N + 2P − F)/S⌋ + 1</b>, where N = input side, F = filter side, P = padding, S = stride.")+
+ EX("6×6 input, 3×3 filter: with <b>P=1, S=1</b> → (6+2−3)/1+1 = <b>6</b>. With <b>P=0, S=2</b> → ⌊(6−3)/2⌋+1 = ⌊1.5⌋+1 = <b>2</b>.")},
+
+{c:"ml",q:"RNNs and the 4 input→output shapes",a:
+ P("A Recurrent Neural Network processes sequences by carrying a 'hidden state' from one step to the next, so earlier inputs influence later outputs. Tasks differ by how many inputs map to how many outputs.")+
+ A("reading a sentence word by word while remembering what came before, so your understanding of word 10 depends on words 1–9.")+
+ FIG(SVG_RNN,"RNN shapes: one-to-one, one-to-many, many-to-one, many-to-many")+
+ F("<ul><li><b>one-to-one</b> — plain network (e.g. image → label).</li><li><b>one-to-many</b> — image → caption.</li><li><b>many-to-one</b> — sequence → single label (<b>sentiment classification</b>).</li><li><b>many-to-many</b> — translation, or per-frame video labelling.</li></ul>RNNs suffer from the <b>vanishing/exploding gradient</b> problem over long sequences.")},
+
+{c:"ml",q:"LSTM & GRU — solving the vanishing-gradient problem",a:
+ P("Plain RNNs forget long-range information because gradients shrink to nothing over many steps. LSTM and GRU add gates that let the network keep or discard information deliberately, preserving long-term memory.")+
+ A("a conveyor belt (the cell state) running through the whole sequence; gates decide what to drop on, take off, or read from the belt.")+
+ F("<b>LSTM</b> fixes vanishing gradients with a <b>memory cell (cell state)</b> + <b>gates</b>: <b>forget, input, output</b> gates. <b>GRU</b> is a lighter version with an <b>update gate</b> and a <b>reset gate</b> (no separate output gate). <b>ResNet</b> uses <b>residual/skip connections</b> to fix vanishing gradients in <i>deep</i> networks (it helps with vanishing, not only exploding).")},
+
+{c:"ml",q:"Transformers: self-attention & positional encoding",a:
+ P("Transformers process a whole sequence at once (not step-by-step), using self-attention so every token can directly 'look at' every other token. Because they have no built-in sense of order, they add positional information explicitly.")+
+ A("everyone in a meeting hearing everyone else at the same time (attention), with name-tags showing where each person sits (positional encoding), since otherwise order would be lost.")+
+ F("<b>Self-attention</b> lets each token weigh all others → captures long-range context in parallel. It has <b>no inherent notion of order</b> → fixed by <b>positional encoding</b>. Cost is <b>quadratic</b> in sequence length → reduce with <b>sparse / local-window attention</b>. <b>Multi-head attention</b> learns several relationship types at once.")},
+
+{c:"ml",q:"GPT vs BERT, and how large language models are trained",a:
+ P("Both are built on the Transformer but differ in direction and use. GPT reads left-to-right and generates text; BERT reads both directions and is used to understand text. GPT-style models learn by predicting the next token on huge unlabelled text.")+
+ F("<b>GPT</b> = <b>autoregressive</b>, left-to-right, <b>Transformer</b> architecture; great for <b>text generation/completion</b>; <b>GPT-3 trained by unsupervised next-token prediction</b> (self-supervised on unlabelled text). <b>BERT</b> = <b>bidirectional</b> (masked-language modelling), for understanding tasks — <b>not</b> autoregressive next-word prediction. <b>Language modelling</b> = predicting the next word.")},
+
+{c:"ml",q:"Ensembles: Bagging (and how it differs from Boosting)",a:
+ P("Instead of one model, train many and combine them. Bagging trains models in parallel on different random samples of the data and averages/votes — this mainly reduces variance (overfitting).")+
+ A("asking many independent people and taking the majority vote — individual mistakes cancel out.")+
+ F("<b>Bagging</b> (e.g. Random Forest): train each learner on a <b>different random subset</b> (bootstrap sample) of the data <b>in parallel</b>, then average/vote → reduces <b>variance</b>. <b>Boosting</b>: train learners <b>sequentially</b>, each focusing on the previous one's mistakes → reduces <b>bias</b>.")},
+
+/* ===================== DISTRIBUTED SYSTEMS (exam topic list) ===================== */
+{c:"sys",q:"Multicast ordering: FIFO vs Causal vs Total (read from a figure)",a:
+ P("When one sender multicasts messages to a group, you can guarantee different strengths of delivery order. The exam shows a figure of who-received-what-when and asks which ordering it satisfies.")+
+ A("group chat rules: FIFO = each person's own messages stay in order; Causal = a reply never shows before the message it answers; Total = everyone sees the exact same overall order.")+
+ F("<ul><li><b>FIFO ordering</b> — messages from the <b>same sender</b> are delivered in send order (different senders may interleave freely).</li><li><b>Causal ordering</b> — if m1 <i>happened-before</i> m2 (a reply to m1), everyone delivers m1 before m2. Causal ⇒ FIFO.</li><li><b>Total ordering</b> — <b>all</b> processes deliver <b>all</b> messages in the <b>same</b> order (even unrelated ones).</li></ul><b>How to read the figure:</b> check same-sender order (FIFO?) → check reply-after-cause everywhere (causal?) → check every process has the identical sequence (total?).")},
+
+{c:"sys",q:"Group communication: how to achieve atomicity (atomic multicast)",a:
+ P("Atomicity in group communication means a multicast is <b>all-or-nothing</b>: either every correct member of the group delivers the message, or none do — even if the sender crashes halfway.")+
+ A("a group email that's guaranteed to reach everyone on the list or nobody — never just half the team.")+
+ F("<b>Atomic multicast</b> = all-or-nothing delivery to all (correct) group members. Achieved by: members <b>buffer/hold-back</b> a message and only deliver once delivery to all is assured; if the sender fails, another member <b>re-transmits</b> so everyone gets it (or it's discarded everywhere). <b>Virtual synchrony</b> ties delivery to <b>group membership views</b> so all members agree on who received what. Often combined with <b>total ordering</b> → atomic + ordered multicast.")},
+
+{c:"sys",q:"Data-centric consistency models — identify one from an example",a:
+ P("A consistency model is the contract about how up-to-date and ordered reads of replicated data must be. The exam gives an example execution and asks which model it matches.")+
+ F("Quick identification guide (strong → weak):<ul><li><b>Strict</b> — a read returns the result of the <b>most recent</b> write instantly (needs a global clock; ideal/impossible).</li><li><b>Sequential</b> — all processes see <b>all</b> writes in the <b>same</b> single order (consistent with each process's own program order). No real time required.</li><li><b>Causal</b> — only <b>causally-related</b> writes must be seen in the same order; concurrent writes may differ across processes.</li><li><b>FIFO/PRAM</b> — writes by the <b>same</b> process are seen in order; others may reorder.</li><li><b>Eventual</b> — if updates stop, all replicas eventually converge.</li></ul><b>Tip:</b> different orders but causality respected = <b>causal</b>; one global order all agree on = <b>sequential</b>.")},
+
+{c:"sys",q:"Interprocess communication: which socket code is the CLIENT vs the SERVER?",a:
+ P("Exam code question: given a snippet, decide if it's the client or server side. The giveaway is the sequence of socket calls — the server <i>waits</i> for connections, the client <i>initiates</i> one.")+
+ FIG(SVG_SOCK,"Server: socket→bind→listen→accept. Client: socket→connect. Then read/write→close.")+
+ F("<b>SERVER side</b> calls: <b>socket() → bind() → listen() → accept()</b> (it binds a known port and waits). <b>CLIENT side</b> calls: <b>socket() → connect()</b> (it reaches out to the server's address). After the link: both <b>read()/write()</b> (or send/recv) then <b>close()</b>. <b>Memory hook:</b> see <b>bind/listen/accept</b> → server; see <b>connect</b> → client. (UDP skips connect/listen/accept and uses sendto/recvfrom.)")},
+
+{c:"sys",q:"Distributed file system: mount / unmount (and the superblock)",a:
+ P("To use a remote file system, you 'mount' it — attach it into your local directory tree so remote files look local. Unmounting detaches it. (The superblock is filesystem metadata you were told you can skip the deep detail of.)")+
+ F("<b>Mount</b> = attach a (remote) file system at a <b>mount point</b> in the local namespace so its files are accessed as if local (e.g. NFS mounts a remote directory; a <b>VFS</b> layer hides local-vs-remote). <b>Unmount</b> = detach it. NFS keeps the <b>server stateless</b> → easy crash recovery. <i>(Superblock = on-disk structure holding filesystem-wide metadata — flagged as skippable for the QCM, just recognise the term.)</i>")},
+
+{c:"sys",q:"Failure recovery & concurrency control",a:
+ P("Two reliability tools. <b>Failure recovery</b> = how the system returns to a correct state after a crash. <b>Concurrency control</b> = how simultaneous operations are kept from corrupting shared data.")+
+ F("<b>Failure recovery:</b> <ul><li><b>Backward recovery</b> — roll back to a saved <b>checkpoint</b> / use a <b>log</b> (most common).</li><li><b>Forward recovery</b> — move to a new correct state (needs known error types).</li><li><b>Two-Phase Commit (2PC)</b> — a coordinator ensures a distributed transaction <b>commits everywhere or aborts everywhere</b> (atomic).</li></ul><b>Concurrency control:</b> <b>locking</b> (two-phase locking), <b>timestamp ordering</b>, and <b>optimistic</b> concurrency control — all aim to keep concurrent transactions <b>serializable</b> (equivalent to some serial order).")},
+
+{c:"sys",q:"Web search: the spider / crawler architecture",a:
+ P("A search engine first needs to collect the web. A 'spider' (web crawler) starts from seed URLs, downloads pages, extracts their links, and follows them — feeding text to an indexer along the way.")+
+ A("an explorer with a to-do list of places (the frontier): visit a place, write down what's there (index), note every new doorway you see (links), add them to the to-do list, repeat.")+
+ FIG(SVG_SPIDER,"Spider: Seed URLs → URL frontier → downloader → parser → (links loop back) + indexer")+
+ F("Crawler loop: <b>Seed URLs → URL Frontier (queue) → Downloader (fetch page) → Parser (extract links + content)</b>; new links go <b>back into the frontier</b>, page content goes to the <b>Indexer → index/store</b>. Must handle: <b>politeness</b> (robots.txt, rate limits), <b>duplicate detection</b>, and huge <b>scale</b> (distributed crawlers).")},
+];
+
+/* ---------- EXAM-STYLE QUIZ: MCQ + True/False (opts True/False) ---------- */
+const QUIZ_EXAM=[
+/* ML — multiple choice */
+{c:"ml",q:"Which is NOT a reasonable description of machine learning?",opts:["Algorithms that improve through experience","Learning from data without explicit programming","Automated, data-driven model building","Explicitly programming every task, no data-driven learning"],correct:3},
+{c:"ml",q:"Which best describes SUPERVISED learning?",opts:["Learning in a dynamic environment by reward","Finding structure in data","Reducing data dimensions","Building predictive models from labelled data"],correct:3},
+{c:"ml",q:"Precision = ?  (TP/FP/TN/FN)",opts:["TP/(TP+FP)","TN/(TN+FP)","TP/(TP+FN)","TN/(TN+FN)"],correct:0},
+{c:"ml",q:"What does 'K' mean in K-Nearest Neighbours?",opts:["Kernel","K classes","K-Means","Number of neighbours"],correct:3},
+{c:"ml",q:"Key assumption of Naive Bayes?",opts:["Features are conditionally dependent","Features are conditionally independent","Features are linearly related","Features are normally distributed"],correct:1},
+{c:"ml",q:"For a hard-margin SVM, the maximised margin equals…",opts:["1/‖ω‖","2/‖ω‖","(1+ω₀)/‖ω‖","(1−ω₀)/‖ω‖"],correct:1},
+{c:"ml",q:"Main strategy for non-linearly-separable data in SVM?",opts:["Map to higher dimension with a kernel","Use polynomial regression","Add more samples","Remove features"],correct:0},
+{c:"ml",q:"Main purpose of information gain when building a decision tree?",opts:["Reduce training data","Split nodes to increase subset purity","Reduce overfitting directly","Increase tree depth"],correct:1},
+{c:"ml",q:"You have low training error but high test error. The model has…",opts:["High variance (overfitting)","High bias (underfitting)","Both","Neither"],correct:0},
+{c:"ml",q:"Activation function of logistic regression?",opts:["Sigmoid","ReLU","Tanh","Leaky ReLU"],correct:0},
+{c:"ml",q:"Which is NOT a binary classification problem?",opts:["Gender from height & weight","Credit-card default: yes/no","Predict house price from area & location","Tumour benign vs malignant"],correct:2},
+{c:"ml",q:"For an MLP unit z = ω₁x₁ + ω₂x₂ + b, what is ∂z/∂x₂?",opts:["ω₂","ω₁","ω₁+ω₂","ω₁+b"],correct:0},
+{c:"ml",q:"A 6×6×3 image with two 3×3×3 filters → output channels?",opts:["6","3","2","1"],correct:2},
+{c:"ml",q:"6×6 input, 3×3 filter, padding=0, stride=2 → output side length?",opts:["1","2","3","4"],correct:1},
+{c:"ml",q:"How does LSTM tackle the vanishing-gradient problem?",opts:["Dropout layers","Higher learning rate","More neurons","Memory cell (cell state) + gating mechanisms"],correct:3},
+{c:"ml",q:"RNN type used for sentiment classification?",opts:["one-to-one","one-to-many","many-to-one","many-to-many"],correct:2},
+{c:"ml",q:"Self-attention has no notion of order. The fix is…",opts:["Token shuffling","Positional encoding","Attention masking","Gradient descent"],correct:1},
+{c:"ml",q:"Architecture used in GPT-3.5?",opts:["Transformer","CNN","LSTM","RNN"],correct:0},
+{c:"ml",q:"How is GPT-3 trained?",opts:["Supervised with labelled data","Reinforcement learning","Unsupervised next-token prediction","Transfer from a smaller model"],correct:2},
+{c:"ml",q:"Which is a part of a GRU?",opts:["Update gate","Forget gate","Output gate","Input gate"],correct:0},
+/* ML — True / False */
+{c:"ml",q:"(T/F) Supervised, unsupervised and reinforcement learning are completely independent with no overlap.",opts:["True","False"],correct:1},
+{c:"ml",q:"(T/F) PCA is primarily used for clustering data into similar groups.",opts:["True","False"],correct:1},
+{c:"ml",q:"(T/F) The kernel trick lets SVM work in the original feature space without explicitly mapping to higher dimensions.",opts:["True","False"],correct:0},
+{c:"ml",q:"(T/F) In Bagging, different learners are trained on different subsets of the data.",opts:["True","False"],correct:0},
+{c:"ml",q:"(T/F) Using too large a regularization parameter causes the hypothesis to OVERFIT.",opts:["True","False"],correct:1},
+{c:"ml",q:"(T/F) The range of the Sigmoid function is (0, 1).",opts:["True","False"],correct:0},
+{c:"ml",q:"(T/F) An MLP can be designed with multiple outputs.",opts:["True","False"],correct:0},
+{c:"ml",q:"(T/F) GPT-3 is autoregressive, unlike BERT which is bidirectional.",opts:["True","False"],correct:0},
+{c:"ml",q:"(T/F) BERT uses an autoregressive approach to predict the next word.",opts:["True","False"],correct:1},
+{c:"ml",q:"(T/F) Language modelling is the task of predicting the next word.",opts:["True","False"],correct:0},
+/* Ethics — MCQ + T/F (case-style) */
+{c:"eth",q:"Technical feasibility, by itself, establishes ethical acceptability.",opts:["True","False"],correct:1},
+{c:"eth",q:"Which is NOT one of the three features of engineering ethics?",opts:["Multiple values in conflict","Multiple affected actors","Guaranteed certainty of outcomes","Uncertainty of consequences"],correct:2},
+{c:"eth",q:"(T/F) Acceptable risk requires that risk be reduced to exactly zero.",opts:["True","False"],correct:1},
+{c:"eth",q:"In the risk-governance cycle, the first stage is…",opts:["Respond and monitor","Identify and assess","Communicate and decide","Compensate"],correct:1},
+{c:"eth",q:"Which barrier to responsible action is 'sacrificing criticism for agreement'?",opts:["Self-interest","Microscopic vision","Groupthink","Ignorance"],correct:2},
+{c:"eth",q:"(T/F) In case analysis, you should identify personal, organizational AND institutional causes to prevent recurrence.",opts:["True","False"],correct:0},
+/* DS — MCQ + T/F */
+{c:"sys",q:"Components in a distributed system coordinate by…",opts:["Shared memory","Passing messages only","A global clock","A single CPU"],correct:1},
+{c:"sys",q:"Which socket call belongs to the SERVER, not the client?",opts:["connect()","accept()","write()","close()"],correct:1},
+{c:"sys",q:"'All processes deliver all messages in the same order' describes…",opts:["FIFO ordering","Causal ordering","Total ordering","No ordering"],correct:2},
+{c:"sys",q:"A multicast that is delivered to all correct members or none is…",opts:["FIFO multicast","Atomic multicast","Unreliable multicast","Lazy multicast"],correct:1},
+{c:"sys",q:"'All processes see all writes in one single agreed order' is which consistency model?",opts:["Strict","Sequential","Causal","Eventual"],correct:1},
+{c:"sys",q:"Two-Phase Commit (2PC) mainly guarantees…",opts:["Faster reads","A distributed transaction commits everywhere or aborts everywhere","Lower latency","Load balancing"],correct:1},
+{c:"sys",q:"In a web-search spider, newly extracted links are…",opts:["Discarded","Added back to the URL frontier","Sent straight to the user","Stored as the final index"],correct:1},
+{c:"sys",q:"(T/F) Causal ordering implies FIFO ordering.",opts:["True","False"],correct:0},
+{c:"sys",q:"(T/F) NFS keeps the server stateless, which makes crash recovery easier.",opts:["True","False"],correct:0},
+{c:"sys",q:"(T/F) On receiving a message, a vector clock takes the element-wise MAX then increments its own slot.",opts:["True","False"],correct:0},
+];
+
+/* ---------- EXAM-STYLE EXERCISES: short-answer / calculation / case ---------- */
+const PRACTICE_EXAM=[
+/* ML short-answer (mirrors the teacher's prep sheet) */
+{c:"ml",q:"SHORT ANSWER (exam-style): Calculate the information gain of splitting on 'Humidity'. Dataset (PlayTennis): 14 days, Play = 9 Yes / 5 No. Humidity=High on 7 days (3 Yes, 4 No); Humidity=Normal on 7 days (6 Yes, 1 No).",
+ steps:"<b>1) Entropy of the whole set:</b> H(S) = −(9/14)log₂(9/14) − (5/14)log₂(5/14) = 0.409 + 0.531 = <b>0.940</b>.<br><b>2) Entropy of each branch:</b><br>High (3 Yes/4 No): H = −(3/7)log₂(3/7) − (4/7)log₂(4/7) = 0.524 + 0.461 = <b>0.985</b>.<br>Normal (6 Yes/1 No): H = −(6/7)log₂(6/7) − (1/7)log₂(1/7) = 0.191 + 0.401 = <b>0.592</b>.<br><b>3) Weighted child entropy:</b> (7/14)(0.985) + (7/14)(0.592) = 0.4925 + 0.296 = 0.789.<br><b>4) Information gain:</b> IG = H(S) − weighted children = 0.940 − 0.789.",
+ answer:"IG(Humidity) ≈ 0.151 bits",
+ study:"ML Lecture 5 — Decision Trees: Entropy & Information Gain (this is exam Short-Answer Q3)."},
+{c:"ml",q:"SHORT ANSWER (exam-style): Classify the new point (3, 4) using KNN with k=3. Training set: A(1,2)=Class0, B(2,3)=Class0, C(3,3)=Class1, D(5,4)=Class1, E(4,5)=Class1, F(2,1)=Class0. Use Euclidean distance.",
+ steps:"<b>1) Distance to each point</b> = √[(Δx)²+(Δy)²] from (3,4):<br>A(1,2): √(4+4)=√8≈2.83 · B(2,3): √(1+1)=√2≈1.41 · C(3,3): √(0+1)=1.00 · D(5,4): √(4+0)=2.00 · E(4,5): √(1+1)=√2≈1.41 · F(2,1): √(1+9)=√10≈3.16.<br><b>2) Pick the 3 smallest:</b> C=1.00 (Class1), B=1.41 (Class0), E=1.41 (Class1).<br><b>3) Majority vote:</b> Class1 appears twice (C, E), Class0 once (B).",
+ answer:"Predict Class 1 (2 of the 3 nearest are Class 1)",
+ study:"ML Lecture 3 — KNN: distance metric + majority vote (this is exam Short-Answer Q4)."},
+{c:"ml",q:"SHORT ANSWER (exam-style, ≥100 words target): Describe the basic structure of an MLP and the role of activation functions. (Write a model answer outline.)",
+ steps:"Cover these points: An MLP is a <b>feedforward</b> neural network with three kinds of layers — an <b>input layer</b> (receives the feature vector), one or more <b>hidden layers</b> (transform the input through weighted connections), and an <b>output layer</b> (produces the prediction). Each neuron computes a <b>weighted sum + bias</b> of the previous layer, then applies an <b>activation function</b>. Activations must be <b>non-linear</b> (sigmoid, tanh, ReLU) — otherwise stacking layers collapses into a single linear model, so the network couldn't learn complex patterns or solve problems like XOR. Training uses a <b>forward pass</b> to predict, a loss function to measure error, then <b>backpropagation</b> (chain rule) with <b>gradient descent</b> to update every weight. MLPs are universal function approximators and can have multiple outputs.",
+ answer:"Input → hidden(s) → output, fully connected; non-linear activations give it power; trained by forward pass + backprop + gradient descent.",
+ study:"ML Lecture 8 — MLP & Neural Networks (exam Short-Answer Q1)."},
+{c:"ml",q:"SHORT ANSWER (exam-style): Explain the basic steps of the K-means algorithm — how it places centroids and assigns points.",
+ steps:"Model answer: <b>1)</b> Choose K and initialise K centroids (randomly, or K-means++). <b>2) Assignment step:</b> assign each data point to its <b>nearest centroid</b> (usually by Euclidean distance), forming K clusters. <b>3) Update step:</b> move each centroid to the <b>mean</b> of the points assigned to it. <b>4) Repeat</b> assignment + update until the centroids stop moving (convergence). It minimises within-cluster squared distance and converges to a <b>local</b> optimum, so the result depends on initialisation (run several times). You must choose K in advance.",
+ answer:"Init K centroids → assign points to nearest centroid → move centroids to cluster means → repeat until stable (local optimum).",
+ study:"ML Lecture 2 — Unsupervised Learning: K-means (exam Short-Answer Q2)."},
+{c:"ml",q:"CALCULATION (exam-style): An input image is 6×6×3. Apply two 3×3×3 kernels with padding=1, stride=1. Give (a) number of output channels and (b) output side length.",
+ steps:"<b>(a) Channels out = number of kernels = 2.</b> (Each kernel's depth must match the input's 3 channels, and each produces one output channel.)<br><b>(b) Side = ⌊(N + 2P − F)/S⌋ + 1</b> = ⌊(6 + 2·1 − 3)/1⌋ + 1 = ⌊5⌋ + 1 = 6.",
+ answer:"Output = 6×6×2 (2 channels, side length 6)",
+ study:"ML Lecture 9 — CNN: channels & output-size formula ⌊(N+2P−F)/S⌋+1."},
+{c:"ml",q:"DIAGNOSIS (exam-style): Your regularized polynomial regression has LOW error on the training set but UNACCEPTABLY LARGE error on new houses. Bias or variance? What two fixes help?",
+ steps:"Low train error + high test error = the model fits the training data (including noise) but doesn't generalise → <b>high variance (overfitting)</b>. Fixes that reduce variance: <b>increase the regularization parameter λ</b>, get <b>more training data</b>, or use a <b>simpler model</b> (lower-degree polynomial / fewer features).",
+ answer:"High variance (overfitting); fix with more regularization (larger λ), more data, or a simpler model.",
+ study:"ML Lecture 6 — Generalization & Regularization: bias–variance tradeoff."},
+/* DS exercises (the teacher's topic list) */
+{c:"sys",q:"CODE READING (exam-style): A program calls socket(), then bind(), then listen(), then accept(), then read()/write(). Is it the CLIENT or the SERVER? How do you know?",
+ steps:"The tell-tale calls are <b>bind() + listen() + accept()</b>. bind() ties the socket to a known port; listen() marks it ready for incoming connections; accept() <b>blocks waiting</b> for a client to connect. A client never calls these — it would call <b>connect()</b> instead.",
+ answer:"SERVER — because of bind() → listen() → accept() (the client side would use connect()).",
+ study:"Dist Systems T6 — Socket Communication: the client vs server call sequence (read the code slides!)."},
+{c:"sys",q:"ORDERING (exam-style): Figure shows P1 multicasts m1 then m2; every process delivers m1 before m2, but P2 delivers an UNRELATED message x from P3 before m1 while P4 delivers x after m1. Which ordering is satisfied — FIFO, causal, or total?",
+ steps:"Same-sender order is kept (m1 before m2 everywhere) → <b>FIFO holds</b>. Are causal relations respected? x and m1 are unrelated (concurrent), so causal ordering does not constrain them → <b>causal can still hold</b>. But P2 and P4 deliver x and m1 in <b>different</b> orders → not everyone agrees on one global order → <b>total ordering FAILS</b>.",
+ answer:"FIFO (and causal) are satisfied, but NOT total ordering (processes disagree on the order of concurrent messages).",
+ study:"Dist Systems — Group Communication: FIFO vs causal vs total multicast ordering (reading a figure)."},
+{c:"sys",q:"CONSISTENCY (exam-style): Two processes write A then later B (B is a reply to A — causally after). On replica R1 a reader sees A then B; on replica R2 a reader sees B then A. Two unrelated writes appear in different orders elsewhere. Which model is violated, and which one could still hold?",
+ steps:"B is causally after A, so EVERY replica must show A before B. R2 shows B before A → a <b>causal</b> (and therefore sequential/strict) violation. If instead only <b>concurrent/unrelated</b> writes appeared in different orders (and all causal pairs were respected), that would be allowed under <b>causal consistency</b> but would still violate <b>sequential</b> (which needs one global order).",
+ answer:"Causal consistency is violated here (a causal pair A→B was reordered). Reordering only unrelated writes would be OK under causal, but still breaks sequential.",
+ study:"Dist Systems — Data-centric consistency models: strict / sequential / causal / FIFO / eventual."},
+{c:"sys",q:"VECTOR CLOCK (exam-style): Process P is slot 2 of 3, clock = [1,3,2]. It receives a message stamped [4,2,5]. What is P's clock after the receive event?",
+ steps:"Receive rule: element-wise MAX of the two vectors, then +1 to your OWN slot.<br>max([1,3,2],[4,2,5]) = [4,3,5]. P is slot 2 → increment slot 2: 3→4.",
+ answer:"[4,4,5]",
+ study:"Dist Systems T4 — Logical Time: vector clocks (VC1–VC3)."},
+{c:"sys",q:"ATOMICITY (exam-style): A sender multicasts a message to a group of 5 but crashes after only 2 members receive it. What must an atomic multicast protocol do, and what property does this enforce?",
+ steps:"Atomic multicast = <b>all-or-nothing</b>. Since some correct members already have the message, the protocol must ensure the <b>remaining members also receive it</b> (a surviving member re-transmits) — or, if it must be aborted, it is discarded by the 2 as well. This enforces <b>atomicity</b>: every correct member delivers it, or none do. (Often paired with total ordering + membership views = virtual synchrony.)",
+ answer:"Have a surviving member re-transmit so all 5 correct members deliver it (all-or-nothing) → enforces atomicity.",
+ study:"Dist Systems — Group Communication: atomic multicast & virtual synchrony."},
+/* Ethics — case analysis (matches the 4×15-point case format) */
+{c:"eth",q:"CASE ANALYSIS (exam-style): A team finds a safety flaw in a product near launch. Fixing it delays release and costs money; the manager pressures them to ship. Analyse using the course's 3-question framework.",
+ steps:"<b>1) Facts & roles:</b> Is the information complete? The engineers hold the technical knowledge; the manager holds decision power; the public bears the risk. Clarify how serious/likely the flaw is.<br><b>2) Values & impacts:</b> Public safety & the right-to-know vs cost, schedule, and company profit. Shipping concentrates risk on users who didn't consent. Barriers at play: <b>authority pressure</b> and <b>groupthink</b>.<br><b>3) Action & reasons:</b> The publicly-defensible action is to <b>disclose the risk and not ship until fixed</b> — 'human welfare first' and 'prevention first'. Justify via Kant (don't use users merely as a means) and utilitarianism (avoid large foreseeable harm). Prevent recurrence: a safety sign-off gate, a whistle-blowing channel, and a checklist owner.",
+ answer:"Don't ship; escalate/disclose the flaw. Public safety outranks schedule/profit; add an institutional safety-gate to prevent recurrence.",
+ study:"Ethics Ch2 & Ch4 + Course Summary 'Three Questions for Case Analysis' (facts/roles → values/impacts → action/reasons)."},
+{c:"eth",q:"CASE ANALYSIS (exam-style): A company deploys a hiring algorithm that turns out to disadvantage one demographic group. Analyse with the 3-question framework and propose fixes.",
+ steps:"<b>1) Facts & roles:</b> What data trained it? Who built, approved and is accountable for it? Is the bias measured/confirmed?<br><b>2) Values & impacts:</b> <b>Algorithmic fairness</b> & non-discrimination vs efficiency/convenience; affected applicants have little voice (a data-ethics issue — bias, rights). Risk of an unjust distribution of harm.<br><b>3) Action & reasons:</b> Audit the model for bias, fix the data/algorithm or suspend it, add human oversight and an appeals process. Justify by fairness/justice and 'human welfare first'. Fill the <b>policy vacuum</b>: bias-testing before deployment, documented accountability, ongoing monitoring across the data life cycle.",
+ answer:"Audit & remediate (or suspend) the biased model; add oversight + bias-testing policy with a clear owner. Grounded in algorithmic fairness & data ethics.",
+ study:"Ethics Ch5 — Information & Big Data Ethics (fairness, bias) + the case-analysis framework."},
+];
+
+/* ---------- EXAM-STYLE confusable pairs (advanced) ---------- */
+const PAIRS_EXAM=[
+{c:"ml",title:"LSTM vs GRU",
+ a:{name:"LSTM",txt:"Memory cell + THREE gates: forget, input, output. More parameters, very expressive."},
+ b:{name:"GRU",txt:"Lighter: TWO gates (update, reset), no separate output gate. Faster, fewer parameters."},
+ tip:"Both fix vanishing gradients with gates. LSTM = 3 gates + cell state; GRU = 2 gates, simpler."},
+{c:"ml",title:"GPT vs BERT",
+ a:{name:"GPT",txt:"Autoregressive, left-to-right; trained by next-token prediction. Best for text GENERATION."},
+ b:{name:"BERT",txt:"Bidirectional (masked-language modelling); reads both directions. Best for UNDERSTANDING tasks."},
+ tip:"GPT generates (one direction); BERT understands (both directions). Both are Transformers."},
+{c:"ml",title:"Bagging vs Boosting",
+ a:{name:"Bagging",txt:"Train learners in PARALLEL on random subsets, then vote/average. Reduces VARIANCE (e.g. Random Forest)."},
+ b:{name:"Boosting",txt:"Train learners SEQUENTIALLY, each fixing the last one's mistakes. Reduces BIAS."},
+ tip:"Bagging = parallel + cut variance. Boosting = sequential + cut bias."},
+{c:"sys",title:"Sequential vs Causal consistency",
+ a:{name:"Sequential",txt:"ALL processes see ALL writes in ONE single agreed order (incl. unrelated writes)."},
+ b:{name:"Causal",txt:"Only CAUSALLY-related writes must share an order; concurrent writes may appear in different orders."},
+ tip:"One global order for everything = sequential. Only cause-before-effect enforced = causal (weaker)."},
+{c:"sys",title:"FIFO vs Total ordering (multicast)",
+ a:{name:"FIFO ordering",txt:"Messages from the SAME sender arrive in send order; different senders may interleave."},
+ b:{name:"Total ordering",txt:"EVERY process delivers ALL messages in the SAME order, regardless of sender."},
+ tip:"FIFO = per-sender order. Total = one identical global order for everyone."},
+{c:"sys",title:"Client vs Server socket calls",
+ a:{name:"Server",txt:"socket → bind → listen → accept (binds a port and WAITS for connections)."},
+ b:{name:"Client",txt:"socket → connect (reaches OUT to the server's address)."},
+ tip:"See bind/listen/accept → server. See connect → client."},
+];
+
 const COURSES = {
   chi:{name:"Chinese Culture",color:"var(--c-chi)",hex:"#9c4221"},
   eth:{name:"Engineering Ethics",color:"var(--c-eth)",hex:"#2c5f4f"},
   ml:{name:"Machine Learning",color:"var(--c-ml)",hex:"#5b3a8c"},
   sys:{name:"Distributed Systems",color:"var(--c-sys)",hex:"#1f5673"},
 };
-const ALLCARDS = CARDS.concat(NEW_CARDS, CARDS_DRIVE);
-const ALLPRACTICE = PRACTICE.concat(PRACTICE_NEW, PRACTICE_DRIVE);
-const ALLQUIZ = QUIZ.concat(QUIZ_NEW, QUIZ_DRIVE);
-const ALLPAIRS = PAIRS.concat(PAIRS_NEW, PAIRS_DRIVE);
+const ALLCARDS = CARDS.concat(NEW_CARDS, CARDS_DRIVE, CARDS_EXAM);
+const ALLPRACTICE = PRACTICE.concat(PRACTICE_NEW, PRACTICE_DRIVE, PRACTICE_EXAM);
+const ALLQUIZ = QUIZ.concat(QUIZ_NEW, QUIZ_DRIVE, QUIZ_EXAM);
+const ALLPAIRS = PAIRS.concat(PAIRS_NEW, PAIRS_DRIVE, PAIRS_EXAM);
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 
 /* ---------- tabs ---------- */
@@ -1249,7 +1501,7 @@ function renderPairs(){
 
 /* ===================== MAP ===================== */
 const MAPS={
- ml:{name:"Machine Learning",hex:"#5b3a8c",lead:"Each step needs the one before it. Variance before PCA; foundations before the supervised methods.",
+ ml:{name:"Machine Learning",hex:"#5b3a8c",lead:"EXAM: 35 multiple-choice + 15 true/false + 5 short-answer (incl. an information-gain calculation and a KNN k=3 classification). Study order: each step needs the one before it — variance before PCA; foundations before the supervised methods; deep learning last.",
    steps:["<b>Foundations</b> — what ML is, 3 paradigms, sample/feature/label, confusion matrix, the 4 metrics",
    "<b>Variance & covariance</b> — the maths PCA is built on",
    "<b>PCA</b> — dimensionality reduction, eigenfaces",
@@ -1261,16 +1513,21 @@ const MAPS={
    "<b>Linear regression</b> — fit a line, squared-error cost, gradient descent",
    "<b>Logistic regression</b> — sigmoid S-curve, predicts True/False",
    "<b>Generalization & regularization</b> — overfitting/underfitting, L1/L2",
-   "<b>Neural networks (MLP)</b> — perceptron, XOR, activation, backprop",
-   "<b>Deep learning: CNN</b> — convolution, pooling, the 3 image properties"]},
- sys:{name:"Distributed Systems",hex:"#1f5673",lead:"Note the correction: study physical time BEFORE logical time \u2014 logical time exists because physical clocks can't sync perfectly.",
+   "<b>Neural networks (MLP)</b> — perceptron, XOR, activation, chain rule, backprop",
+   "<b>Deep learning: CNN</b> — convolution, pooling, channels, output-size formula",
+   "<b>Sequence models</b> — RNN types, LSTM/GRU gates, vanishing gradient",
+   "<b>Transformers & LLMs</b> — self-attention, positional encoding, GPT vs BERT; plus ResNet & Bagging"]},
+ sys:{name:"Distributed Systems",hex:"#1f5673",lead:"EXAM FOCUS (teacher's list): DS definition/features/motivation; difference between the models; vector clocks; IPC \u2014 tell client vs server from the code; group comm atomicity; read a figure & name the ordering; pick the data-centric consistency model from an example; mount/unmount (skip superblock detail); failure recovery & concurrency control; the web-search spider architecture. Study physical time BEFORE logical time.",
    steps:["<b>Fundamentals & models</b> — definition, 8 challenges, 8 transparencies, architecture, 3 models",
    "<b>Communication</b> — sockets (socket/bind/listen/accept), TCP vs UDP, RPC / RMI",
    "<b>Physical time FIRST</b> — drift/skew, Cristian's, Berkeley, NTP",
    "<b>Logical time</b> — happened-before, Lamport, vector clocks",
+   "<b>Group communication</b> — multicast ordering (FIFO/causal/total), atomicity",
    "<b>Mutual exclusion & elections</b> — Ricart-Agrawala, token ring; Bully & Ring elections",
-   "<b>Replication, consistency & file systems</b> — consistency models, quorum, NFS, GFS"]},
- eth:{name:"Engineering Ethics",hex:"#2c5f4f",lead:"Follow the chapter numbers \u2014 they already build in order. Academic integrity is standalone.",
+   "<b>Replication & consistency</b> — data-centric models (pick one from an example), quorum",
+   "<b>File systems & reliability</b> — mount/unmount, NFS/GFS, failure recovery & concurrency control",
+   "<b>Web search</b> — the spider/crawler architecture"]},
+ eth:{name:"Engineering Ethics",hex:"#2c5f4f",lead:"EXAM (closed-book, 120 min, 100 pts): 10 multiple-choice (20) + 10 true/false (20) + 4 case analyses (60). For cases use the 3 questions: facts/roles \u2192 values/impacts \u2192 action/reasons. Follow the chapter numbers \u2014 they build in order.",
    steps:["<b>Ch 1</b> — Engineering & Ethics: 伦理 (Lun/Li), norms, 7 dimensions",
    "<b>Ch 2</b> — Risk, Safety & Responsibility: risk = probability × loss, 3 sources + cases",
    "<b>Ch 3</b> — Value, Benefit & Justice: 5 values, double-edged sword, NIMBY, stakeholders",
